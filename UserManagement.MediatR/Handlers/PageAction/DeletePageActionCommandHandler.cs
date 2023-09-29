@@ -1,7 +1,4 @@
 ﻿using AutoMapper;
-using UserManagement.Common.UnitOfWork;
-using UserManagement.Data.Dto;
-using UserManagement.Domain;
 using UserManagement.MediatR.Commands;
 using UserManagement.Repository;
 using MediatR;
@@ -9,6 +6,9 @@ using Microsoft.EntityFrameworkCore;
 using System.Threading;
 using System.Threading.Tasks;
 using UserManagement.Helper;
+using UserManagement.Data.Context;
+using UserManagement.Data.Dto.PageAction;
+using UserManagement.Data.UnitOfWork;
 
 namespace UserManagement.MediatR.Handlers
 {

@@ -1,6 +1,6 @@
-﻿using UserManagement.Data.Dto;
-using MediatR;
+﻿using MediatR;
 using UserManagement.Helper;
+using UserManagement.Data.Dto.User;
 
 namespace UserManagement.MediatR.Commands
 {

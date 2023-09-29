@@ -2,9 +2,9 @@
 using Microsoft.Extensions.Logging;
 using System.Threading;
 using System.Threading.Tasks;
-using UserManagement.Common.UnitOfWork;
-using UserManagement.Data.Dto;
-using UserManagement.Domain;
+using UserManagement.Data.Context;
+using UserManagement.Data.Dto.Email;
+using UserManagement.Data.UnitOfWork;
 using UserManagement.Helper;
 using UserManagement.MediatR.Commands;
 using UserManagement.Repository;

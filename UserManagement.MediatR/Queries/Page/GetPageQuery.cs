@@ -1,7 +1,7 @@
-﻿using UserManagement.Data.Dto;
-using MediatR;
+﻿using MediatR;
 using System;
 using UserManagement.Helper;
+using UserManagement.Data.Dto.Page;
 
 namespace UserManagement.MediatR.Queries
 {

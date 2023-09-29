@@ -1,6 +1,6 @@
 ﻿using MediatR;
 using System.Collections.Generic;
-using UserManagement.Data.Dto;
+using UserManagement.Data.Dto.EmailTemplate;
 using UserManagement.Helper;
 
 namespace UserManagement.MediatR.Queries

@@ -1,6 +1,8 @@
 ﻿using AutoMapper;
-using UserManagement.Data;
-using UserManagement.Data.Dto;
+using UserManagement.Data.Dto.User;
+using UserManagement.Data.Dto.UserClaim;
+using UserManagement.Data.Entities;
+using UserManagement.Domain.Model.User;
 using UserManagement.MediatR.Commands;
 
 namespace UserManagement.API.Helpers.Mapping
@@ -13,7 +15,7 @@ namespace UserManagement.API.Helpers.Mapping
             CreateMap<UserRoleDto, UserRole>().ReverseMap();
             CreateMap<UserAllowedIPDto, UserAllowedIP>().ReverseMap();
             CreateMap<User, UserDto>().ReverseMap();
-            CreateMap<AddUserCommand, User>();
+            CreateMap<AddUserModel, User>();
             CreateMap<SocialLoginCommand, User>();
             CreateMap<ResetPasswordCommand, UserDto>();
         }

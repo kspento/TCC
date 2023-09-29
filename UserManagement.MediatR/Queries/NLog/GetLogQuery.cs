@@ -1,6 +1,6 @@
 ﻿using MediatR;
 using System;
-using UserManagement.Data.Dto;
+using UserManagement.Data.Dto.NLog;
 using UserManagement.Helper;
 
 namespace UserManagement.MediatR.Queries

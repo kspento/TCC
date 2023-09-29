@@ -1,7 +1,7 @@
-﻿using UserManagement.Common.GenericRespository;
-using UserManagement.Common.UnitOfWork;
-using UserManagement.Data;
-using UserManagement.Domain;
+﻿using UserManagement.Data.Context;
+using UserManagement.Data.Entities;
+using UserManagement.Data.GenericRespository;
+using UserManagement.Data.UnitOfWork;
 
 namespace UserManagement.Repository
 {

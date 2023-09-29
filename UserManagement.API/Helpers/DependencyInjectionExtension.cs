@@ -1,6 +1,11 @@
-﻿using UserManagement.Common.UnitOfWork;
-using UserManagement.Repository;
+﻿using UserManagement.Repository;
 using Microsoft.Extensions.DependencyInjection;
+using UserManagement.Data.Repository.Contracts;
+using UserManagement.Data.Repository.UserRepository;
+using UserManagement.Data.Repository.UserClaimRepository;
+using UserManagement.Data.UnitOfWork;
+using UserManagement.Data.Repository.UserRole;
+using UserManagement.Data.Repository.LoginAudit;
 
 namespace UserManagement.Api.Helpers
 {

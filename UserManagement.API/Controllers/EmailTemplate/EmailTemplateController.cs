@@ -5,7 +5,8 @@ using System;
 using System.Collections.Generic;
 using System.Text.Json;
 using System.Threading.Tasks;
-using UserManagement.Data.Dto;
+using UserManagement.Data.Dto.AppSetting;
+using UserManagement.Data.Dto.EmailTemplate;
 using UserManagement.MediatR.Commands;
 using UserManagement.MediatR.Queries;
 

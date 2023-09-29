@@ -1,6 +1,8 @@
 ﻿using MediatR;
 using System.Threading;
 using System.Threading.Tasks;
+using UserManagement.Data.Repository.Contracts;
+using UserManagement.Data.Repository.UserRepository;
 using UserManagement.MediatR.Queries;
 using UserManagement.Repository;
 

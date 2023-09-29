@@ -1,6 +1,6 @@
 ﻿using AutoMapper;
-using UserManagement.Data.Dto;
 using System.Security.Claims;
+using UserManagement.Data.Dto.User;
 
 namespace UserManagement.API.Helpers.Mapping
 {

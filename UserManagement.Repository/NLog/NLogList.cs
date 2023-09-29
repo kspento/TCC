@@ -3,8 +3,8 @@ using System;
 using System.Collections.Generic;
 using System.Linq;
 using System.Threading.Tasks;
-using UserManagement.Data;
-using UserManagement.Data.Dto;
+using UserManagement.Data.Dto.NLog;
+using UserManagement.Data.Entities;
 
 namespace UserManagement.Repository
 {

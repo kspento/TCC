@@ -3,7 +3,7 @@ using Microsoft.AspNetCore.Mvc;
 using System;
 using System.Collections.Generic;
 using System.Threading.Tasks;
-using UserManagement.Data.Dto;
+using UserManagement.Data.Dto.Email;
 using UserManagement.MediatR.Commands;
 using UserManagement.MediatR.Queries;
 

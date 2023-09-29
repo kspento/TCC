@@ -1,12 +1,12 @@
-﻿using UserManagement.Common.UnitOfWork;
-using UserManagement.Data.Dto;
-using UserManagement.Domain;
-using UserManagement.MediatR.Commands;
+﻿using UserManagement.MediatR.Commands;
 using UserManagement.Repository;
 using MediatR;
 using System.Threading;
 using System.Threading.Tasks;
 using UserManagement.Helper;
+using UserManagement.Data.Context;
+using UserManagement.Data.Dto.Page;
+using UserManagement.Data.UnitOfWork;
 
 namespace UserManagement.MediatR.Handlers
 {

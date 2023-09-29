@@ -1,6 +1,7 @@
 ﻿using AutoMapper;
-using UserManagement.Data;
-using UserManagement.Data.Dto;
+using UserManagement.Data.Dto.Role;
+using UserManagement.Data.Dto.RoleClaim;
+using UserManagement.Data.Entities;
 using UserManagement.MediatR.Commands;
 
 namespace UserManagement.API.Helpers.Mapping

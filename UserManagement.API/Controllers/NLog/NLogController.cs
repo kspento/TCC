@@ -3,7 +3,7 @@ using Microsoft.AspNetCore.Authorization;
 using Microsoft.AspNetCore.Mvc;
 using System;
 using System.Threading.Tasks;
-using UserManagement.Data.Dto;
+using UserManagement.Data.Dto.NLog;
 using UserManagement.Data.Resources;
 using UserManagement.MediatR.Commands;
 using UserManagement.MediatR.Queries;

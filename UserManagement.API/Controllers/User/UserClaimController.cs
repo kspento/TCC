@@ -1,10 +1,10 @@
 ﻿using System;
 using System.Threading.Tasks;
-using UserManagement.Data.Dto;
 using UserManagement.MediatR.Commands;
 using MediatR;
 using Microsoft.AspNetCore.Authorization;
 using Microsoft.AspNetCore.Mvc;
+using UserManagement.Data.Dto.UserClaim;
 
 namespace UserManagement.API.Controllers
 {

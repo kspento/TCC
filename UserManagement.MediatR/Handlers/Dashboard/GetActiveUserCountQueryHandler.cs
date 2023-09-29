@@ -2,6 +2,7 @@
 using System.Linq;
 using System.Threading;
 using System.Threading.Tasks;
+using UserManagement.Data.Repository.Contracts;
 using UserManagement.MediatR.Queries;
 using UserManagement.Repository;
 

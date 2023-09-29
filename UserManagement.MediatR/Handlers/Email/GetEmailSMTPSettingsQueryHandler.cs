@@ -4,7 +4,7 @@ using Microsoft.EntityFrameworkCore;
 using System.Collections.Generic;
 using System.Threading;
 using System.Threading.Tasks;
-using UserManagement.Data.Dto;
+using UserManagement.Data.Dto.Email;
 using UserManagement.MediatR.Queries;
 using UserManagement.Repository;
 

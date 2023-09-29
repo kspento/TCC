@@ -1,7 +1,8 @@
-﻿using UserManagement.Data.Dto;
-using MediatR;
+﻿using MediatR;
 using System.Collections.Generic;
 using UserManagement.Helper;
+using UserManagement.Data.Dto.RoleClaim;
+using UserManagement.Data.Dto.Role;
 
 namespace UserManagement.MediatR.Commands
 {

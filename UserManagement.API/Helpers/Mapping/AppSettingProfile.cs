@@ -1,6 +1,6 @@
 ﻿using AutoMapper;
-using UserManagement.Data;
-using UserManagement.Data.Dto;
+using UserManagement.Data.Dto.AppSetting;
+using UserManagement.Data.Entities;
 using UserManagement.MediatR.Commands;
 
 namespace UserManagement.API.Helpers.Mapping

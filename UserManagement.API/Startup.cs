@@ -1,8 +1,5 @@
 using UserManagement.Api.Helpers;
 using UserManagement.API.Helpers.Mapping;
-using UserManagement.Data;
-using UserManagement.Data.Dto;
-using UserManagement.Domain;
 using UserManagement.Helper;
 using UserManagement.MediatR.PipeLineBehavior;
 using FluentValidation;
@@ -24,7 +21,11 @@ using System;
 using System.IO;
 using System.Linq;
 using System.Reflection;
-using UserManagement.Repository;
+using UserManagement.Data.Entities;
+using UserManagement.Data.Context;
+using UserManagement.Data.Dto.User;
+using UserManagement.Data.Dto;
+using UserManagement.Data.Hub;
 
 namespace UserManagement.API
 {

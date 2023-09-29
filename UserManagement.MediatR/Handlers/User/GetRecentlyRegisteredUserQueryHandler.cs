@@ -5,7 +5,8 @@ using System.Collections.Generic;
 using System.Linq;
 using System.Threading;
 using System.Threading.Tasks;
-using UserManagement.Data.Dto;
+using UserManagement.Data.Dto.User;
+using UserManagement.Data.Repository.Contracts;
 using UserManagement.MediatR.Queries;
 using UserManagement.Repository;
 

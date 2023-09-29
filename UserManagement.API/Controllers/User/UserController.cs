@@ -1,15 +1,17 @@
 ﻿using System;
 using System.Collections.Generic;
 using System.Threading.Tasks;
-using UserManagement.Data.Dto;
 using UserManagement.MediatR.Commands;
 using UserManagement.MediatR.Queries;
 using MediatR;
 using Microsoft.AspNetCore.Authorization;
 using Microsoft.AspNetCore.Mvc;
 using Microsoft.AspNetCore.Hosting;
-using UserManagement.Data.Resources;
 using UserManagement.Repository;
+using UserManagement.Domain.Model.User;
+using UserManagement.Data.Repository.UserRepository;
+using UserManagement.Data.Resources;
+using UserManagement.Data.Dto.User;
 
 namespace UserManagement.API.Controllers
 {
@@ -47,7 +49,7 @@ namespace UserManagement.API.Controllers
         /// <returns></returns>
         [HttpPost]
         [Produces("application/json", "application/xml", Type = typeof(UserDto))]
-        public async Task<IActionResult> AddUser(AddUserCommand addUserCommand)
+        public async Task<IActionResult> AddUser(AddUserModel addUserCommand)
         {
             var result = await _mediator.Send(addUserCommand);
             if (!result.Success)

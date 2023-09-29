@@ -1,6 +1,4 @@
-﻿using UserManagement.Data;
-using UserManagement.Data.Dto;
-using UserManagement.MediatR.Commands;
+﻿using UserManagement.MediatR.Commands;
 using UserManagement.Repository;
 using MediatR;
 using Microsoft.AspNetCore.Identity;
@@ -11,6 +9,9 @@ using System.Linq;
 using Microsoft.EntityFrameworkCore;
 using Microsoft.AspNetCore.SignalR;
 using UserManagement.Data.Dto.User;
+using UserManagement.Domain.Dto.User;
+using UserManagement.Data.Entities;
+using UserManagement.Data.Repository.Contracts;
 
 namespace UserManagement.MediatR.Handlers
 {

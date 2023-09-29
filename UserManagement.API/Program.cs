@@ -4,7 +4,7 @@ using Microsoft.Extensions.DependencyInjection;
 using Microsoft.Extensions.Logging;
 using NLog.Web;
 using UserManagement.API;
-using UserManagement.Domain;
+using UserManagement.Data.Context;
 
 var builder = WebApplication.CreateBuilder(args);
 

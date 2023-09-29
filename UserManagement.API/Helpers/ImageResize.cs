@@ -1,10 +1,9 @@
-﻿using UserManagement.Data;
-using SixLabors.ImageSharp;
+﻿using SixLabors.ImageSharp;
 using SixLabors.ImageSharp.Processing;
 using System;
 using System.IO;
 using System.Linq;
-using ImageInfo = UserManagement.Data.ImageInfo;
+using ImageInfo = UserManagement.Data.Dto.ImageInfo;
 
 namespace UserManagement.API.Helpers
 {

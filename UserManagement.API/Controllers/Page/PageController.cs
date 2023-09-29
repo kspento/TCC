@@ -1,12 +1,12 @@
 ﻿using System;
 using System.Collections.Generic;
 using System.Threading.Tasks;
-using UserManagement.Data.Dto;
 using UserManagement.MediatR.Commands;
 using UserManagement.MediatR.Queries;
 using MediatR;
 using Microsoft.AspNetCore.Authorization;
 using Microsoft.AspNetCore.Mvc;
+using UserManagement.Data.Dto.Page;
 
 namespace UserManagement.API.Controllers
 {

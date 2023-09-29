@@ -1,7 +1,7 @@
-﻿using UserManagement.Data;
-using Microsoft.EntityFrameworkCore;
+﻿using Microsoft.EntityFrameworkCore;
+using UserManagement.Data.Entities;
 
-namespace UserManagement.Domain
+namespace UserManagement.Data
 {
     public static class DefaultEntityMappingExtension
     {

@@ -1,5 +1,5 @@
-﻿using UserManagement.Common.GenericRespository;
-using UserManagement.Data;
+﻿using UserManagement.Data.Entities;
+using UserManagement.Data.GenericRespository;
 
 namespace UserManagement.Repository
 {

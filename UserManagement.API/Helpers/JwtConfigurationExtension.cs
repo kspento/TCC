@@ -6,7 +6,7 @@ using System.Linq;
 using System.Text;
 using System.Threading.Tasks;
 using System.IdentityModel.Tokens.Jwt;
-using UserManagement.Data;
+using UserManagement.Data.Dto.User;
 using UserManagement.Data.Dto;
 
 namespace UserManagement.Api.Helpers

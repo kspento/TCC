@@ -1,9 +1,4 @@
-﻿using UserManagement.Common.GenericRespository;
-using UserManagement.Common.UnitOfWork;
-using UserManagement.Data;
-using UserManagement.Data.Dto;
-using UserManagement.Domain;
-using Microsoft.EntityFrameworkCore;
+﻿using Microsoft.EntityFrameworkCore;
 using Microsoft.IdentityModel.Tokens;
 using System;
 using System.Collections.Generic;
@@ -12,7 +7,14 @@ using System.Linq;
 using System.Security.Claims;
 using System.Text;
 using System.Threading.Tasks;
+using UserManagement.Data.Entities;
+using UserManagement.Data.Context;
+using UserManagement.Data.GenericRespository;
 using UserManagement.Data.Resources;
+using UserManagement.Data.Dto.User;
+using UserManagement.Data.Dto;
+using UserManagement.Data.Repository.Contracts;
+using UserManagement.Data.UnitOfWork;
 
 namespace UserManagement.Repository
 {

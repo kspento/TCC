@@ -1,5 +1,5 @@
 ﻿using MediatR;
-using UserManagement.Data.Dto;
+using UserManagement.Data.Dto.Email;
 using UserManagement.Helper;
 
 namespace UserManagement.MediatR.Commands

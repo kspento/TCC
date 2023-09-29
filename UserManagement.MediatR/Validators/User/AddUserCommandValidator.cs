@@ -1,9 +1,9 @@
-﻿using UserManagement.MediatR.Commands;
-using FluentValidation;
+﻿using FluentValidation;
+using UserManagement.Domain.Model.User;
 
 namespace UserManagement.MediatR.Validators
 {
-    public class AddUserCommandValidator : AbstractValidator<AddUserCommand>
+    public class AddUserCommandValidator : AbstractValidator<AddUserModel>
     {
         public AddUserCommandValidator()
         {

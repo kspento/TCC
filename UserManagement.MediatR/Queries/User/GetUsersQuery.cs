@@ -1,4 +1,5 @@
 ﻿using MediatR;
+using UserManagement.Data.Repository.UserRepository;
 using UserManagement.Data.Resources;
 using UserManagement.Repository;
 

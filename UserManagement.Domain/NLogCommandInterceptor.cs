@@ -5,7 +5,7 @@ using System.Data.Common;
 using System.Threading;
 using System.Threading.Tasks;
 
-namespace UserManagement.Domain
+namespace UserManagement.Data
 {
 
     public class TaggedQueryCommandInterceptor : DbCommandInterceptor
@@ -27,7 +27,7 @@ namespace UserManagement.Domain
         {
             ManipulateCommand(command);
 
-            return  ValueTask.FromResult(result);
+            return ValueTask.FromResult(result);
         }
 
         private static void ManipulateCommand(DbCommand command)

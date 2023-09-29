@@ -1,9 +1,9 @@
-﻿using UserManagement.Data;
-using Microsoft.AspNetCore.Identity.EntityFrameworkCore;
+﻿using Microsoft.AspNetCore.Identity.EntityFrameworkCore;
 using Microsoft.EntityFrameworkCore;
 using System;
+using UserManagement.Data.Entities;
 
-namespace UserManagement.Domain
+namespace UserManagement.Data.Context
 {
     public class UserContext : IdentityDbContext<User, Role, Guid, UserClaim, UserRole, UserLogin, RoleClaim, UserToken>
     {
@@ -17,7 +17,7 @@ namespace UserManagement.Domain
         public override DbSet<UserLogin> UserLogins { get; set; }
         public override DbSet<RoleClaim> RoleClaims { get; set; }
         public override DbSet<UserToken> UserTokens { get; set; }
-        public DbSet<Data.Action> Actions { get; set; }
+        public DbSet<Action> Actions { get; set; }
         public DbSet<Page> Pages { get; set; }
         public DbSet<PageAction> PageActions { get; set; }
         public DbSet<NLog> NLog { get; set; }
@@ -88,7 +88,7 @@ namespace UserManagement.Domain
 
             });
 
-            builder.Entity<Data.Action>(b =>
+            builder.Entity<Action>(b =>
             {
                 b.HasOne(e => e.CreatedByUser)
                     .WithMany()

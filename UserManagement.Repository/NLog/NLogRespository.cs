@@ -1,12 +1,12 @@
 ﻿using Microsoft.EntityFrameworkCore;
 using System.Linq;
 using System.Threading.Tasks;
-using UserManagement.Common.GenericRespository;
-using UserManagement.Common.UnitOfWork;
-using UserManagement.Data;
-using UserManagement.Data.Dto;
+using UserManagement.Data.Context;
+using UserManagement.Data.Dto.NLog;
+using UserManagement.Data.Entities;
+using UserManagement.Data.GenericRespository;
 using UserManagement.Data.Resources;
-using UserManagement.Domain;
+using UserManagement.Data.UnitOfWork;
 
 namespace UserManagement.Repository
 {

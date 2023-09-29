@@ -1,8 +1,4 @@
 ﻿using AutoMapper;
-using UserManagement.Common.UnitOfWork;
-using UserManagement.Data;
-using UserManagement.Data.Dto;
-using UserManagement.Domain;
 using UserManagement.MediatR.Commands;
 using MediatR;
 using Microsoft.AspNetCore.Identity;
@@ -10,6 +6,10 @@ using System.Threading;
 using System.Threading.Tasks;
 using UserManagement.Helper;
 using Microsoft.Extensions.Logging;
+using UserManagement.Data.Entities;
+using UserManagement.Data.Context;
+using UserManagement.Data.Dto.User;
+using UserManagement.Data.UnitOfWork;
 
 namespace UserManagement.MediatR.Handlers
 {

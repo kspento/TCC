@@ -5,7 +5,7 @@ using Microsoft.Extensions.Logging;
 using System.Linq;
 using System.Threading;
 using System.Threading.Tasks;
-using UserManagement.Data.Dto;
+using UserManagement.Data.Dto.Email;
 using UserManagement.Helper;
 using UserManagement.MediatR.Queries;
 using UserManagement.Repository;

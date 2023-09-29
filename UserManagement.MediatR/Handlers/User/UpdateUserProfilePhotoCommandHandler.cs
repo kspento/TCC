@@ -7,10 +7,10 @@ using System.IO;
 using System.Linq;
 using System.Threading;
 using System.Threading.Tasks;
-using UserManagement.Common.UnitOfWork;
-using UserManagement.Data;
-using UserManagement.Data.Dto;
-using UserManagement.Domain;
+using UserManagement.Data.Context;
+using UserManagement.Data.Dto.User;
+using UserManagement.Data.Entities;
+using UserManagement.Data.UnitOfWork;
 using UserManagement.Helper;
 using UserManagement.MediatR.Commands;
 

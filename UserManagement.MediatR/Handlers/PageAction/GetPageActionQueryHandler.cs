@@ -1,5 +1,4 @@
 ﻿using AutoMapper;
-using UserManagement.Data.Dto;
 using UserManagement.MediatR.Queries;
 using UserManagement.Repository;
 using MediatR;
@@ -7,6 +6,7 @@ using Microsoft.Extensions.Logging;
 using System.Threading;
 using System.Threading.Tasks;
 using UserManagement.Helper;
+using UserManagement.Data.Dto.PageAction;
 
 namespace UserManagement.MediatR.Handlers
 {

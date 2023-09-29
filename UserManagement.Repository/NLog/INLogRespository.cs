@@ -1,6 +1,6 @@
 ﻿using System.Threading.Tasks;
-using UserManagement.Common.GenericRespository;
-using UserManagement.Data;
+using UserManagement.Data.Entities;
+using UserManagement.Data.GenericRespository;
 using UserManagement.Data.Resources;
 
 namespace UserManagement.Repository

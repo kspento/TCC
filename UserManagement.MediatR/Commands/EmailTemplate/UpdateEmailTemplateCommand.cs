@@ -1,6 +1,6 @@
 ﻿using MediatR;
 using System;
-using UserManagement.Data.Dto;
+using UserManagement.Data.Dto.EmailTemplate;
 using UserManagement.Helper;
 
 namespace UserManagement.MediatR.Commands

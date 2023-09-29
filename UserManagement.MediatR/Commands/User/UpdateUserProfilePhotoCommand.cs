@@ -1,6 +1,6 @@
 ﻿using MediatR;
 using Microsoft.AspNetCore.Http;
-using UserManagement.Data.Dto;
+using UserManagement.Data.Dto.User;
 using UserManagement.Helper;
 
 namespace UserManagement.MediatR.Commands

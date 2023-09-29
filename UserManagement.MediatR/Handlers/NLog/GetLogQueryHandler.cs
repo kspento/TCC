@@ -2,7 +2,7 @@
 using MediatR;
 using System.Threading;
 using System.Threading.Tasks;
-using UserManagement.Data.Dto;
+using UserManagement.Data.Dto.NLog;
 using UserManagement.Helper;
 using UserManagement.MediatR.Queries;
 using UserManagement.Repository;

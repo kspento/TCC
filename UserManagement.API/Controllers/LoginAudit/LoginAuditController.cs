@@ -2,6 +2,7 @@
 using Microsoft.AspNetCore.Authorization;
 using Microsoft.AspNetCore.Mvc;
 using System.Threading.Tasks;
+using UserManagement.Data.Repository.LoginAudit;
 using UserManagement.Data.Resources;
 using UserManagement.MediatR.Queries;
 using UserManagement.Repository;

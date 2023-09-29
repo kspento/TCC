@@ -1,14 +1,15 @@
-﻿using UserManagement.Data.Dto;
-using UserManagement.MediatR.Commands;
+﻿using UserManagement.MediatR.Commands;
 using MediatR;
 using System.Threading;
 using System.Threading.Tasks;
 using UserManagement.Repository;
 using System;
-using UserManagement.Domain;
-using UserManagement.Common.UnitOfWork;
 using UserManagement.Helper;
 using Microsoft.Extensions.Logging;
+using UserManagement.Data.Context;
+using UserManagement.Data.Dto.Role;
+using UserManagement.Data.Dto.User;
+using UserManagement.Data.UnitOfWork;
 
 namespace UserManagement.MediatR.Handlers
 {

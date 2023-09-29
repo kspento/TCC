@@ -1,6 +1,6 @@
-﻿using UserManagement.Data.Dto;
-using MediatR;
+﻿using MediatR;
 using System.Collections.Generic;
+using UserManagement.Data.Dto.Page;
 
 namespace UserManagement.MediatR.Queries
 {

@@ -1,4 +1,5 @@
 ﻿using MediatR;
+using UserManagement.Data.Repository.LoginAudit;
 using UserManagement.Data.Resources;
 using UserManagement.Repository;
 

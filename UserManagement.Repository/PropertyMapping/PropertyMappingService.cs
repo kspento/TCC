@@ -1,8 +1,10 @@
-﻿using UserManagement.Data;
-using UserManagement.Data.Dto;
-using System;
+﻿using System;
 using System.Collections.Generic;
 using System.Linq;
+using UserManagement.Data.Entities;
+using UserManagement.Data.Dto.LoginAudit;
+using UserManagement.Data.Dto.User;
+using UserManagement.Data.Dto.NLog;
 
 namespace UserManagement.Repository
 {

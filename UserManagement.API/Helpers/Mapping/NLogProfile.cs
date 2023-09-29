@@ -1,5 +1,5 @@
 ﻿using AutoMapper;
-using UserManagement.Data.Dto;
+using UserManagement.Data.Dto.NLog;
 
 namespace UserManagement.API.Helpers.Mapping
 {
@@ -7,7 +7,7 @@ namespace UserManagement.API.Helpers.Mapping
     {
         public NLogProfile()
         {
-            CreateMap<Data.NLog, NLogDto>().ReverseMap();
+            CreateMap<Data.Entities.NLog, NLogDto>().ReverseMap();
         }
     }
 }
