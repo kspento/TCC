@@ -40,8 +40,8 @@ namespace UserManagement.Domain.Services
         IUnitOfWork<UserContext> _uow;
 
         public UserService(
-            IMapper mapper,
             UserManager<User> userManager,
+            IMapper mapper,
             UserInfoToken userInfoToken,
             ILogger<AddUserModel> logger,
             IUnitOfWork<UserContext> uow,
@@ -147,7 +147,7 @@ namespace UserManagement.Domain.Services
             return _mapper.Map<List<UserDto>>(entities);
         }
 
-        public async Task<UserDto> GetUsers(GetUserModel request)
+        public async Task<UserDto> GetUsers(GetUsersModel request)
         {
             var entity = await _userRepository.AllIncluding(c => c.UserRoles, cs => cs.UserClaims, ip => ip.UserAllowedIPs).FirstOrDefaultAsync(c => c.Id == request.Id);
 
@@ -361,6 +361,20 @@ namespace UserManagement.Domain.Services
             //    return ServiceResponse<UserAuthDto>.ReturnFailed(401, "UserName Or Password is InCorrect.");
             //}
             return authUser;
+        }
+
+        public async Task<UserDto> GetUser(GetUserModel request)
+        {
+            var entity = await _userRepository.AllIncluding(c => c.UserRoles, cs => cs.UserClaims, ip => ip.UserAllowedIPs).FirstOrDefaultAsync(c => c.Id == request.Id);
+            //if (entity != null)
+            //    return ServiceResponse<UserDto>.ReturnResultWith200(_mapper.Map<UserDto>(entity));
+            //else
+            //{
+            //    _logger.LogError("User not found");
+            //    return ServiceResponse<UserDto>.ReturnFailed(404, "User not found");
+            //}
+
+            return _mapper.Map<UserDto>(entity);
         }
     }
 }

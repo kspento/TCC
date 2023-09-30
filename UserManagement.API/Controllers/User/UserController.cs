@@ -8,10 +8,12 @@ using Microsoft.AspNetCore.Authorization;
 using Microsoft.AspNetCore.Mvc;
 using Microsoft.AspNetCore.Hosting;
 using UserManagement.Repository;
-using UserManagement.Domain.Model.User;
+using UserManagement.Domain.Contracts.Services;
 using UserManagement.Data.Repository.UserRepository;
 using UserManagement.Data.Resources;
 using UserManagement.Data.Dto.User;
+using UserManagement.Domain.Model.User;
+using UserManagement.Domain.Services;
 
 namespace UserManagement.API.Controllers
 {
@@ -23,22 +25,21 @@ namespace UserManagement.API.Controllers
     [Authorize]
     public class UserController : BaseController
     {
-        public IMediator _mediator { get; set; }
+        private readonly IUserService _userService;
         private IWebHostEnvironment _webHostEnvironment;
         public readonly UserInfoToken _userInfo;
         /// <summary>
         /// User
         /// </summary>
-        /// <param name="mediator"></param>
         /// <param name="userInfo"></param>
         /// <param name="webHostEnvironment"></param>
         public UserController(
-            IMediator mediator,
+            IUserService userService,
             UserInfoToken userInfo,
             IWebHostEnvironment webHostEnvironment
             )
         {
-            _mediator = mediator;
+            _userService = userService;
             _userInfo = userInfo;
             _webHostEnvironment = webHostEnvironment;
         }
@@ -51,12 +52,14 @@ namespace UserManagement.API.Controllers
         [Produces("application/json", "application/xml", Type = typeof(UserDto))]
         public async Task<IActionResult> AddUser(AddUserModel addUserCommand)
         {
-            var result = await _mediator.Send(addUserCommand);
-            if (!result.Success)
-            {
-                return ReturnFormattedResponse(result);
-            }
-            return CreatedAtAction("GetUser", new { id = result.Data.Id }, result.Data);
+            var result = await _userService.AddUser(addUserCommand);
+            //if (!result.Success)
+            //{
+            //    return ReturnFormattedResponse(result);
+            //}
+            //return CreatedAtAction("GetUser", new { id = result.Data.Id }, result.Data);
+
+            return Ok(result);
         }
 
 
@@ -69,7 +72,7 @@ namespace UserManagement.API.Controllers
         public async Task<IActionResult> GetAllUsers()
         {
             var getAllUserQuery = new GetAllUserQuery { };
-            var result = await _mediator.Send(getAllUserQuery);
+            var result = await _userService.GetAllUsers();
             return Ok(result);
         }
 
@@ -82,9 +85,11 @@ namespace UserManagement.API.Controllers
         [Produces("application/json", "application/xml", Type = typeof(UserDto))]
         public async Task<IActionResult> GetUser(Guid id)
         {
-            var getUserQuery = new GetUserQuery { Id = id };
-            var result = await _mediator.Send(getUserQuery);
-            return ReturnFormattedResponse(result);
+            var getUserModel = new GetUserModel { Id = id };
+            var result = await _userService.GetUser(getUserModel);
+            //return ReturnFormattedResponse(result);
+
+            return Ok(result);
         }
 
         /// <summary>
@@ -96,21 +101,21 @@ namespace UserManagement.API.Controllers
         [Produces("application/json", "application/xml", Type = typeof(UserList))]
         public async Task<IActionResult> GetUsers([FromQuery] UserResource userResource)
         {
-            var getAllLoginAuditQuery = new GetUsersQuery
+            var getAllLoginAuditQuery = new GetUsersModel
             {
                 UserResource = userResource
             };
-            var result = await _mediator.Send(getAllLoginAuditQuery);
-
-            var paginationMetadata = new
-            {
-                totalCount = result.TotalCount,
-                pageSize = result.PageSize,
-                skip = result.Skip,
-                totalPages = result.TotalPages
-            };
-            Response.Headers.Add("X-Pagination",
-                Newtonsoft.Json.JsonConvert.SerializeObject(paginationMetadata));
+            var result = await _userService.GetUsers(getAllLoginAuditQuery);
+        
+            //var paginationMetadata = new
+            //{
+            //    totalCount = result.TotalCount,
+            //    pageSize = result.PageSize,
+            //    skip = result.Skip,
+            //    totalPages = result.TotalPages
+            //};
+            //Response.Headers.Add("X-Pagination",
+            //    Newtonsoft.Json.JsonConvert.SerializeObject(paginationMetadata));
             return Ok(result);
         }
 
@@ -122,8 +127,8 @@ namespace UserManagement.API.Controllers
         [Produces("application/json", "application/xml", Type = typeof(List<UserDto>))]
         public async Task<IActionResult> GetRecentlyRegisteredUsers()
         {
-            var getRecentlyRegisteredUserQuery = new GetRecentlyRegisteredUserQuery { };
-            var result = await _mediator.Send(getRecentlyRegisteredUserQuery);
+            //var getRecentlyRegisteredUserQuery = new GetRecentlyRegisteredUserQuery { };
+            var result = await _userService.GetRecentlyRegisteredUser();
             return Ok(result);
         }
 
@@ -136,21 +141,23 @@ namespace UserManagement.API.Controllers
         [HttpPost("login")]
         [AllowAnonymous]
         [Produces("application/json", "application/xml", Type = typeof(UserAuthDto))]
-        public async Task<IActionResult> UserLogin(UserLoginCommand userLoginCommand)
+        public async Task<IActionResult> UserLogin(UserLoginModel userLoginCommand)
         {
             userLoginCommand.RemoteIp = Request.HttpContext.Connection.RemoteIpAddress.ToString();
-            var result = await _mediator.Send(userLoginCommand);
+            var result = await _userService.UserLogin(userLoginCommand);
 
-            if (!result.Success)
-            {
-                return ReturnFormattedResponse(result);
-            }
-            if (!string.IsNullOrWhiteSpace(result.Data.ProfilePhoto))
-            {
-                result.Data.ProfilePhoto = $"Users/{result.Data.ProfilePhoto}";
-            }
+            //if (!result.Success)
+            //{
+            //    return ReturnFormattedResponse(result);
+            //}
+            //if (!string.IsNullOrWhiteSpace(result.Data.ProfilePhoto))
+            //{
+            //    result.Data.ProfilePhoto = $"Users/{result.Data.ProfilePhoto}";
+            //}
+            //
+            //return Ok(result.Data);
 
-            return Ok(result.Data);
+            return Ok(result);
         }
 
         /// <summary>
@@ -161,11 +168,13 @@ namespace UserManagement.API.Controllers
         /// <returns></returns>
         [HttpPut("{id}")]
         [Produces("application/json", "application/xml", Type = typeof(UserDto))]
-        public async Task<IActionResult> UpdateUser(Guid id, UpdateUserCommand updateUserCommand)
+        public async Task<IActionResult> UpdateUser(Guid id, UpdateUserModel updateUserCommand)
         {
             updateUserCommand.Id = id;
-            var result = await _mediator.Send(updateUserCommand);
-            return ReturnFormattedResponse(result);
+            var result = await _userService.UpdateUser(updateUserCommand);
+            //return ReturnFormattedResponse(result);
+
+            return Ok(result);
         }
 
         /// <summary>
@@ -175,10 +184,12 @@ namespace UserManagement.API.Controllers
         /// <returns></returns>
         [HttpPut("profile")]
         [Produces("application/json", "application/xml", Type = typeof(UserDto))]
-        public async Task<IActionResult> UpdateUserProfile(UpdateUserProfileCommand updateUserProfileCommand)
+        public async Task<IActionResult> UpdateUserProfile(UpdateUserProfileModel updateUserProfileCommand)
         {
-            var result = await _mediator.Send(updateUserProfileCommand);
-            return ReturnFormattedResponse(result);
+            var result = await _userService.UpdateUserProfile(updateUserProfileCommand);
+            //return ReturnFormattedResponse(result);
+
+            return Ok(result);
         }
 
         /// <summary>
@@ -189,13 +200,15 @@ namespace UserManagement.API.Controllers
         [Produces("application/json", "application/xml", Type = typeof(UserDto))]
         public async Task<IActionResult> UpdateUserProfilePhoto()
         {
-            var updateUserProfilePhotoCommand = new UpdateUserProfilePhotoCommand()
+            var updateUserProfilePhotoCommand = new UpdateUserProfilePhotoModel()
             {
                 FormFile = Request.Form.Files,
                 RootPath = _webHostEnvironment.WebRootPath
             };
-            var result = await _mediator.Send(updateUserProfilePhotoCommand);
-            return ReturnFormattedResponse(result);
+            var result = await _userService.UpdateUserProfilePhoto(updateUserProfilePhotoCommand);
+            //return ReturnFormattedResponse(result);
+
+            return Ok(result);
         }
 
         /// <summary>
@@ -206,9 +219,11 @@ namespace UserManagement.API.Controllers
         [HttpDelete("{Id}")]
         public async Task<IActionResult> DeleteUser(Guid Id)
         {
-            var deleteUserCommand = new DeleteUserCommand { Id = Id };
-            var result = await _mediator.Send(deleteUserCommand);
-            return ReturnFormattedResponse(result);
+            var deleteUserCommand = new DeleteUserModel { Id = Id };
+            var result = await _userService.DeleteUser(deleteUserCommand);
+            //return ReturnFormattedResponse(result);
+            
+            return Ok(result);
         }
 
         /// <summary>
@@ -217,10 +232,12 @@ namespace UserManagement.API.Controllers
         /// <param name="resetPasswordCommand"></param>
         /// <returns></returns>
         [HttpPost("changepassword")]
-        public async Task<IActionResult> ChangePassword(ChangePasswordCommand resetPasswordCommand)
+        public async Task<IActionResult> ChangePassword(ChangePasswordModel resetPasswordCommand)
         {
-            var result = await _mediator.Send(resetPasswordCommand);
-            return ReturnFormattedResponse(result);
+            var result = await _userService.ChangePassword(resetPasswordCommand);
+            //return ReturnFormattedResponse(result);
+
+            return Ok(result);
         }
 
         /// <summary>
@@ -229,10 +246,12 @@ namespace UserManagement.API.Controllers
         /// <param name="newPasswordCommand"></param>
         /// <returns></returns>
         [HttpPost("resetpassword")]
-        public async Task<IActionResult> ResetPassword(ResetPasswordCommand newPasswordCommand)
+        public async Task<IActionResult> ResetPassword(ResetPasswordModel newPasswordCommand)
         {
-            var result = await _mediator.Send(newPasswordCommand);
-            return ReturnFormattedResponse(result);
+            var result = await _userService.ResetPassword(newPasswordCommand);
+            //return ReturnFormattedResponse(result);
+
+            return Ok(result);
         }
 
         /// <summary>
@@ -242,16 +261,18 @@ namespace UserManagement.API.Controllers
         [HttpGet("profile")]
         public async Task<IActionResult> GetProfile()
         {
-            var getUserQuery = new GetUserQuery
+            var getUserQuery = new GetUserModel
             {
                 Id = Guid.Parse(_userInfo.Id)
             };
-            var result = await _mediator.Send(getUserQuery);
-            if (!string.IsNullOrWhiteSpace(result.Data.ProfilePhoto))
+            var result = await _userService.GetUser(getUserQuery);
+            if (!string.IsNullOrWhiteSpace(result.ProfilePhoto))
             {
-                result.Data.ProfilePhoto = $"Users/{result.Data.ProfilePhoto}";
+                result.ProfilePhoto = $"Users/{result.ProfilePhoto}";
             }
-            return ReturnFormattedResponse(result);
+            //return ReturnFormattedResponse(result);
+            
+            return Ok(result);
         }
 
     }

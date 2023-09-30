@@ -8,6 +8,7 @@ using System.Threading;
 using System.Threading.Tasks;
 using UserManagement.Data.Repository.Contracts;
 using UserManagement.Data.Dto.User;
+using IUserRepository = UserManagement.Data.Repository.Contracts.IUserRepository;
 
 namespace UserManagement.MediatR.Handlers
 {

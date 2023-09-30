@@ -5,6 +5,15 @@
   </PropertyGroup>
 
   <ItemGroup>
+    <Compile Remove="Commands\User\**" />
+    <Compile Remove="Handlers\User\**" />
+    <EmbeddedResource Remove="Commands\User\**" />
+    <EmbeddedResource Remove="Handlers\User\**" />
+    <None Remove="Commands\User\**" />
+    <None Remove="Handlers\User\**" />
+  </ItemGroup>
+
+  <ItemGroup>
     <PackageReference Include="AutoMapper" Version="12.0.1" />
     <PackageReference Include="AutoMapper.Extensions.Microsoft.DependencyInjection" Version="12.0.1" />
     <PackageReference Include="FluentValidation" Version="11.6.0" />
