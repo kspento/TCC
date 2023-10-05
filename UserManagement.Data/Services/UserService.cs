@@ -149,7 +149,7 @@ namespace UserManagement.Domain.Services
 
         public async Task<UserDto> GetUsers(GetUsersModel request)
         {
-            var entity = await _userRepository.AllIncluding(c => c.UserRoles, cs => cs.UserClaims, ip => ip.UserAllowedIPs).FirstOrDefaultAsync(c => c.Id == request.Id);
+            var entity = await _userRepository.AllIncluding(c => c.UserRoles, cs => cs.UserClaims, ip => ip.UserAllowedIPs).FirstOrDefaultAsync(c => c.Id == request.UserResource.Id);
 
             //if(entity == null)
             //{

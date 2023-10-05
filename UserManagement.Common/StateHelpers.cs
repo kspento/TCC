@@ -1,5 +1,5 @@
 ﻿using Microsoft.EntityFrameworkCore;
-using UserManagement.Domain.Entities;
+using UserManagement.Data.Entities;
 
 namespace UserManagement.Common
 {

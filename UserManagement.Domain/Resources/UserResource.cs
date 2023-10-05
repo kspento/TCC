@@ -1,11 +1,13 @@
-﻿namespace UserManagement.Data.Resources
+﻿using System;
+
+namespace UserManagement.Data.Resources
 {
     public class UserResource : ResourceParameter
     {
         public UserResource() : base("Email")
         {
         }
-
+        public Guid Id { get; set; }
         public string Name { get; set; }
         public string FirstName { get; set; }
         public string LastName { get; set; }
