@@ -5,7 +5,6 @@ using System.Linq;
 using System.Threading.Tasks;
 using UserManagement.Data.Dto.User;
 using UserManagement.Data.Entities;
-using UserManagement.Domain.Entities;
 
 namespace UserManagement.Data.Repository.UserRepository
 {

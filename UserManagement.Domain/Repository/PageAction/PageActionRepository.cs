@@ -3,9 +3,9 @@ using UserManagement.Data.Entities;
 using UserManagement.Data.GenericRespository;
 using UserManagement.Data.UnitOfWork;
 
-namespace UserManagement.Repository
+namespace UserManagement.Data.Repository.PageAction
 {
-    public class PageActionRepository : GenericRepository<PageAction, UserContext>,
+    public class PageActionRepository : GenericRepository<Entities.PageAction, UserContext>,
         IPageActionRepository
     {
         public PageActionRepository(

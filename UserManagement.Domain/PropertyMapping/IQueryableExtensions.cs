@@ -1,9 +1,8 @@
 ﻿using System;
 using System.Collections.Generic;
 using System.Linq;
-using System.Linq.Dynamic.Core;
 
-namespace UserManagement.Repository
+namespace UserManagement.Data.PropertyMapping
 {
     public static class IQueryableExtensions
     {
@@ -69,7 +68,10 @@ namespace UserManagement.Repository
                     {
                         orderDescending = !orderDescending;
                     }
-                    source = source.OrderBy(destinationProperty + (orderDescending ? " descending" : " ascending"));
+
+                    source = source.OrderBy((T item) => item.GetType().GetProperty(destinationProperty).GetValue(item, null));
+
+                    //source = source.OrderBy(destinationProperty + (orderDescending ? " descending" : " ascending"));
                 }
             }
             return source;

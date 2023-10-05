@@ -7,13 +7,14 @@ using UserManagement.Data.Context;
 using UserManagement.Data.Dto.LoginAudit;
 using UserManagement.Data.Entities;
 using UserManagement.Data.GenericRespository;
+using UserManagement.Data.PropertyMapping;
 using UserManagement.Data.Repository.Contracts;
 using UserManagement.Data.Resources;
 using UserManagement.Data.UnitOfWork;
 
 namespace UserManagement.Data.Repository.LoginAudit
 {
-    public class LoginAuditRepository : GenericRepository<LoginAudit, UserContext>,
+    public class LoginAuditRepository : GenericRepository<UserManagement.Data.Entities.LoginAudit, UserContext>,
        ILoginAuditRepository
     {
         private readonly IUnitOfWork<UserContext> _uow;
@@ -35,7 +36,7 @@ namespace UserManagement.Data.Repository.LoginAudit
             var collectionBeforePaging = All;
             collectionBeforePaging =
                collectionBeforePaging.ApplySort(loginAuditResrouce.OrderBy,
-               _propertyMappingService.GetPropertyMapping<LoginAuditDto, LoginAudit>());
+               _propertyMappingService.GetPropertyMapping<LoginAuditDto, UserManagement.Data.Entities.LoginAudit>());
 
             if (!string.IsNullOrWhiteSpace(loginAuditResrouce.UserName))
             {
@@ -55,7 +56,7 @@ namespace UserManagement.Data.Repository.LoginAudit
         {
             try
             {
-                Add(new LoginAudit
+                Add(new UserManagement.Data.Entities.LoginAudit
                 {
                     Id = Guid.NewGuid(),
                     LoginTime = DateTime.Now.ToLocalTime(),

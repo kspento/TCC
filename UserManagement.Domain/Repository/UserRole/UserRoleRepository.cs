@@ -6,7 +6,7 @@ using UserManagement.Data.UnitOfWork;
 
 namespace UserManagement.Data.Repository.UserRole
 {
-    public class UserRoleRepository : GenericRepository<UserRole, UserContext>,
+    public class UserRoleRepository : GenericRepository<Entities.UserRole, UserContext>,
        IUserRoleRepository
     {
         public UserRoleRepository(

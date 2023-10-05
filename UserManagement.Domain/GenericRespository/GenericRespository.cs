@@ -4,7 +4,6 @@ using System.Collections.Generic;
 using System.Linq;
 using System.Linq.Expressions;
 using System.Threading.Tasks;
-using UserManagement.Domain.Entities;
 using UserManagement.Data.UnitOfWork;
 
 namespace UserManagement.Data.GenericRespository
@@ -122,7 +121,7 @@ namespace UserManagement.Data.GenericRespository
         }
         public virtual void Delete(Guid id)
         {
-            var entity = Context.Set<TC>().Find(id) as BaseEntity;
+            var entity = Context.Set<TC>().Find(id) as Entities.BaseEntity;
             if (entity != null)
             {
                 entity.IsDeleted = true;
@@ -131,7 +130,7 @@ namespace UserManagement.Data.GenericRespository
         }
         public virtual void Delete(TC entityData)
         {
-            var entity = entityData as BaseEntity;
+            var entity = entityData as Entities.BaseEntity;
             entity.IsDeleted = true;
             Context.Update(entity);
         }

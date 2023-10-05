@@ -1,4 +1,4 @@
-﻿namespace UserManagement.Repository
+﻿namespace UserManagement.Data.PropertyMapping
 {
     public interface ITypeHelperService
     {

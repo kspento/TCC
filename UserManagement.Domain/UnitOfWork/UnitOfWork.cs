@@ -3,7 +3,6 @@ using Microsoft.Extensions.Logging;
 using System;
 using System.Threading.Tasks;
 using UserManagement.Data.Dto.User;
-using UserManagement.Domain.Entities;
 
 namespace UserManagement.Data.UnitOfWork
 {
@@ -68,7 +67,7 @@ namespace UserManagement.Data.UnitOfWork
 
         private void SetModifiedInformation()
         {
-            foreach (var entry in Context.ChangeTracker.Entries<BaseEntity>())
+            foreach (var entry in Context.ChangeTracker.Entries<Entities.BaseEntity>())
             {
                 if (entry.State == EntityState.Added)
                 {

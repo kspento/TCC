@@ -15,6 +15,7 @@ using UserManagement.Data.Context;
 using UserManagement.Data.Dto.Role;
 using UserManagement.Data.Dto.User;
 using UserManagement.Data.UnitOfWork;
+using UserManagement.Data.Repository.RoleClaim;
 
 namespace UserManagement.MediatR.Handlers
 {

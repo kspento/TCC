@@ -15,6 +15,9 @@ using UserManagement.Data.Dto.User;
 using UserManagement.Data.Dto;
 using UserManagement.Data.Repository.Contracts;
 using UserManagement.Data.UnitOfWork;
+using UserManagement.Data.PropertyMapping;
+using UserManagement.Data.Repository.RoleClaim;
+using UserManagement.Data.Repository.PageAction;
 
 namespace UserManagement.Repository
 {

@@ -17,7 +17,7 @@ namespace UserManagement.Data.Context
         public override DbSet<UserLogin> UserLogins { get; set; }
         public override DbSet<RoleClaim> RoleClaims { get; set; }
         public override DbSet<UserToken> UserTokens { get; set; }
-        public DbSet<Action> Actions { get; set; }
+        public DbSet<Entities.Action> Actions { get; set; }
         public DbSet<Page> Pages { get; set; }
         public DbSet<PageAction> PageActions { get; set; }
         public DbSet<NLog> NLog { get; set; }
@@ -88,7 +88,7 @@ namespace UserManagement.Data.Context
 
             });
 
-            builder.Entity<Action>(b =>
+            builder.Entity<Entities.Action>(b =>
             {
                 b.HasOne(e => e.CreatedByUser)
                     .WithMany()

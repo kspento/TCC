@@ -1,6 +1,6 @@
 ﻿using System.Collections.Generic;
 
-namespace UserManagement.Repository
+namespace UserManagement.Data.PropertyMapping
 {
     public interface IPropertyMappingService
     {

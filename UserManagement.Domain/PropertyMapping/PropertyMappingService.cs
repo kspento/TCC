@@ -6,7 +6,7 @@ using UserManagement.Data.Dto.LoginAudit;
 using UserManagement.Data.Dto.User;
 using UserManagement.Data.Dto.NLog;
 
-namespace UserManagement.Repository
+namespace UserManagement.Data.PropertyMapping
 {
     public class PropertyMappingService : IPropertyMappingService
     {

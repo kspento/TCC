@@ -1,6 +1,6 @@
 ﻿using System.Reflection;
 
-namespace UserManagement.Repository
+namespace UserManagement.Data.PropertyMapping
 {
     public class TypeHelperService : ITypeHelperService
     {

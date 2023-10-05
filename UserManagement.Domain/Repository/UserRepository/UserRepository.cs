@@ -15,6 +15,9 @@ using UserManagement.Data.Resources;
 using UserManagement.Data.Dto.User;
 using UserManagement.Data.Dto;
 using UserManagement.Data.UnitOfWork;
+using UserManagement.Data.Repository.RoleClaim;
+using UserManagement.Data.Repository.PageAction;
+using UserManagement.Data.PropertyMapping;
 
 namespace UserManagement.Data.Repository.UserRepository
 {
@@ -136,12 +139,12 @@ namespace UserManagement.Data.Repository.UserRepository
             return lstAppClaimDto;
         }
 
-        private async Task<List<RoleClaim>> GetRoleClaims(User appUser)
+        private async Task<List<Entities.RoleClaim>> GetRoleClaims(User appUser)
         {
             var rolesIds = await _userRoleRepository.All.Where(c => c.UserId == appUser.Id)
                 .Select(c => c.RoleId)
                 .ToListAsync();
-            List<RoleClaim> lstRoleClaim = new List<RoleClaim>();
+            List<Entities.RoleClaim> lstRoleClaim = new List<Entities.RoleClaim>();
             foreach (var roleId in rolesIds)
             {
                 var roleClaims = await _roleClaimRepository.FindBy(c => c.RoleId == roleId).ToListAsync();

@@ -6,6 +6,9 @@ using UserManagement.Data.Repository.UserClaimRepository;
 using UserManagement.Data.UnitOfWork;
 using UserManagement.Data.Repository.UserRole;
 using UserManagement.Data.Repository.LoginAudit;
+using UserManagement.Data.PropertyMapping;
+using UserManagement.Data.Repository.RoleClaim;
+using UserManagement.Data.Repository.PageAction;
 
 namespace UserManagement.Api.Helpers
 {

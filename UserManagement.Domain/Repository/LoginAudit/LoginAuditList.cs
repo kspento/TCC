@@ -28,7 +28,7 @@ namespace UserManagement.Data.Repository.LoginAudit
             AddRange(items);
         }
 
-        public async Task<LoginAuditList> Create(IQueryable<LoginAudit> source, int skip, int pageSize)
+        public async Task<LoginAuditList> Create(IQueryable<Entities.LoginAudit> source, int skip, int pageSize)
         {
             var count = await GetCount(source);
             var dtoList = await GetDtos(source, skip, pageSize);
@@ -36,12 +36,12 @@ namespace UserManagement.Data.Repository.LoginAudit
             return dtoPageList;
         }
 
-        public async Task<int> GetCount(IQueryable<LoginAudit> source)
+        public async Task<int> GetCount(IQueryable<UserManagement.Data.Entities.LoginAudit> source)
         {
             return await source.AsNoTracking().CountAsync();
         }
 
-        public async Task<List<LoginAuditDto>> GetDtos(IQueryable<LoginAudit> source, int skip, int pageSize)
+        public async Task<List<LoginAuditDto>> GetDtos(IQueryable<UserManagement.Data.Entities.LoginAudit> source, int skip, int pageSize)
         {
             var entities = await source
                 .Skip(skip)

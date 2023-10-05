@@ -7,6 +7,7 @@ using UserManagement.Data.Context;
 using UserManagement.Data.Dto.LoginAudit;
 using UserManagement.Data.Entities;
 using UserManagement.Data.GenericRespository;
+using UserManagement.Data.PropertyMapping;
 using UserManagement.Data.Resources;
 using UserManagement.Data.UnitOfWork;
 
