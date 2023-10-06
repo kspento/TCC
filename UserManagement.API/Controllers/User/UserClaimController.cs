@@ -1,10 +1,11 @@
 ﻿using System;
 using System.Threading.Tasks;
-using UserManagement.MediatR.Commands;
 using MediatR;
 using Microsoft.AspNetCore.Authorization;
 using Microsoft.AspNetCore.Mvc;
 using UserManagement.Data.Dto.UserClaim;
+using UserManagement.Domain.Contracts.Services;
+using UserManagement.Domain.Model.User;
 
 namespace UserManagement.API.Controllers
 {
@@ -16,14 +17,14 @@ namespace UserManagement.API.Controllers
     [Authorize]
     public class UserClaimController : BaseController
     {
-        public IMediator _mediator { get; set; }
+        public IUserService _userService { get; set; }
         /// <summary>
         /// UserClaim
         /// </summary>
-        /// <param name="mediator"></param>
-        public UserClaimController(IMediator mediator)
+        /// <param name="userService"></param>
+        public UserClaimController(IUserService userService)
         {
-            _mediator = mediator;
+            _userService = userService;
         }
         /// <summary>
         /// Update User Claim By Id
@@ -33,11 +34,11 @@ namespace UserManagement.API.Controllers
         /// <returns></returns>
         [HttpPut("{id}")]
         [Produces("application/json", "application/xml", Type = typeof(UserClaimDto))]
-        public async Task<IActionResult> UpdateUserClaim(Guid id, UpdateUserClaimCommand addUserCommand)
+        public async Task<IActionResult> UpdateUserClaim(Guid id, UpdateUserClaimModel addUserCommand)
         {
             addUserCommand.Id = id;
-            var result = await _mediator.Send(addUserCommand);
-            return ReturnFormattedResponse(result);
+            var result = await _userService.UpdateUserClaim(addUserCommand);
+            return Ok(result);
         }
     }
 }

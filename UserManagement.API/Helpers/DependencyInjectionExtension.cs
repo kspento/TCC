@@ -1,14 +1,12 @@
-﻿using UserManagement.Repository;
-using Microsoft.Extensions.DependencyInjection;
+﻿using Microsoft.Extensions.DependencyInjection;
 using UserManagement.Data.Repository.Contracts;
-using UserManagement.Data.Repository.UserRepository;
 using UserManagement.Data.Repository.UserClaimRepository;
 using UserManagement.Data.UnitOfWork;
-using UserManagement.Data.Repository.UserRole;
 using UserManagement.Data.Repository.LoginAudit;
 using UserManagement.Data.PropertyMapping;
 using UserManagement.Data.Repository.RoleClaim;
 using UserManagement.Data.Repository.PageAction;
+using UserManagement.Repository;
 
 namespace UserManagement.Api.Helpers
 {
@@ -21,13 +19,13 @@ namespace UserManagement.Api.Helpers
             services.AddScoped<IPageRepository, PageRepository>();
             services.AddScoped<IActionRepository, ActionRepository>();
             services.AddScoped<IRoleRepository, RoleRepository>();
-            services.AddScoped<IUserRepository, UserRepository>();
-            services.AddScoped<IUserRoleRepository, UserRoleRepository>();
+            services.AddScoped<Data.Repository.Contracts.IUserRepository, Data.Repository.UserRepository.UserRepository>();
+            services.AddScoped<Data.Repository.Contracts.IUserRoleRepository, Data.Repository.UserRole.UserRoleRepository>();
             services.AddScoped<IUserClaimRepository, UserClaimRepository>();
             services.AddScoped<IRoleClaimRepository, RoleClaimRepository>();
             services.AddScoped<IPageActionRepository, PageActionRepository>();
             services.AddScoped<ILoginAuditRepository, LoginAuditRepository>();
-            services.AddScoped<IUserAllowedIPRepository, UserAllowedIPRepository>();
+            services.AddScoped<Data.Repository.Contracts.IUserAllowedIPRepository, Data.Repository.UserRepository.UserAllowedIPRepository>();
             services.AddScoped<IAppSettingRepository, AppSettingRepository>();
             services.AddScoped<INLogRespository, NLogRespository>();
             services.AddScoped<IEmailTemplateRepository, EmailTemplateRepository>();

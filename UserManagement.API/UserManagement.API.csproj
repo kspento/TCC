@@ -14,10 +14,57 @@
   </PropertyGroup>
 
   <ItemGroup>
+    <Compile Remove="Controllers\Action\**" />
+    <Compile Remove="Controllers\AppSetting\**" />
+    <Compile Remove="Controllers\Dashboard\**" />
+    <Compile Remove="Controllers\EmailTemplate\**" />
+    <Compile Remove="Controllers\Email\**" />
+    <Compile Remove="Controllers\LoginAudit\**" />
+    <Compile Remove="Controllers\NLog\**" />
+    <Compile Remove="Controllers\PageAction\**" />
+    <Compile Remove="Controllers\Page\**" />
+    <Compile Remove="Controllers\Role\**" />
+    <Compile Remove="Controllers\Social\**" />
+    <Content Remove="Controllers\Action\**" />
+    <Content Remove="Controllers\AppSetting\**" />
+    <Content Remove="Controllers\Dashboard\**" />
+    <Content Remove="Controllers\EmailTemplate\**" />
+    <Content Remove="Controllers\Email\**" />
+    <Content Remove="Controllers\LoginAudit\**" />
+    <Content Remove="Controllers\NLog\**" />
+    <Content Remove="Controllers\PageAction\**" />
+    <Content Remove="Controllers\Page\**" />
+    <Content Remove="Controllers\Role\**" />
+    <Content Remove="Controllers\Social\**" />
+    <EmbeddedResource Remove="Controllers\Action\**" />
+    <EmbeddedResource Remove="Controllers\AppSetting\**" />
+    <EmbeddedResource Remove="Controllers\Dashboard\**" />
+    <EmbeddedResource Remove="Controllers\EmailTemplate\**" />
+    <EmbeddedResource Remove="Controllers\Email\**" />
+    <EmbeddedResource Remove="Controllers\LoginAudit\**" />
+    <EmbeddedResource Remove="Controllers\NLog\**" />
+    <EmbeddedResource Remove="Controllers\PageAction\**" />
+    <EmbeddedResource Remove="Controllers\Page\**" />
+    <EmbeddedResource Remove="Controllers\Role\**" />
+    <EmbeddedResource Remove="Controllers\Social\**" />
+    <None Remove="Controllers\Action\**" />
+    <None Remove="Controllers\AppSetting\**" />
+    <None Remove="Controllers\Dashboard\**" />
+    <None Remove="Controllers\EmailTemplate\**" />
+    <None Remove="Controllers\Email\**" />
+    <None Remove="Controllers\LoginAudit\**" />
+    <None Remove="Controllers\NLog\**" />
+    <None Remove="Controllers\PageAction\**" />
+    <None Remove="Controllers\Page\**" />
+    <None Remove="Controllers\Role\**" />
+    <None Remove="Controllers\Social\**" />
+  </ItemGroup>
+
+  <ItemGroup>
     <PackageReference Include="AutoMapper" Version="12.0.1" />
     <PackageReference Include="AutoMapper.Extensions.Microsoft.DependencyInjection" Version="12.0.1" />
-    <PackageReference Include="FluentValidation" Version="11.6.0" />
-    <PackageReference Include="FluentValidation.DependencyInjectionExtensions" Version="11.6.0" />
+    <PackageReference Include="FluentValidation" Version="11.7.1" />
+    <PackageReference Include="FluentValidation.DependencyInjectionExtensions" Version="11.7.1" />
     <PackageReference Include="MediatR" Version="12.1.1" />
     <PackageReference Include="Microsoft.AspNetCore.Authentication.JwtBearer" Version="7.0.9" />
     <PackageReference Include="Microsoft.AspNetCore.Mvc.NewtonsoftJson" Version="7.0.9" />
@@ -41,7 +88,7 @@
     <ProjectReference Include="..\UserManagement.Data\UserManagement.Domain.csproj" />
     <ProjectReference Include="..\UserManagement.Domain\UserManagement.Data.csproj" />
     <ProjectReference Include="..\UserManagement.Helper\UserManagement.Helper.csproj" />
-    <ProjectReference Include="..\UserManagement.MediatR\UserManagement.MediatR.csproj" />
+    <ProjectReference Include="..\UserManagement.Repository\UserManagement.Repository.csproj" />
   </ItemGroup>
 
   <ItemGroup>

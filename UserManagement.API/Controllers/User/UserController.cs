@@ -1,19 +1,14 @@
 ﻿using System;
 using System.Collections.Generic;
 using System.Threading.Tasks;
-using UserManagement.MediatR.Commands;
-using UserManagement.MediatR.Queries;
-using MediatR;
 using Microsoft.AspNetCore.Authorization;
 using Microsoft.AspNetCore.Mvc;
 using Microsoft.AspNetCore.Hosting;
-using UserManagement.Repository;
 using UserManagement.Domain.Contracts.Services;
 using UserManagement.Data.Repository.UserRepository;
 using UserManagement.Data.Resources;
 using UserManagement.Data.Dto.User;
 using UserManagement.Domain.Model.User;
-using UserManagement.Domain.Services;
 
 namespace UserManagement.API.Controllers
 {
@@ -71,7 +66,6 @@ namespace UserManagement.API.Controllers
         [Produces("application/json", "application/xml", Type = typeof(List<UserDto>))]
         public async Task<IActionResult> GetAllUsers()
         {
-            var getAllUserQuery = new GetAllUserQuery { };
             var result = await _userService.GetAllUsers();
             return Ok(result);
         }

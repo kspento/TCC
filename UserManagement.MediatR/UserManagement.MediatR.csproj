@@ -7,16 +7,28 @@
   <ItemGroup>
     <Compile Remove="Commands\User\**" />
     <Compile Remove="Handlers\User\**" />
+    <Compile Remove="Validators\**" />
     <EmbeddedResource Remove="Commands\User\**" />
     <EmbeddedResource Remove="Handlers\User\**" />
+    <EmbeddedResource Remove="Validators\**" />
     <None Remove="Commands\User\**" />
     <None Remove="Handlers\User\**" />
+    <None Remove="Validators\**" />
+  </ItemGroup>
+
+  <ItemGroup>
+    <Compile Remove="Handlers\PageAction\DeletePageActionCommandHandler.cs" />
+    <Compile Remove="Handlers\Page\AddPageCommandHandler.cs" />
+    <Compile Remove="Handlers\Page\DeletePageCommandHandler.cs" />
+    <Compile Remove="Handlers\Page\GetAllPageQueryHandler.cs" />
+    <Compile Remove="Handlers\Page\GetPageQueryHandler.cs" />
+    <Compile Remove="Handlers\Page\UpdatePageCommandHandler.cs" />
   </ItemGroup>
 
   <ItemGroup>
     <PackageReference Include="AutoMapper" Version="12.0.1" />
     <PackageReference Include="AutoMapper.Extensions.Microsoft.DependencyInjection" Version="12.0.1" />
-    <PackageReference Include="FluentValidation" Version="11.6.0" />
+    <PackageReference Include="FluentValidation" Version="11.7.1" />
     <PackageReference Include="FluentValidation.DependencyInjectionExtensions" Version="11.6.0" />
     <PackageReference Include="MediatR" Version="12.1.1" />
   </ItemGroup>
@@ -27,6 +39,10 @@
     <ProjectReference Include="..\UserManagement.Domain\UserManagement.Data.csproj" />
     <ProjectReference Include="..\UserManagement.Helper\UserManagement.Helper.csproj" />
     <ProjectReference Include="..\UserManagement.Repository\UserManagement.Repository.csproj" />
+  </ItemGroup>
+
+  <ItemGroup>
+    <Folder Include="Handlers\Page\" />
   </ItemGroup>
 
 </Project>

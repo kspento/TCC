@@ -5,7 +5,29 @@
   </PropertyGroup>
 
   <ItemGroup>
+    <Compile Remove="Validators\Action\**" />
+    <Compile Remove="Validators\AppSetting\**" />
+    <Compile Remove="Validators\EmailTemplate\**" />
+    <Compile Remove="Validators\Page\**" />
+    <Compile Remove="Validators\Role\**" />
+    <Compile Remove="Validators\Social\**" />
+    <EmbeddedResource Remove="Validators\Action\**" />
+    <EmbeddedResource Remove="Validators\AppSetting\**" />
+    <EmbeddedResource Remove="Validators\EmailTemplate\**" />
+    <EmbeddedResource Remove="Validators\Page\**" />
+    <EmbeddedResource Remove="Validators\Role\**" />
+    <EmbeddedResource Remove="Validators\Social\**" />
+    <None Remove="Validators\Action\**" />
+    <None Remove="Validators\AppSetting\**" />
+    <None Remove="Validators\EmailTemplate\**" />
+    <None Remove="Validators\Page\**" />
+    <None Remove="Validators\Role\**" />
+    <None Remove="Validators\Social\**" />
+  </ItemGroup>
+
+  <ItemGroup>
     <PackageReference Include="AutoMapper" Version="12.0.1" />
+    <PackageReference Include="FluentValidation" Version="11.7.1" />
     <PackageReference Include="Microsoft.AspNetCore.Identity" Version="2.2.0" />
     <PackageReference Include="Microsoft.AspNetCore.Identity.EntityFrameworkCore" Version="7.0.9" />
     <PackageReference Include="Microsoft.AspNetCore.SignalR.Core" Version="1.1.0" />
