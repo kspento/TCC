@@ -2,7 +2,7 @@
 using System.Threading.Tasks;
 using UserManagement.Data.Dto.PageAction;
 using UserManagement.Domain.Model.PageAction;
-using UserManagement.MediatR.Queries;
+
 namespace UserManagement.Domain.Contracts.Services
 {
     public interface IPageActionService

@@ -7,9 +7,7 @@ using UserManagement.Data.Dto.PageAction;
 using UserManagement.Data.Entities;
 using UserManagement.Data.Repository.PageAction;
 using UserManagement.Data.UnitOfWork;
-using UserManagement.Helper;
 using UserManagement.Domain.Model.PageAction;
-using UserManagement.MediatR.Queries;
 using Microsoft.EntityFrameworkCore;
 using Microsoft.Extensions.Logging;
 

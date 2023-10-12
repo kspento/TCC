@@ -1,5 +1,4 @@
 ﻿using AutoMapper;
-using UserManagement.MediatR.Commands;
 using MediatR;
 using Microsoft.EntityFrameworkCore;
 using System;
@@ -16,10 +15,11 @@ using UserManagement.Data.Dto.User;
 using UserManagement.Data.UnitOfWork;
 using UserManagement.Data.Repository.RoleClaim;
 using UserManagement.Data.Repository.Contracts;
+using UserManagement.Domain.Model.Role;
 
 namespace UserManagement.MediatR.Handlers
 {
-    public class UpdateRoleCommandHandler : IRequestHandler<UpdateRoleCommand, ServiceResponse<RoleDto>>
+    public class UpdateRoleCommandHandler : IRequestHandler<UpdateRoleModel, ServiceResponse<RoleDto>>
     {
         private readonly IRoleRepository _roleRepository;
         private readonly IRoleClaimRepository _roleClaimRepository;
@@ -44,7 +44,7 @@ namespace UserManagement.MediatR.Handlers
             _logger = logger;
         }
 
-        public async Task<ServiceResponse<RoleDto>> Handle(UpdateRoleCommand request, CancellationToken cancellationToken)
+        public async Task<ServiceResponse<RoleDto>> Handle(UpdateRoleModel request, CancellationToken cancellationToken)
         {
             var entityExist = await _roleRepository.FindBy(c => c.Name == request.Name && c.Id != request.Id)
                  .FirstOrDefaultAsync();

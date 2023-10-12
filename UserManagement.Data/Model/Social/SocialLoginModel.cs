@@ -1,10 +1,8 @@
-﻿using MediatR;
-using UserManagement.Data.Dto.User;
-using UserManagement.Helper;
+﻿using UserManagement.Data.Dto.User;
 
-namespace UserManagement.MediatR.Commands
+namespace UserManagement.Domain.Model.Social
 {
-    public class SocialLoginCommand : IRequest<ServiceResponse<UserAuthDto>>
+    public class SocialLoginModel : UserAuthDto
     {
         public string UserName { get; set; }
         public string Email { get; set; }

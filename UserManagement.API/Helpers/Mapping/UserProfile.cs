@@ -2,8 +2,8 @@
 using UserManagement.Data.Dto.User;
 using UserManagement.Data.Dto.UserClaim;
 using UserManagement.Data.Entities;
+using UserManagement.Domain.Model.Social;
 using UserManagement.Domain.Model.User;
-using UserManagement.MediatR.Commands;
 
 namespace UserManagement.API.Helpers.Mapping
 {

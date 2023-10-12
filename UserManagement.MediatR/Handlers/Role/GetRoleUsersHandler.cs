@@ -1,22 +1,22 @@
-﻿using UserManagement.MediatR.Queries;
-using MediatR;
+﻿using MediatR;
 using System.Collections.Generic;
 using System.Linq;
 using System.Threading;
 using System.Threading.Tasks;
 using UserManagement.Data.Dto.User;
 using UserManagement.Data.Repository.Contracts;
+using UserManagement.Domain.Model.Role;
 
 namespace UserManagement.MediatR.Handlers
 {
-    public class GetRoleUsersHandler : IRequestHandler<GetRoleUsersQuery, List<UserRoleDto>>
+    public class GetRoleUsersHandler : IRequestHandler<GetRoleUsersModel, List<UserRoleDto>>
     {
         IUserRoleRepository _userRoleRepository;
         public GetRoleUsersHandler(IUserRoleRepository userRoleRepository)
         {
             _userRoleRepository = userRoleRepository;
         }
-        public Task<List<UserRoleDto>> Handle(GetRoleUsersQuery request, CancellationToken cancellationToken)
+        public Task<List<UserRoleDto>> Handle(GetRoleUsersModel request, CancellationToken cancellationToken)
         {
             var userRoles = _userRoleRepository
                 .AllIncluding(c => c.User)

@@ -1,5 +1,4 @@
 ﻿using AutoMapper;
-using UserManagement.MediatR.Queries;
 using MediatR;
 using Microsoft.EntityFrameworkCore;
 using Microsoft.Extensions.Logging;
@@ -8,10 +7,11 @@ using System.Threading;
 using System.Threading.Tasks;
 using UserManagement.Data.Dto.Role;
 using UserManagement.Data.Repository.Contracts;
+using UserManagement.Domain.Model.Role;
 
 namespace UserManagement.MediatR.Handlers
 {
-    public class GetAllRoleQueryHandler : IRequestHandler<GetAllRoleQuery, List<RoleDto>>
+    public class GetAllRoleQueryHandler : IRequestHandler<GetAllRoleModel, List<RoleDto>>
     {
         private readonly IRoleRepository _roleRepository;
         private readonly IMapper _mapper;
@@ -28,7 +28,7 @@ namespace UserManagement.MediatR.Handlers
 
         }
 
-        public async Task<List<RoleDto>> Handle(GetAllRoleQuery request, CancellationToken cancellationToken)
+        public async Task<List<RoleDto>> Handle(GetAllRoleModel request, CancellationToken cancellationToken)
         {
             var entities = await _roleRepository.All.ToListAsync();
             return _mapper.Map<List<RoleDto>>(entities);

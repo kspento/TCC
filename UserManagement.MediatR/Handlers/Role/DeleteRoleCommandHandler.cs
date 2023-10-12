@@ -1,5 +1,4 @@
-﻿using UserManagement.MediatR.Commands;
-using MediatR;
+﻿using MediatR;
 using System.Threading;
 using System.Threading.Tasks;
 using System;
@@ -10,10 +9,11 @@ using UserManagement.Data.Dto.Role;
 using UserManagement.Data.Dto.User;
 using UserManagement.Data.UnitOfWork;
 using UserManagement.Data.Repository.Contracts;
+using UserManagement.Domain.Model.Role;
 
 namespace UserManagement.MediatR.Handlers
 {
-    public class DeleteRoleCommandHandler : IRequestHandler<DeleteRoleCommand, ServiceResponse<RoleDto>>
+    public class DeleteRoleCommandHandler : IRequestHandler<DeleteRoleModel, ServiceResponse<RoleDto>>
     {
         private readonly UserInfoToken _userInfoToken;
         private readonly IRoleRepository _roleRepository;
@@ -32,7 +32,7 @@ namespace UserManagement.MediatR.Handlers
             _logger = logger;
         }
 
-        public async Task<ServiceResponse<RoleDto>> Handle(DeleteRoleCommand request, CancellationToken cancellationToken)
+        public async Task<ServiceResponse<RoleDto>> Handle(DeleteRoleModel request, CancellationToken cancellationToken)
         {
             var entityExist = await _roleRepository.FindAsync(request.Id);
             if (entityExist == null)

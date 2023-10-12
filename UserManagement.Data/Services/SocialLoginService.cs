@@ -1,25 +1,22 @@
-﻿using AutoMapper;
-using MediatR;
-using Microsoft.AspNetCore.Identity;
+﻿using Microsoft.AspNetCore.Identity;
 using Microsoft.AspNetCore.SignalR;
-using System;
-using System.Linq;
-using System.Threading;
 using System.Threading.Tasks;
-using UserManagement.Data;
+using System.Threading;
+using System;
+using UserManagement.Data.Dto.LoginAudit;
 using UserManagement.Data.Dto.User;
 using UserManagement.Data.Entities;
+using UserManagement.Helper;
+using AutoMapper;
 using UserManagement.Data.Hub;
 using UserManagement.Data.Repository.Contracts;
-using UserManagement.Domain.Dto.User;
-using UserManagement.Domain.Entities;
-using UserManagement.Helper;
-using UserManagement.MediatR.Commands;
-using UserManagement.Repository;
+using UserManagement.Domain.Model.Social;
+using System.Linq;
+using UserManagement.Domain.Contracts.Services;
 
-namespace UserManagement.MediatR.Handlers
+namespace UserManagement.Domain.Services
 {
-    public class SocialLoginCommandHandler : IRequestHandler<SocialLoginCommand, ServiceResponse<UserAuthDto>>
+    public class SocialLoginService : ISocialLoginService
     {
         private readonly UserManager<User> _userManager;
         private readonly IMapper _mapper;
@@ -27,14 +24,13 @@ namespace UserManagement.MediatR.Handlers
         private readonly ILoginAuditRepository _loginAuditRepository;
         private readonly IHubContext<UserHub, IHubClient> _hubContext;
         private readonly IRoleRepository _roleRepository;
-        public SocialLoginCommandHandler(
-            IMapper mapper,
+
+        public SocialLoginService(IMapper mapper,
             UserManager<User> userManager,
             IUserRepository userRepository,
             ILoginAuditRepository loginAuditRepository,
              IHubContext<UserHub, IHubClient> hubContext,
-             IRoleRepository roleRepository
-            )
+             IRoleRepository roleRepository)
         {
             _mapper = mapper;
             _userManager = userManager;
@@ -43,7 +39,8 @@ namespace UserManagement.MediatR.Handlers
             _hubContext = hubContext;
             _roleRepository = roleRepository;
         }
-        public async Task<ServiceResponse<UserAuthDto>> Handle(SocialLoginCommand request, CancellationToken cancellationToken)
+
+        public async Task<ServiceResponse<UserAuthDto>> SocialLogin(SocialLoginModel request, CancellationToken cancellationToken)
         {
             var loginAudit = new LoginAuditDto
             {

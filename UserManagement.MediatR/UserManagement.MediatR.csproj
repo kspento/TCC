@@ -5,43 +5,16 @@
   </PropertyGroup>
 
   <ItemGroup>
-    <Compile Remove="Commands\Action\**" />
-    <Compile Remove="Commands\AppSetting\**" />
-    <Compile Remove="Commands\EmailTemplate\**" />
-    <Compile Remove="Commands\Email\**" />
-    <Compile Remove="Commands\User\**" />
-    <Compile Remove="Handlers\Action\**" />
-    <Compile Remove="Handlers\AppSetting\**" />
-    <Compile Remove="Handlers\Dashboard\**" />
-    <Compile Remove="Handlers\EmailTemplate\**" />
-    <Compile Remove="Handlers\Email\**" />
-    <Compile Remove="Handlers\User\**" />
+    <Compile Remove="Commands\**" />
+    <Compile Remove="Handlers\**" />
     <Compile Remove="Queries\AppSetting\**" />
     <Compile Remove="Validators\**" />
-    <EmbeddedResource Remove="Commands\Action\**" />
-    <EmbeddedResource Remove="Commands\AppSetting\**" />
-    <EmbeddedResource Remove="Commands\EmailTemplate\**" />
-    <EmbeddedResource Remove="Commands\Email\**" />
-    <EmbeddedResource Remove="Commands\User\**" />
-    <EmbeddedResource Remove="Handlers\Action\**" />
-    <EmbeddedResource Remove="Handlers\AppSetting\**" />
-    <EmbeddedResource Remove="Handlers\Dashboard\**" />
-    <EmbeddedResource Remove="Handlers\EmailTemplate\**" />
-    <EmbeddedResource Remove="Handlers\Email\**" />
-    <EmbeddedResource Remove="Handlers\User\**" />
+    <EmbeddedResource Remove="Commands\**" />
+    <EmbeddedResource Remove="Handlers\**" />
     <EmbeddedResource Remove="Queries\AppSetting\**" />
     <EmbeddedResource Remove="Validators\**" />
-    <None Remove="Commands\Action\**" />
-    <None Remove="Commands\AppSetting\**" />
-    <None Remove="Commands\EmailTemplate\**" />
-    <None Remove="Commands\Email\**" />
-    <None Remove="Commands\User\**" />
-    <None Remove="Handlers\Action\**" />
-    <None Remove="Handlers\AppSetting\**" />
-    <None Remove="Handlers\Dashboard\**" />
-    <None Remove="Handlers\EmailTemplate\**" />
-    <None Remove="Handlers\Email\**" />
-    <None Remove="Handlers\User\**" />
+    <None Remove="Commands\**" />
+    <None Remove="Handlers\**" />
     <None Remove="Queries\AppSetting\**" />
     <None Remove="Validators\**" />
   </ItemGroup>
@@ -64,7 +37,7 @@
 
   <ItemGroup>
     <Folder Include="Queries\NLog\" />
-    <Folder Include="Queries\PageAction\" />
+    <Folder Include="Queries\Role\" />
   </ItemGroup>
 
 </Project>
