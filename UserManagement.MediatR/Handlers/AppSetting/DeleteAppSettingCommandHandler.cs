@@ -14,7 +14,7 @@ using UserManagement.Repository;
 
 namespace UserManagement.MediatR.Handlers
 {
-    public class DeleteAppSettingCommandHandler : IRequestHandler<DeleteAppSettingCommand, ServiceResponse<AppSettingDto>>
+    public class DeleteAppSettingCommandHandler : IRequestHandler<DeleteAppSettingModel, ServiceResponse<AppSettingDto>>
     {
         private readonly IAppSettingRepository _appSettingRepository;
         private readonly IUnitOfWork<UserContext> _uow;
@@ -36,7 +36,7 @@ namespace UserManagement.MediatR.Handlers
             _logger = logger;
         }
 
-        public async Task<ServiceResponse<AppSettingDto>> Handle(DeleteAppSettingCommand request, CancellationToken cancellationToken)
+        public async Task<ServiceResponse<AppSettingDto>> Handle(DeleteAppSettingModel request, CancellationToken cancellationToken)
         {
             var entityExist = await _appSettingRepository.FindAsync(request.Id);
             if (entityExist == null)

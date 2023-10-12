@@ -1,6 +1,7 @@
 ﻿using AutoMapper;
 using UserManagement.Data.Dto.Email;
 using UserManagement.Data.Entities;
+using UserManagement.Domain.Model.Email;
 using UserManagement.MediatR.Commands;
 
 namespace UserManagement.API.Helpers.Mapping
@@ -10,8 +11,8 @@ namespace UserManagement.API.Helpers.Mapping
         public EmailProfile()
         {
             CreateMap<EmailSMTPSetting, EmailSMTPSettingDto>().ReverseMap();
-            CreateMap<EmailSMTPSetting, AddEmailSMTPSettingCommand>().ReverseMap();
-            CreateMap<EmailSMTPSetting, UpdateEmailSMTPSettingCommand>().ReverseMap();
+            CreateMap<EmailSMTPSetting, EmailSettingModel>().ReverseMap();
+            //CreateMap<EmailSMTPSetting, UpdateEmailSMTPSettingCommand>().ReverseMap();
         }
     }
 }

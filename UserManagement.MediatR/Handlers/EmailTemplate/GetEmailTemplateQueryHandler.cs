@@ -5,9 +5,9 @@ using Microsoft.Extensions.Logging;
 using System.Threading;
 using System.Threading.Tasks;
 using UserManagement.Data.Dto.EmailTemplate;
+using UserManagement.Data.Repository.Contracts;
 using UserManagement.Helper;
 using UserManagement.MediatR.Queries;
-using UserManagement.Repository;
 
 namespace UserManagement.MediatR.Handlers
 {

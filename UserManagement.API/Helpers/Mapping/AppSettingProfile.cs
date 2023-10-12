@@ -1,7 +1,7 @@
 ﻿using AutoMapper;
 using UserManagement.Data.Dto.AppSetting;
 using UserManagement.Data.Entities;
-using UserManagement.MediatR.Commands;
+using UserManagement.Domain.Model.App;
 
 namespace UserManagement.API.Helpers.Mapping
 {
@@ -10,9 +10,8 @@ namespace UserManagement.API.Helpers.Mapping
         public AppSettingProfile()
         {
             CreateMap<AppSettingDto, AppSetting>().ReverseMap();
-            CreateMap<AddAppSettingCommand, AppSetting>();
-            CreateMap<UpdateAppSettingCommand, AppSetting>().ReverseMap();
-
+            CreateMap<AddAppSettingModel, AppSetting>();
+            CreateMap<UpdateAppSettingModel, AppSetting>().ReverseMap();
         }
     }
 }

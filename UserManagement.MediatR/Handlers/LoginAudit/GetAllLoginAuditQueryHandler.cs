@@ -4,7 +4,6 @@ using System.Threading.Tasks;
 using UserManagement.Data.Repository.Contracts;
 using UserManagement.Data.Repository.LoginAudit;
 using UserManagement.MediatR.Queries;
-using UserManagement.Repository;
 
 namespace UserManagement.MediatR.Handlers
 {

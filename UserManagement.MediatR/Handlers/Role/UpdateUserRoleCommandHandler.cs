@@ -1,6 +1,5 @@
 ﻿using AutoMapper;
 using UserManagement.MediatR.Commands;
-using UserManagement.Repository;
 using MediatR;
 using Microsoft.EntityFrameworkCore;
 using System;

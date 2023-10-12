@@ -6,7 +6,12 @@ using UserManagement.Data.Repository.LoginAudit;
 using UserManagement.Data.PropertyMapping;
 using UserManagement.Data.Repository.RoleClaim;
 using UserManagement.Data.Repository.PageAction;
-using UserManagement.Repository;
+using UserManagement.Data.Repository.Email;
+using UserManagement.Data.Repository.NLog;
+using UserManagement.Data.Repository.Action;
+using UserManagement.Data.Repository.Role;
+using UserManagement.Data.Repository.AppSetting;
+using UserManagement.Data.Repository.EmailTemplate;
 
 namespace UserManagement.Api.Helpers
 {

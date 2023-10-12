@@ -49,7 +49,7 @@ namespace UserManagement.MediatR.Handlers
                     ToAddress = request.ToAddress,
                     CCAddress = request.CCAddress,
                     UserName = defaultSmtp.UserName,
-                    Attechments = request.Attechments
+                    Attachments = request.Attachments
                 });
                 return ServiceResponse<EmailDto>.ReturnSuccess();
             }

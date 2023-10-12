@@ -1,5 +1,4 @@
 ﻿using AutoMapper;
-using UserManagement.MediatR.Commands;
 using MediatR;
 using Microsoft.EntityFrameworkCore;
 using System.Threading;
@@ -9,10 +8,11 @@ using UserManagement.Data.Context;
 using UserManagement.Data.Dto.PageAction;
 using UserManagement.Data.UnitOfWork;
 using UserManagement.Data.Repository.PageAction;
+using UserManagement.Domain.Model.PageAction;
 
 namespace UserManagement.MediatR.Handlers
 {
-    public class DeletePageActionCommandHandler : IRequestHandler<DeletePageActionCommand, ServiceResponse<PageActionDto>>
+    public class DeletePageActionCommandHandler : IRequestHandler<DeletePageActionModel, ServiceResponse<PageActionDto>>
     {
         private readonly IPageActionRepository _pageActionRepository;
         private readonly IUnitOfWork<UserContext> _uow;
@@ -28,7 +28,7 @@ namespace UserManagement.MediatR.Handlers
             _uow = uow;
         }
 
-        public async Task<ServiceResponse<PageActionDto>> Handle(DeletePageActionCommand request, CancellationToken cancellationToken)
+        public async Task<ServiceResponse<PageActionDto>> Handle(DeletePageActionModel request, CancellationToken cancellationToken)
         {
             var entityExist = await _pageActionRepository.FindBy(c => c.Id == request.Id).FirstOrDefaultAsync();
             if (entityExist == null)

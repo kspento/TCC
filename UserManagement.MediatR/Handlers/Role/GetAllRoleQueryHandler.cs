@@ -1,6 +1,5 @@
 ﻿using AutoMapper;
 using UserManagement.MediatR.Queries;
-using UserManagement.Repository;
 using MediatR;
 using Microsoft.EntityFrameworkCore;
 using Microsoft.Extensions.Logging;
@@ -8,6 +7,7 @@ using System.Collections.Generic;
 using System.Threading;
 using System.Threading.Tasks;
 using UserManagement.Data.Dto.Role;
+using UserManagement.Data.Repository.Contracts;
 
 namespace UserManagement.MediatR.Handlers
 {

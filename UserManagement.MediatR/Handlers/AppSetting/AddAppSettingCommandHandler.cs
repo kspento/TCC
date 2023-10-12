@@ -16,7 +16,7 @@ using UserManagement.Repository;
 
 namespace UserManagement.MediatR.Handlers
 {
-    public class AddAppSettingCommandHandler : IRequestHandler<AddAppSettingCommand, ServiceResponse<AppSettingDto>>
+    public class AddAppSettingCommandHandler : IRequestHandler<AddAppSettingModel, ServiceResponse<AppSettingDto>>
     {
         private readonly IAppSettingRepository _appSettingRepository;
         private readonly IUnitOfWork<UserContext> _uow;
@@ -37,7 +37,7 @@ namespace UserManagement.MediatR.Handlers
             _userInfoToken = userInfoToken;
             _logger = logger;
         }
-        public async Task<ServiceResponse<AppSettingDto>> Handle(AddAppSettingCommand request, CancellationToken cancellationToken)
+        public async Task<ServiceResponse<AppSettingDto>> Handle(AddAppSettingModel request, CancellationToken cancellationToken)
         {
             var entityExist = await _appSettingRepository.FindBy(c => c.Key == request.Key).FirstOrDefaultAsync();
             if (entityExist != null)

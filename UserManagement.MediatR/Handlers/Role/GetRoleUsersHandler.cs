@@ -1,5 +1,4 @@
 ﻿using UserManagement.MediatR.Queries;
-using UserManagement.Repository;
 using MediatR;
 using System.Collections.Generic;
 using System.Linq;

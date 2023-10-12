@@ -1,7 +1,7 @@
 ﻿using MediatR;
+using UserManagement.Data.Repository.User;
 using UserManagement.Data.Repository.UserRepository;
 using UserManagement.Data.Resources;
-using UserManagement.Repository;
 
 namespace UserManagement.MediatR.Queries
 {

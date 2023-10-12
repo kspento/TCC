@@ -4,10 +4,10 @@ using System.Threading;
 using System.Threading.Tasks;
 using UserManagement.Data.Context;
 using UserManagement.Data.Dto.User;
+using UserManagement.Data.Repository.Contracts;
 using UserManagement.Data.UnitOfWork;
 using UserManagement.Helper;
 using UserManagement.MediatR.Commands;
-using UserManagement.Repository;
 
 namespace UserManagement.MediatR.Handlers
 {

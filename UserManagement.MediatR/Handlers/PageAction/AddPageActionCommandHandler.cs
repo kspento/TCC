@@ -1,5 +1,4 @@
 ﻿using AutoMapper;
-using UserManagement.MediatR.Commands;
 using MediatR;
 using Microsoft.EntityFrameworkCore;
 using System;
@@ -11,10 +10,11 @@ using UserManagement.Data.Entities;
 using UserManagement.Data.Dto.PageAction;
 using UserManagement.Data.UnitOfWork;
 using UserManagement.Data.Repository.PageAction;
+using UserManagement.Domain.Model.PageAction;
 
 namespace UserManagement.MediatR.Handlers
 {
-    public class AddPageActionCommandHandler : IRequestHandler<AddPageActionCommand, ServiceResponse<PageActionDto>>
+    public class AddPageActionCommandHandler : IRequestHandler<AddPageActionModel, ServiceResponse<PageActionDto>>
     {
         private readonly IPageActionRepository _pageActionRepository;
         private readonly IUnitOfWork<UserContext> _uow;
@@ -30,7 +30,7 @@ namespace UserManagement.MediatR.Handlers
             _uow = uow;
         }
 
-        public async Task<ServiceResponse<PageActionDto>> Handle(AddPageActionCommand request, CancellationToken cancellationToken)
+        public async Task<ServiceResponse<PageActionDto>> Handle(AddPageActionModel request, CancellationToken cancellationToken)
         {
             var entity = await _pageActionRepository.FindBy(c => c.PageId == request.PageId && c.ActionId == request.ActionId).FirstOrDefaultAsync();
             if (entity == null)

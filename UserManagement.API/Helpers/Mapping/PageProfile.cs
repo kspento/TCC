@@ -1,7 +1,7 @@
 ﻿using AutoMapper;
 using UserManagement.Data.Dto.Page;
 using UserManagement.Data.Entities;
-using UserManagement.MediatR.Commands;
+
 
 namespace UserManagement.API.Helpers.Mapping
 {

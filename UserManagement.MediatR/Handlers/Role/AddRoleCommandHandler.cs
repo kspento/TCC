@@ -1,6 +1,5 @@
 ﻿using AutoMapper;
 using UserManagement.MediatR.Commands;
-using UserManagement.Repository;
 using MediatR;
 using Microsoft.EntityFrameworkCore;
 using System;
@@ -13,6 +12,7 @@ using UserManagement.Data.Entities;
 using UserManagement.Data.Dto.Role;
 using UserManagement.Data.Dto.User;
 using UserManagement.Data.UnitOfWork;
+using UserManagement.Data.Repository.Contracts;
 
 namespace UserManagement.MediatR.Handlers
 {

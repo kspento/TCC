@@ -10,8 +10,9 @@ namespace UserManagement.API.Helpers
         public EmailTemplateProfile()
         {
             CreateMap<EmailTemplateDto, EmailTemplate>().ReverseMap();
-            CreateMap<AddEmailTemplateCommand, EmailTemplate>();
-            CreateMap<UpdateEmailTemplateCommand, EmailTemplate>().ReverseMap();
+            //TODO VER ESSE MAPP AQUI
+            //CreateMap<AddEmailTemplateCommand, EmailTemplate>();
+            //CreateMap<UpdateEmailTemplateCommand, EmailTemplate>().ReverseMap();
         }
     }
 }

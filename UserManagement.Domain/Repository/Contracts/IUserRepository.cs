@@ -7,9 +7,9 @@ using UserManagement.Data.Dto.User;
 
 namespace UserManagement.Data.Repository.Contracts
 {
-    public interface IUserRepository : IGenericRepository<User>
+    public interface IUserRepository : IGenericRepository<Entities.User>
     {
         Task<UserList> GetUsers(UserResource userResource);
-        Task<UserAuthDto> BuildUserAuthObject(User appUser);
+        Task<UserAuthDto> BuildUserAuthObject(Entities.User appUser);
     }
 }

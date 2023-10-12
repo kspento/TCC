@@ -5,10 +5,16 @@
   </PropertyGroup>
 
   <ItemGroup>
+    <Compile Remove="Action\**" />
+    <Compile Remove="EmailTemplate\**" />
     <Compile Remove="LoginAudit\**" />
     <Compile Remove="Page\**" />
+    <EmbeddedResource Remove="Action\**" />
+    <EmbeddedResource Remove="EmailTemplate\**" />
     <EmbeddedResource Remove="LoginAudit\**" />
     <EmbeddedResource Remove="Page\**" />
+    <None Remove="Action\**" />
+    <None Remove="EmailTemplate\**" />
     <None Remove="LoginAudit\**" />
     <None Remove="Page\**" />
   </ItemGroup>
@@ -24,10 +30,6 @@
     <ProjectReference Include="..\UserManagement.Common\UserManagement.Common.csproj" />
     <ProjectReference Include="..\UserManagement.Domain\UserManagement.Data.csproj" />
     <ProjectReference Include="..\UserManagement.Helper\UserManagement.Helper.csproj" />
-  </ItemGroup>
-
-  <ItemGroup>
-    <Folder Include="UserClaim\" />
   </ItemGroup>
 
 </Project>

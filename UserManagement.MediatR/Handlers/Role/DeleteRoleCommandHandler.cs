@@ -2,7 +2,6 @@
 using MediatR;
 using System.Threading;
 using System.Threading.Tasks;
-using UserManagement.Repository;
 using System;
 using UserManagement.Helper;
 using Microsoft.Extensions.Logging;
@@ -10,6 +9,7 @@ using UserManagement.Data.Context;
 using UserManagement.Data.Dto.Role;
 using UserManagement.Data.Dto.User;
 using UserManagement.Data.UnitOfWork;
+using UserManagement.Data.Repository.Contracts;
 
 namespace UserManagement.MediatR.Handlers
 {

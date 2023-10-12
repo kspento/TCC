@@ -14,7 +14,7 @@ namespace UserManagement.Helper
         public string Host { get; set; }
         public string UserName { get; set; }
         public string Password { get; set; }
-        public List<FileInfo> Attechments { get; set; }
+        public List<FileInfo> Attachments { get; set; }
 
 
     }
