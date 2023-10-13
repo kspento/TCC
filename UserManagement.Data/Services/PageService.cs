@@ -11,6 +11,7 @@ using UserManagement.Data.Entities;
 using UserManagement.Data.Repository.Contracts;
 using UserManagement.Data.UnitOfWork;
 using UserManagement.Domain.Contracts.Services;
+using UserManagement.Domain.Exception;
 using UserManagement.Domain.Model.Page;
 using UserManagement.Helper;
 
@@ -33,13 +34,13 @@ public class PageService : IPageService
         _logger = logger;
     }
 
-    public async Task<ServiceResponse<PageDto>> AddPage(AddPageModel request)
+    public async Task<PageDto> AddPage(AddPageModel request)
     {
         var existingEntity = await _pageRepository.FindBy(c => c.Name == request.Name).FirstOrDefaultAsync();
         if (existingEntity != null)
         {
             _logger.LogError("Page Already Exists");
-            return ServiceResponse<PageDto>.Return409("Page Already Exists.");
+            throw new AlreadyExistsException("Page Already Exists.");
         }
 
         var entity = _mapper.Map<Page>(request);
@@ -48,13 +49,13 @@ public class PageService : IPageService
         if (await _uow.SaveAsync() <= 0)
         {
             _logger.LogError("Save Page has Error");
-            return ServiceResponse<PageDto>.Return500();
+            throw new System.Exception();
         }
 
-        return ServiceResponse<PageDto>.ReturnResultWith200(_mapper.Map<PageDto>(entity));
+        return _mapper.Map<PageDto>(entity);
     }
 
-    public async Task<ServiceResponse<PageDto>> UpdatePage(UpdatePageModel request)
+    public async Task<PageDto> UpdatePage(UpdatePageModel request)
     {
         var entityExist = await _pageRepository.FindBy(c => c.Name == request.Name && c.Id != request.Id)
             .FirstOrDefaultAsync();
@@ -62,7 +63,7 @@ public class PageService : IPageService
         if (entityExist != null)
         {
             _logger.LogError("Page Name Already Exists.");
-            return ServiceResponse<PageDto>.Return409("Page Name Already Exists.");
+            throw new AlreadyExistsException("Page Name Already Exists.");
         }
 
         entityExist = await _pageRepository.FindBy(v => v.Id == request.Id).FirstOrDefaultAsync();
@@ -73,38 +74,36 @@ public class PageService : IPageService
 
         if (await _uow.SaveAsync() <= 0)
         {
-            return ServiceResponse<PageDto>.Return500();
+            throw new System.Exception();
         }
 
-        return ServiceResponse<PageDto>.ReturnResultWith200(_mapper.Map<PageDto>(entityExist));
+        return _mapper.Map<PageDto>(entityExist);
     }
 
-    public async Task<ServiceResponse<PageDto>> DeletePage(DeletePageModel request)
+    public async Task DeletePage(DeletePageModel request)
     {
         var entityExist = await _pageRepository.FindAsync(request.Id);
         if (entityExist == null)
         {
-            return ServiceResponse<PageDto>.Return404();
+            throw new NotFoundException(string.Empty);
         }
 
         _pageRepository.Delete(request.Id);
         if (await _uow.SaveAsync() <= 0)
         {
-            return ServiceResponse<PageDto>.Return500();
+            throw new System.Exception();
         }
-
-        return ServiceResponse<PageDto>.ReturnSuccess();
     }
 
-    public async Task<ServiceResponse<PageDto>> GetPage(GetPageModel request)
+    public async Task<PageDto> GetPage(GetPageModel request)
     {
         var entity = await _pageRepository.FindAsync(request.Id);
         if (entity != null)
-            return ServiceResponse<PageDto>.ReturnResultWith200(_mapper.Map<PageDto>(entity));
+            return _mapper.Map<PageDto>(entity);
         else
         {
             _logger.LogError("Not found");
-            return ServiceResponse<PageDto>.Return404();
+            throw new NotFoundException(string.Empty);
         }
     }
 

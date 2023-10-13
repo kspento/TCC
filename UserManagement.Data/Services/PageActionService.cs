@@ -11,6 +11,7 @@ using UserManagement.Domain.Model.PageAction;
 using Microsoft.EntityFrameworkCore;
 using Microsoft.Extensions.Logging;
 using UserManagement.Domain.Contracts.Services;
+using UserManagement.Domain.Exception;
 
 public class PageActionService : IPageActionService
 {
@@ -42,13 +43,10 @@ public class PageActionService : IPageActionService
             _pageActionRepository.Add(entity);
             if (await _uow.SaveAsync() <= 0)
             {
-                return null;
-                //return ServiceResponse<PageActionDto>.Return500();
+                throw new System.Exception();
             }
         }
         return _mapper.Map<PageActionDto>(entity);
-
-        //return ServiceResponse<PageActionDto>.ReturnResultWith200(_mapper.Map<PageActionDto>(entity));
     }
 
     public async Task DeletePageAction(DeletePageActionModel request)
@@ -56,18 +54,14 @@ public class PageActionService : IPageActionService
         var entityExist = await _pageActionRepository.FindBy(c => c.Id == request.Id).FirstOrDefaultAsync();
         if (entityExist == null)
         {
-            //
-            //return ServiceResponse<PageActionDto>.Return404();
+            throw new NotFoundException(string.Empty);
         }
 
         _pageActionRepository.Remove(entityExist);
         if (await _uow.SaveAsync() <= 0)
         {
-            //
-            //return ServiceResponse<PageActionDto>.Return500();
+            throw new System.Exception();
         }
-
-        //return ServiceResponse<PageActionDto>.ReturnSuccess();
     }
 
     public async Task<List<PageActionDto>> GetAllPageActions()
@@ -75,8 +69,6 @@ public class PageActionService : IPageActionService
         var entities = await _pageActionRepository.All.ToListAsync();
 
         return _mapper.Map<List<PageActionDto>>(entities);
-
-        // return ServiceResponse<List<PageActionDto>>.ReturnResultWith200(_mapper.Map<List<PageActionDto>>(entities));
     }
 
     public async Task<PageActionDto> GetPageAction(GetPageActionModel request)
@@ -84,13 +76,11 @@ public class PageActionService : IPageActionService
         var entity = await _pageActionRepository.FindAsync(request.Id);
         if (entity != null)
             return _mapper.Map<PageActionDto>(entity);
-        //return ServiceResponse<PageActionDto>.ReturnResultWith200(_mapper.Map<PageActionDto>(entity));
         else
         {
             // Log a warning since the page action was not found
             _logger.LogWarning("PageAction Not Found");
-            return null;
-            //return ServiceResponse<PageActionDto>.Return404();
+            throw new NotFoundException(string.Empty);
         }
     }
 }

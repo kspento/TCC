@@ -20,6 +20,8 @@ using UserManagement.Data.UnitOfWork;
 using UserManagement.Domain.Contracts.Services;
 using UserManagement.Domain.Model.User;
 using UserManagement.Helper;
+using UserManagement.Domain.Exception;
+using NLog.LayoutRenderers.Wrappers;
 
 namespace UserManagement.Domain.Services
 {
@@ -78,7 +80,7 @@ namespace UserManagement.Domain.Services
             if (appUser != null)
             {
                 _logger.LogError("Email already exist for another user.");
-                //return ServiceResponse<UserDto>.Return409("Email already exist for another user.");
+                throw new AlreadyExistsException("Email already exist for another user.");
             }
             var entity = _mapper.Map<User>(addUser);
             entity.CreatedBy = Guid.Parse(_userInfoToken.Id);
@@ -89,7 +91,7 @@ namespace UserManagement.Domain.Services
             IdentityResult result = await _userManager.CreateAsync(entity);
             if (!result.Succeeded)
             {
-                //return ServiceResponse<UserDto>.Return500();
+                throw new System.Exception();
             }
             if (!string.IsNullOrEmpty(addUser.Password))
             {
@@ -97,7 +99,7 @@ namespace UserManagement.Domain.Services
                 IdentityResult passwordResult = await _userManager.ResetPasswordAsync(entity, code, addUser.Password);
                 if (!passwordResult.Succeeded)
                 {
-                    //return ServiceResponse<UserDto>.Return500();
+                    throw new System.Exception();
                 }
             }
             return _mapper.Map<UserDto>(entity);
@@ -109,7 +111,7 @@ namespace UserManagement.Domain.Services
             if (!result.Succeeded)
             {
                 _logger.LogError("Old Password does not match.");
-                //return ServiceResponse<UserDto>.ReturnFailed(422, "Old Password does not match.");
+                throw new NotAllowedException("Old Password does not match.");
             }
 
             var entity = await _userManager.FindByNameAsync(request.UserName);
@@ -117,9 +119,8 @@ namespace UserManagement.Domain.Services
             IdentityResult passwordResult = await _userManager.ResetPasswordAsync(entity, code, request.NewPassword);
             if (!passwordResult.Succeeded)
             {
-                //return ServiceResponse<UserDto>.Return500();
+                throw new System.Exception();
             }
-            //return ServiceResponse<UserDto>.ReturnSuccess();
 
             return _mapper.Map<UserDto>(entity);
         }
@@ -131,17 +132,17 @@ namespace UserManagement.Domain.Services
             if (appUser == null)
             {
                 _logger.LogError("User does not exist.");
-                //return ServiceResponse<UserDto>.Return409("User does not exist.");
+                throw new AlreadyExistsException("User does not exist.");
             }
             appUser.IsDeleted = true;
             appUser.DeletedDate = DateTime.Now.ToLocalTime();
             appUser.DeletedBy = Guid.Parse(_userInfoToken.Id);
             IdentityResult result = await _userManager.UpdateAsync(appUser);
-            //if (!result.Succeeded)
-            //{
-            //    return ServiceResponse<UserDto>.Return500();
-            //}
-            //return ServiceResponse<UserDto>.ReturnResultWith200(_mapper.Map<UserDto>(appUser));
+            if (!result.Succeeded)
+            {
+                throw new System.Exception();
+            }
+
             return _mapper.Map<UserDto>(appUser);
         }
 
@@ -161,11 +162,11 @@ namespace UserManagement.Domain.Services
         {
             var entity = await _userRepository.AllIncluding(c => c.UserRoles, cs => cs.UserClaims, ip => ip.UserAllowedIPs).FirstOrDefaultAsync(c => c.Id == request.UserResource.Id);
 
-            //if(entity == null)
-            //{
-            //    _logger.LogError("User not found");
-            //    return ServiceResponse<UserDto>.ReturnFailed(404, "User not found");
-            //}
+            if (entity == null)
+            {
+                _logger.LogError("User not found");
+                throw new NotFoundException("User not found");
+            }
 
             return _mapper.Map<UserDto>(entity);     
         }
@@ -173,17 +174,17 @@ namespace UserManagement.Domain.Services
         public async Task<UserDto> ResetPassword(ResetPasswordModel request)
         {
             var entity = await _userManager.FindByEmailAsync(request.UserName);
-            //if (entity == null)
-            //{
-            //    _logger.LogError("User not Found.");
-            //    return ServiceResponse<UserDto>.ReturnFailed(404, "User not Found.");
-            //}
+            if (entity == null)
+            {
+                _logger.LogError("User not Found.");
+                throw new NotFoundException("User not Found.");
+            }
             string code = await _userManager.GeneratePasswordResetTokenAsync(entity);
             IdentityResult passwordResult = await _userManager.ResetPasswordAsync(entity, code, request.Password);
-            //if (!passwordResult.Succeeded)
-            //{
-            //    return ServiceResponse<UserDto>.Return500();
-            //}
+            if (!passwordResult.Succeeded)
+            {
+                throw new System.Exception();
+            }
             return _mapper.Map<UserDto>(entity);
         }
 
@@ -194,10 +195,10 @@ namespace UserManagement.Domain.Services
             _userClaimRepository.AddRange(_mapper.Map<List<UserClaim>>(claimsToAdd));
             var claimsToDelete = appUserClaims.Where(c => !request.UserClaims.Select(cs => cs.ClaimType).Contains(c.ClaimType)).ToList();
             _userClaimRepository.RemoveRange(claimsToDelete);
-            //if (await _uow.SaveAsync() <= 0)
-            //{
-            //    return ServiceResponse<UserClaimDto>.Return500();
-            //}
+            if (await _uow.SaveAsync() <= 0)
+            {
+                throw new System.Exception();
+            }
 
             //todo retornar userclaims atual atualizado ps. essa lógica tá UMA MERDA
             return _mapper.Map<UserClaimDto>(appUserClaims);
@@ -206,11 +207,11 @@ namespace UserManagement.Domain.Services
         public async Task<UserDto> UpdateUser(UpdateUserModel request)
         {
             var appUser = await _userManager.FindByIdAsync(request.Id.ToString());
-            //if (appUser == null)
-            //{
-            //    _logger.LogError("User does not exist.");
-            //    return ServiceResponse<UserDto>.Return409("User does not exist.");
-            //}
+            if (appUser == null)
+            {
+                _logger.LogError("User does not exist.");
+                throw new AlreadyExistsException("User does not exist.");
+            }
             appUser.FirstName = request.FirstName;
             appUser.LastName = request.LastName;
             appUser.PhoneNumber = request.PhoneNumber;
@@ -243,32 +244,33 @@ namespace UserManagement.Domain.Services
                 .ToList();
             _userAllowedIPRepository.RemoveRange(ipsToDelete);
 
-            //if (await _uow.SaveAsync() <= 0 && !result.Succeeded)
-            //{
-            //    return ServiceResponse<UserDto>.Return500();
-            //}
+            if (await _uow.SaveAsync() <= 0 && !result.Succeeded)
+            {
+                throw new System.Exception();
+            }
             return _mapper.Map<UserDto>(appUser);
         }
 
         public async Task<UserDto> UpdateUserProfile(UpdateUserProfileModel request)
         {
             var appUser = await _userManager.FindByIdAsync(_userInfoToken.Id);
-            //if (appUser == null)
-            //{
-            //    _logger.LogError("User does not exist.");
-            //    return ServiceResponse<UserDto>.Return409("User does not exist.");
-            //}
+            if (appUser == null)
+            {
+                _logger.LogError("User does not exist.");
+                throw new AlreadyExistsException("User does not exist.");
+            }
             appUser.FirstName = request.FirstName;
             appUser.LastName = request.LastName;
             appUser.PhoneNumber = request.PhoneNumber;
             appUser.Address = request.Address;
             IdentityResult result = await _userManager.UpdateAsync(appUser);
-            //if (await _uow.SaveAsync() <= 0 && !result.Succeeded)
-            //{
-            //    return ServiceResponse<UserDto>.Return500();
-            //}
-            //if (!string.IsNullOrWhiteSpace(appUser.ProfilePhoto))
-            //    appUser.ProfilePhoto = $"{_pathHelper.UserProfilePath}/{appUser.ProfilePhoto}";
+            if (await _uow.SaveAsync() <= 0 && !result.Succeeded)
+            {
+                throw new System.Exception();
+            }
+            if (!string.IsNullOrWhiteSpace(appUser.ProfilePhoto))
+                appUser.ProfilePhoto = $"{_pathHelper.UserProfilePath}/{appUser.ProfilePhoto}";
+
             return _mapper.Map<UserDto>(appUser);
         }
 
@@ -276,11 +278,11 @@ namespace UserManagement.Domain.Services
         {
             var filePath = $"{request.RootPath}/{_pathHelper.UserProfilePath}";
             var appUser = await _userManager.FindByIdAsync(_userInfoToken.Id);
-            //if (appUser == null)
-            //{
-            //    _logger.LogError("User does not exist.");
-            //    return ServiceResponse<UserDto>.Return409("User does not exist.");
-            //}
+            if (appUser == null)
+            {
+                _logger.LogError("User does not exist.");
+                throw new AlreadyExistsException("User does not exist.");
+            }
             if (!Directory.Exists(filePath))
             {
                 Directory.CreateDirectory(filePath);
@@ -313,10 +315,10 @@ namespace UserManagement.Domain.Services
 
             // update user
             IdentityResult result = await _userManager.UpdateAsync(appUser);
-            //if (await _uow.SaveAsync() <= 0 && !result.Succeeded)
-            //{
-            //    return ServiceResponse<UserDto>.Return500();
-            //}
+            if (await _uow.SaveAsync() <= 0 && !result.Succeeded)
+            {
+                throw new System.Exception();
+            }
 
             if (!string.IsNullOrWhiteSpace(appUser.ProfilePhoto))
                 appUser.ProfilePhoto = $"{_pathHelper.UserProfilePath}/{appUser.ProfilePhoto}";
@@ -343,17 +345,17 @@ namespace UserManagement.Domain.Services
                     .AllIncluding(c => c.UserAllowedIPs)
                     .Where(c => c.UserName == request.UserName)
                     .FirstOrDefaultAsync();
-                //if (!userInfo.IsActive)
-                //{
-                //    await _loginAuditRepository.LoginAudit(loginAudit);
-                //    return ServiceResponse<UserAuthDto>.ReturnFailed(401, "UserName Or Password is InCorrect.");
-                //}
+                if (!userInfo.IsActive)
+                {
+                    await _loginAuditRepository.LoginAudit(loginAudit);
+                    throw new UnauthorizedException("UserName Or Password is InCorrect.");
+                }
 
-                //if (userInfo.UserAllowedIPs.Any() && !userInfo.UserAllowedIPs.Any(c => c.IPAddress == request.RemoteIp))
-                //{
-                //    await _loginAuditRepository.LoginAudit(loginAudit);
-                //    return ServiceResponse<UserAuthDto>.ReturnFailed(401, "You don't have access on this IP Address.");
-                //}
+                if (userInfo.UserAllowedIPs.Any() && !userInfo.UserAllowedIPs.Any(c => c.IPAddress == request.RemoteIp))
+                {
+                    await _loginAuditRepository.LoginAudit(loginAudit);
+                    throw new UnauthorizedException("You don't have access on this IP Address.");
+                }
                 loginAudit.Status = LoginStatus.Success.ToString();
                 await _loginAuditRepository.LoginAudit(loginAudit);
                 authUser = await _userRepository.BuildUserAuthObject(userInfo);
@@ -365,26 +367,25 @@ namespace UserManagement.Domain.Services
                 await _hubContext.Clients.All.Joined(onlineUser);
                
             }
-            //else
-            //{
-            //    await _loginAuditRepository.LoginAudit(loginAudit);
-            //    return ServiceResponse<UserAuthDto>.ReturnFailed(401, "UserName Or Password is InCorrect.");
-            //}
+            else
+            {
+                await _loginAuditRepository.LoginAudit(loginAudit);
+                throw new UnauthorizedException("UserName Or Password is InCorrect.");
+            }
             return authUser;
         }
 
         public async Task<UserDto> GetUser(GetUserModel request)
         {
             var entity = await _userRepository.AllIncluding(c => c.UserRoles, cs => cs.UserClaims, ip => ip.UserAllowedIPs).FirstOrDefaultAsync(c => c.Id == request.Id);
-            //if (entity != null)
-            //    return ServiceResponse<UserDto>.ReturnResultWith200(_mapper.Map<UserDto>(entity));
-            //else
-            //{
-            //    _logger.LogError("User not found");
-            //    return ServiceResponse<UserDto>.ReturnFailed(404, "User not found");
-            //}
+            if (entity != null)
+                return _mapper.Map<UserDto>(entity);
+            else
+            {
+                _logger.LogError("User not found");
 
-            return _mapper.Map<UserDto>(entity);
+                throw new NotFoundException("User not found");
+            }            
         }
     }
 }

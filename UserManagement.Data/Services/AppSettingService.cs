@@ -3,8 +3,6 @@ using Microsoft.EntityFrameworkCore;
 using Microsoft.Extensions.Logging;
 using System;
 using System.Collections.Generic;
-using System.Linq;
-using System.Text;
 using System.Threading;
 using System.Threading.Tasks;
 using UserManagement.Data.Context;
@@ -14,6 +12,7 @@ using UserManagement.Data.Entities;
 using UserManagement.Data.Repository.Contracts;
 using UserManagement.Data.UnitOfWork;
 using UserManagement.Domain.Contracts.Services;
+using UserManagement.Domain.Exception;
 using UserManagement.Domain.Model.App;
 using UserManagement.Helper;
 
@@ -39,13 +38,14 @@ namespace UserManagement.Domain.Services
             _userInfoToken = userInfoToken;
             _uow = uow;
         }
-        public async Task<AppSettingDto> AddAppSetting(AddAppSettingModel request, CancellationToken cancellationToken)
+        public async Task<AppSettingDto> AddAppSetting(AddAppSettingModel request)
         {
             var entityExist = await _appSettingRepository.FindBy(c => c.Key == request.Key).FirstOrDefaultAsync();
             if (entityExist != null)
             {
                 _logger.LogError("AppSetting already exist.");
-                //return ServiceResponse<AppSettingDto>.Return409("App Setting already exist.");
+
+                throw new AlreadyExistsException("App Setting already exist.");
             }
             var entity = _mapper.Map<AppSetting>(request);
             entity.Id = Guid.NewGuid();
@@ -53,87 +53,85 @@ namespace UserManagement.Domain.Services
             entity.CreatedDate = DateTime.Now.ToLocalTime();
             entity.ModifiedBy = Guid.Parse(_userInfoToken.Id);
             _appSettingRepository.Add(entity);
-            //if (await _uow.SaveAsync() <= 0)
-            //{
-            //    return ServiceResponse<AppSettingDto>.Return500();
-            //}
+            if (await _uow.SaveAsync() <= 0)
+            {
+                throw new System.Exception();
+            }
             var entityDto = _mapper.Map<AppSettingDto>(entity);
 
             return entityDto;
-            //return ServiceResponse<AppSettingDto>.ReturnResultWith200(entityDto);
         }
 
-        public async Task DeleteAppSetting(DeleteAppSettingModel request, CancellationToken cancellationToken)
+        public async Task DeleteAppSetting(DeleteAppSettingModel request)
         {
             var entityExist = await _appSettingRepository.FindAsync(request.Id);
             if (entityExist == null)
             {
                 _logger.LogError("AppSetting Not Found.");
-                //return ServiceResponse<AppSettingDto>.Return404();
+
+                throw new NotFoundException("AppSetting Not Found.");
             }
             entityExist.IsDeleted = true;
             entityExist.DeletedBy = Guid.Parse(_userInfoToken.Id);
             entityExist.DeletedDate = DateTime.Now.ToLocalTime();
             _appSettingRepository.Update(entityExist);
-            //if (await _uow.SaveAsync() <= 0)
-            //{
-            //    return ServiceResponse<AppSettingDto>.Return500();
-            //}
-
-            //return entityExist;
-            //return ServiceResponse<AppSettingDto>.ReturnResultWith204();
+            if (await _uow.SaveAsync() <= 0)
+            {
+                throw new System.Exception();
+            }
         }
 
-        public async Task<List<AppSettingDto>> GetAllAppSetting(GetAppSettingModel request, CancellationToken cancellationToken)
+        public async Task<List<AppSettingDto>> GetAllAppSetting(GetAppSettingModel request)
         {
 
             var entities = await _appSettingRepository.All.ToListAsync();
             return _mapper.Map<List<AppSettingDto>>(entities);
-            //return ServiceResponse<List<AppSettingDto>>.ReturnResultWith200(_mapper.Map<List<AppSettingDto>>(entities));
         }
-        public async Task<ServiceResponse<AppSettingDto>> GetAppSettingByKey(GetAppSettingModel request, CancellationToken cancellationToken)
+        public async Task<AppSettingDto> GetAppSettingByKey(GetAppSettingModel request)
         {
             var appsetting = await _appSettingRepository.FindBy(c => c.Key == request.Key).FirstOrDefaultAsync();
             if (appsetting == null)
             {
                 _logger.LogError("AppSetting key is not available");
-                return ServiceResponse<AppSettingDto>.Return404();
+
+                throw new NotFoundException("AppSetting key is not available");
             }
 
-            return ServiceResponse<AppSettingDto>.ReturnResultWith200(_mapper.Map<AppSettingDto>(appsetting));
+            return _mapper.Map<AppSettingDto>(appsetting);
         }
 
-        public async Task<AppSettingDto> GetAppSetting(GetAppSettingModel request, CancellationToken cancellationToken)
+        public async Task<AppSettingDto> GetAppSetting(GetAppSettingModel request)
         {
             var appsetting = await _appSettingRepository.FindBy(c => c.Id == request.Id).FirstOrDefaultAsync();
+
+            if (appsetting == null)
+            {
+                _logger.LogError("AppSetting key is not available");
+
+                throw new NotFoundException("AppSetting key is not available");
+            }
             return _mapper.Map<AppSettingDto>(appsetting);
-            //if (appsetting == null)
-            //{
-            //    _logger.LogError("AppSetting key is not available");
-            //    return ServiceResponse<AppSettingDto>.Return404();
-            //}
-            //return ServiceResponse<AppSettingDto>.ReturnResultWith200(_mapper.Map<AppSettingDto>(appsetting));
         }
 
-        public async Task<AppSettingDto> UpdateAppSetting(UpdateAppSettingModel request, CancellationToken cancellationToken)
+        public async Task<AppSettingDto> UpdateAppSetting(UpdateAppSettingModel request)
         {
             var entityExist = await _appSettingRepository.FindBy(c => c.Key == request.Key && c.Id != request.Id).FirstOrDefaultAsync();
             if (entityExist != null)
             {
                 _logger.LogError("AppSetting already exist.");
-                //return ServiceResponse<AppSettingDto>.Return409("App Setting already exist.");
+
+                throw new AlreadyExistsException("App Setting already exist.");
             }
             var entity = _mapper.Map<AppSetting>(request);
             entity.ModifiedBy = Guid.Parse(_userInfoToken.Id);
             _appSettingRepository.Update(entity);
-            //if (await _uow.SaveAsync() <= 0)
-            //{
-            //    return ServiceResponse<AppSettingDto>.Return500();
-            //}
+            if (await _uow.SaveAsync() <= 0)
+            {
+                throw new System.Exception();
+            }
             var entityDto = _mapper.Map<AppSettingDto>(entity);
 
             return entityDto;
-            //return ServiceResponse<AppSettingDto>.ReturnResultWith200(entityDto);
         }
     }
 }

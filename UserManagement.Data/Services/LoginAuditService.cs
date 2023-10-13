@@ -14,7 +14,7 @@ namespace UserManagement.Domain.Services
         {
             _loginAuditRepository = loginAuditRepository;
         }
-        public async Task<LoginAuditList> GetAllLoginAudit(LoginAuditModel request, CancellationToken cancellationToken)
+        public async Task<LoginAuditList> GetAllLoginAudit(LoginAuditModel request)
         {
             return await _loginAuditRepository.GetDocumentAuditTrails(request);
         }

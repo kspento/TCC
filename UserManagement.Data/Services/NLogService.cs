@@ -10,6 +10,7 @@ using UserManagement.Domain.Model.NLog;
 using UserManagement.Data.Context;
 using UserManagement.Data.UnitOfWork;
 using UserManagement.Domain.Contracts.Services;
+using UserManagement.Domain.Exception;
 
 namespace UserManagement.Domain.Services
 {
@@ -25,23 +26,21 @@ namespace UserManagement.Domain.Services
             _uow = uow;
         }
 
-        public async Task<NLogList> GetNLogs(GetNLogsModel request, CancellationToken cancellationToken)
+        public async Task<NLogList> GetNLogs(GetNLogsModel request)
         {
             return await _nLogRespository.GetNLogsAsync(request.NLogResource);
         }
 
-        public async Task<NLogDto> GetLog(GetNLogsModel request, CancellationToken cancellationToken)
+        public async Task<NLogDto> GetLog(GetNLogsModel request)
         {
             var entity = await _nLogRespository.FindAsync(request.Id);
             if (entity != null)
                 return _mapper.Map<NLogDto>(entity);
-            //return ServiceResponse<NLogDto>.ReturnResultWith200(_mapper.Map<NLogDto>(entity));
             else
-                return null;
-            //return ServiceResponse<NLogDto>.Return404();
+                throw new NotFoundException(string.Empty);
         }
 
-        public async Task<ServiceResponse<NLogDto>> AddLog(AddLogModel request, CancellationToken cancellationToken)
+        public async Task AddLog(AddLogModel request)
         {
             _nLogRespository.Add(new Data.Entities.NLog
             {
@@ -53,7 +52,6 @@ namespace UserManagement.Domain.Services
                 Exception = request.Stack
             });
             await _uow.SaveAsync();
-            return ServiceResponse<NLogDto>.ReturnSuccess();
         }
     }
 }

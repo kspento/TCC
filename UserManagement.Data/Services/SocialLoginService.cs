@@ -40,7 +40,7 @@ namespace UserManagement.Domain.Services
             _roleRepository = roleRepository;
         }
 
-        public async Task<ServiceResponse<UserAuthDto>> SocialLogin(SocialLoginModel request, CancellationToken cancellationToken)
+        public async Task<UserAuthDto> SocialLogin(SocialLoginModel request)
         {
             var loginAudit = new LoginAuditDto
             {
@@ -81,7 +81,7 @@ namespace UserManagement.Domain.Services
                 {
                     loginAudit.Status = LoginStatus.Error.ToString();
                     await _loginAuditRepository.LoginAudit(loginAudit);
-                    return ServiceResponse<UserAuthDto>.Return500();
+                    throw new System.Exception();
                 }
                 appUser = await _userManager.FindByNameAsync(request.Email);
             }
@@ -94,7 +94,7 @@ namespace UserManagement.Domain.Services
                 Id = authUser.Id.ToString()
             };
             await _hubContext.Clients.All.Joined(onlineUser);
-            return ServiceResponse<UserAuthDto>.ReturnResultWith200(authUser);
+            return authUser;
         }
     }
 }

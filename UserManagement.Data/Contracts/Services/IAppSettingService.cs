@@ -9,11 +9,11 @@ namespace UserManagement.Domain.Contracts.Services
 {
     public interface IAppSettingService
     {
-        Task<AppSettingDto> AddAppSetting(AddAppSettingModel request, CancellationToken cancellationToken);
-        Task DeleteAppSetting(DeleteAppSettingModel request, CancellationToken cancellationToken);
-        Task<List<AppSettingDto>> GetAllAppSetting(GetAppSettingModel request, CancellationToken cancellationToken);
-        Task<AppSettingDto> GetAppSetting(GetAppSettingModel request, CancellationToken cancellationToken);
-        Task<ServiceResponse<AppSettingDto>> GetAppSettingByKey(GetAppSettingModel request, CancellationToken cancellationToken);
-        Task<AppSettingDto> UpdateAppSetting(UpdateAppSettingModel request, CancellationToken cancellationToken);
+        Task<AppSettingDto> AddAppSetting(AddAppSettingModel request);
+        Task DeleteAppSetting(DeleteAppSettingModel request);
+        Task<List<AppSettingDto>> GetAllAppSetting(GetAppSettingModel request);
+        Task<AppSettingDto> GetAppSetting(GetAppSettingModel request);
+        Task<AppSettingDto> GetAppSettingByKey(GetAppSettingModel request);
+        Task<AppSettingDto> UpdateAppSetting(UpdateAppSettingModel request);
     }
 }

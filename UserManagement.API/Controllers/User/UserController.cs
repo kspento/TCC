@@ -9,6 +9,7 @@ using UserManagement.Data.Resources;
 using UserManagement.Data.Dto.User;
 using UserManagement.Domain.Model.User;
 using UserManagement.Repository;
+using UserManagement.API.Filters;
 
 namespace UserManagement.API.Controllers
 {
@@ -18,6 +19,7 @@ namespace UserManagement.API.Controllers
     [Route("api/[controller]")]
     [ApiController]
     [Authorize]
+    [ServiceFilter(typeof(CustomExceptionFilter))]
     public class UserController : BaseController
     {
         private readonly IUserService _userService;
@@ -137,21 +139,28 @@ namespace UserManagement.API.Controllers
         [Produces("application/json", "application/xml", Type = typeof(UserAuthDto))]
         public async Task<IActionResult> UserLogin(UserLoginModel userLoginCommand)
         {
-            userLoginCommand.RemoteIp = Request.HttpContext.Connection.RemoteIpAddress.ToString();
-            var result = await _userService.UserLogin(userLoginCommand);
+            try
+            {
+                userLoginCommand.RemoteIp = Request.HttpContext.Connection.RemoteIpAddress.ToString();
+                var result = await _userService.UserLogin(userLoginCommand);
 
-            //if (!result.Success)
-            //{
-            //    return ReturnFormattedResponse(result);
-            //}
-            //if (!string.IsNullOrWhiteSpace(result.Data.ProfilePhoto))
-            //{
-            //    result.Data.ProfilePhoto = $"Users/{result.Data.ProfilePhoto}";
-            //}
-            //
-            //return Ok(result.Data);
+                //if (!result.Success)
+                //{
+                //    return ReturnFormattedResponse(result);
+                //}
+                if (!string.IsNullOrWhiteSpace(result.ProfilePhoto))
+                {
+                    result.ProfilePhoto = $"Users/{result.ProfilePhoto}";
+                }
 
-            return Ok(result);
+                return Ok(result);
+            }
+            catch (Exception)
+            {
+
+                throw;
+            }
+      
         }
 
         /// <summary>
@@ -166,7 +175,6 @@ namespace UserManagement.API.Controllers
         {
             updateUserCommand.Id = id;
             var result = await _userService.UpdateUser(updateUserCommand);
-            //return ReturnFormattedResponse(result);
 
             return Ok(result);
         }
@@ -180,8 +188,7 @@ namespace UserManagement.API.Controllers
         [Produces("application/json", "application/xml", Type = typeof(UserDto))]
         public async Task<IActionResult> UpdateUserProfile(UpdateUserProfileModel updateUserProfileCommand)
         {
-            var result = await _userService.UpdateUserProfile(updateUserProfileCommand);
-            //return ReturnFormattedResponse(result);
+            var result = await _userService.UpdateUserProfile(updateUserProfileCommand);            
 
             return Ok(result);
         }
@@ -199,8 +206,7 @@ namespace UserManagement.API.Controllers
                 FormFile = Request.Form.Files,
                 RootPath = _webHostEnvironment.WebRootPath
             };
-            var result = await _userService.UpdateUserProfilePhoto(updateUserProfilePhotoCommand);
-            //return ReturnFormattedResponse(result);
+            var result = await _userService.UpdateUserProfilePhoto(updateUserProfilePhotoCommand);            
 
             return Ok(result);
         }
@@ -214,8 +220,7 @@ namespace UserManagement.API.Controllers
         public async Task<IActionResult> DeleteUser(Guid Id)
         {
             var deleteUserCommand = new DeleteUserModel { Id = Id };
-            var result = await _userService.DeleteUser(deleteUserCommand);
-            //return ReturnFormattedResponse(result);
+            var result = await _userService.DeleteUser(deleteUserCommand);            
             
             return Ok(result);
         }
@@ -228,8 +233,7 @@ namespace UserManagement.API.Controllers
         [HttpPost("changepassword")]
         public async Task<IActionResult> ChangePassword(ChangePasswordModel resetPasswordCommand)
         {
-            var result = await _userService.ChangePassword(resetPasswordCommand);
-            //return ReturnFormattedResponse(result);
+            var result = await _userService.ChangePassword(resetPasswordCommand);           
 
             return Ok(result);
         }
@@ -242,8 +246,7 @@ namespace UserManagement.API.Controllers
         [HttpPost("resetpassword")]
         public async Task<IActionResult> ResetPassword(ResetPasswordModel newPasswordCommand)
         {
-            var result = await _userService.ResetPassword(newPasswordCommand);
-            //return ReturnFormattedResponse(result);
+            var result = await _userService.ResetPassword(newPasswordCommand);            
 
             return Ok(result);
         }
@@ -264,7 +267,6 @@ namespace UserManagement.API.Controllers
             {
                 result.ProfilePhoto = $"Users/{result.ProfilePhoto}";
             }
-            //return ReturnFormattedResponse(result);
             
             return Ok(result);
         }

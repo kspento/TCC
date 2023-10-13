@@ -39,7 +39,7 @@ namespace UserManagement.Domain.Services
             return Task.FromResult(_userRepository.All.Where(c => !c.IsActive).Count());
         }
 
-        public async Task<List<UserDto>> GetOnlineUsers(List<UserDto> request, CancellationToken cancellationToken)
+        public async Task<List<UserDto>> GetOnlineUsers(List<UserDto> request)
         {
             var user = new SignlarUser
             {

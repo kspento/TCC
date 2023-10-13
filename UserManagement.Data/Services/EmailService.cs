@@ -14,6 +14,7 @@ using UserManagement.Data.Dto.User;
 using System.Collections.Generic;
 using System.Linq;
 using UserManagement.Data.Repository.Contracts;
+using UserManagement.Domain.Exception;
 
 namespace UserManagement.Domain.Services
 {
@@ -37,7 +38,7 @@ namespace UserManagement.Domain.Services
             _userInfoToken = userInfoToken;
         }
 
-        public async Task<EmailSMTPSettingDto> AddEmailSMTPSetting(EmailSettingModel request, CancellationToken cancellationToken)
+        public async Task<EmailSMTPSettingDto> AddEmailSMTPSetting(EmailSettingModel request)
         {
             var entity = _mapper.Map<EmailSMTPSetting>(request);
             _emailSMTPSettingRepository.Add(entity);
@@ -51,21 +52,20 @@ namespace UserManagement.Domain.Services
             }
             if (await _uow.SaveAsync() <= 0)
             {
-                //return ServiceResponse<EmailSMTPSettingDto>.Return500();
+                throw new System.Exception();
             }
             var entityDto = _mapper.Map<EmailSMTPSettingDto>(entity);
 
             return entityDto;
-            //return ServiceResponse<EmailSMTPSettingDto>.ReturnResultWith200(entityDto);
         }
 
-        public async Task<EmailSMTPSettingDto> UpdateEmailSMTPSetting(EmailSettingModel request, CancellationToken cancellationToken)
+        public async Task<EmailSMTPSettingDto> UpdateEmailSMTPSetting(EmailSettingModel request)
         {
             var entityExist = await _emailSMTPSettingRepository.FindAsync(request.Id);
             if (entityExist == null)
             {
                 _logger.LogError("Email SMTP setting does not exist.");
-                //return ServiceResponse<EmailSMTPSettingDto>.Return409("Email SMTP setting does not exist.");
+                throw new AlreadyExistsException("Email SMTP setting does not exist.");
             }
             entityExist.IsDefault = request.IsDefault;
             entityExist.IsEnableSSL = request.IsEnableSSL;
@@ -84,43 +84,40 @@ namespace UserManagement.Domain.Services
             }
             if (await _uow.SaveAsync() <= 0)
             {
-                //return ServiceResponse<EmailSMTPSettingDto>.Return500();
+                throw new System.Exception();
             }
             var entityDto = _mapper.Map<EmailSMTPSettingDto>(entityExist);
 
             return entityDto;
-            
-            //return ServiceResponse<EmailSMTPSettingDto>.ReturnResultWith200(entityDto);
         }
 
-        public async Task DeleteEmailSMTPSetting(EmailSettingModel request, CancellationToken cancellationToken)
+        public async Task DeleteEmailSMTPSetting(EmailSettingModel request)
         {
             var entityExist = await _emailSMTPSettingRepository.FindAsync(request.Id);
             if (entityExist == null)
             {
                 _logger.LogError("Not found");
-                //return ServiceResponse<EmailSMTPSettingDto>.Return404();
+                throw new NotFoundException(string.Empty);
             }
             if (entityExist.IsDefault)
             {
-                //return ServiceResponse<EmailSMTPSettingDto>.Return422("You can not delete default Setting.");
+                throw new NotAllowedException("You can not delete default Setting.");
             }
             entityExist.IsDeleted = true;
             _emailSMTPSettingRepository.Update(entityExist);
             if (await _uow.SaveAsync() <= 0)
             {
-                //return ServiceResponse<EmailSMTPSettingDto>.Return500();
+                throw new System.Exception();
             }
-            //return ServiceResponse<EmailSMTPSettingDto>.ReturnResultWith204();
         }
 
-        public async Task<EmailDto> SendEmail(SendEmailModel request, CancellationToken cancellationToken)
+        public async Task<EmailDto> SendEmail(SendEmailModel request)
         {
             var defaultSmtp = await _emailSMTPSettingRepository.FindBy(c => c.IsDefault).FirstOrDefaultAsync();
             if (defaultSmtp == null)
             {
                 _logger.LogError("Default SMTP setting does not exist.");
-                //return ServiceResponse<EmailDto>.Return404("Default SMTP setting does not exist.");
+                throw new NotFoundException("Default SMTP setting does not exist.");
             }
             try
             {
@@ -140,32 +137,30 @@ namespace UserManagement.Domain.Services
                 });
 
                 return _mapper.Map<EmailDto>(request); 
-                //return ServiceResponse<EmailDto>.ReturnSuccess();
             }
-            catch (Exception e)
+            catch (System.Exception e)
             {
                 _logger.LogError(e.Message, e);
 
-                return null;
-                //return ServiceResponse<EmailDto>.ReturnFailed(500, e.Message);
+                throw;
             }
         }
 
-        public async Task<List<EmailSMTPSettingDto>> GetEmailSMTPSettings(EmailSettingModel request, CancellationToken cancellationToken)
+        public async Task<List<EmailSMTPSettingDto>> GetEmailSMTPSettings(EmailSettingModel request)
         {
             var entities = await _emailSMTPSettingRepository.All.ToListAsync();
             return _mapper.Map<List<EmailSMTPSettingDto>>(entities);
         }
 
-        public async Task<ServiceResponse<EmailSMTPSettingDto>> GetEmailSMTPSetting(EmailSettingModel request, CancellationToken cancellationToken)
+        public async Task<EmailSMTPSettingDto> GetEmailSMTPSetting(EmailSettingModel request)
         {
             var entity = await _emailSMTPSettingRepository.All.Where(c => c.Id == request.Id).FirstOrDefaultAsync();
             if (entity != null)
-                return ServiceResponse<EmailSMTPSettingDto>.ReturnResultWith200(_mapper.Map<EmailSMTPSettingDto>(entity));
+                return _mapper.Map<EmailSMTPSettingDto>(entity);
             else
             {
                 _logger.LogError("Not found");
-                return ServiceResponse<EmailSMTPSettingDto>.Return404();
+                throw new NotFoundException(string.Empty);
             }
         }
     }

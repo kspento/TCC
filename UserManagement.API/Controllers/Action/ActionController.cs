@@ -7,6 +7,8 @@ using MediatR;
 using Microsoft.AspNetCore.Authorization;
 using Microsoft.AspNetCore.Mvc;
 using UserManagement.Data.Dto.Action;
+using UserManagement.Domain.Contracts.Services;
+using UserManagement.Domain.Model.Action;
 
 namespace UserManagement.API.Controllers
 {
@@ -18,15 +20,15 @@ namespace UserManagement.API.Controllers
     [Authorize]
     public class ActionController : BaseController
     {
-        public IMediator _mediator { get; set; }
+        public IActionService _actionService { get; set; }
         
         /// <summary>
         /// Action
         /// </summary>
         /// <param name="mediator"></param>
-        public ActionController(IMediator mediator)
+        public ActionController(IActionService actionService)
         {
-            _mediator = mediator;
+            _actionService = actionService;
         }
         /// <summary>
         /// Get Action By Id
@@ -38,9 +40,10 @@ namespace UserManagement.API.Controllers
         [Produces("application/json", "application/xml", Type = typeof(ActionDto))]
         public async Task<IActionResult> GetAction(Guid id)
         {
-            var getActionQuery = new GetActionQuery { Id = id };
-            var result = await _mediator.Send(getActionQuery);
-            return ReturnFormattedResponse(result);
+            var getActionQuery = new ActionModel { Id = id };
+            var result = _actionService.GetAction(getActionQuery);
+
+            return CreateApiResponse(result);
         }
         /// <summary>
         /// Get All Actions
@@ -49,26 +52,25 @@ namespace UserManagement.API.Controllers
         [HttpGet("Actions")]
         [Produces("application/json", "application/xml", Type = typeof(List<ActionDto>))]
         public async Task<IActionResult> GetActions()
-        {
-            var getAllActionQuery = new GetAllActionQuery { };
-            var result = await _mediator.Send(getAllActionQuery);
-            return ReturnFormattedResponse(result);
+        {          
+            var result = await _actionService.GetAllAction();
+            return CreateApiResponse(result);
         }
         /// <summary>
         /// Create A Action
         /// </summary>
-        /// <param name="addActionCommand"></param>
+        /// <param name="addActionModel"></param>
         /// <returns></returns>
         [HttpPost("Action")]
         [Produces("application/json", "application/xml", Type = typeof(ActionDto))]
-        public async Task<IActionResult> AddAction(AddActionCommand addActionCommand)
+        public async Task<IActionResult> AddAction(ActionModel addActionModel)
         {
-            var response = await _mediator.Send(addActionCommand);
-            if (!response.Success)
-            {
-                return ReturnFormattedResponse(response);
-            }
-            return CreatedAtAction("GetAction", new { id = response.Data.Id }, response.Data);
+            var response = await _actionService.AddAction(addActionModel);
+            //if (!response.Success)
+            //{
+            //    return ReturnFormattedResponse(response);
+            //}
+            return CreatedAtAction("GetAction", new { id = response.Id }, response);
         }
         /// <summary>
         /// Update Exist Action By Id
@@ -78,12 +80,11 @@ namespace UserManagement.API.Controllers
         /// <returns></returns>
         [HttpPut("Action/{Id}")]
         [Produces("application/json", "application/xml", Type = typeof(ActionDto))]
-        public async Task<IActionResult> UpdateAction(Guid Id, UpdateActionCommand updateActionCommand)
+        public async Task<IActionResult> UpdateAction(Guid Id, ActionModel updateActionCommand)
         {
             updateActionCommand.Id = Id;
-            var result = await _mediator.Send(updateActionCommand);
-            return ReturnFormattedResponse(result);
-
+            var result = await  _actionService.UpdateAction(updateActionCommand);
+            return CreateApiResponse(result);
         }
         /// <summary>
         /// Delete Action By Id
@@ -93,9 +94,10 @@ namespace UserManagement.API.Controllers
         [HttpDelete("Action/{Id}")]
         public async Task<IActionResult> DeleteAction(Guid Id)
         {
-            var deleteActionCommand = new DeleteActionCommand { Id = Id };
-            var result = await _mediator.Send(deleteActionCommand);
-            return ReturnFormattedResponse(result);
+            var deleteActionCommand = new ActionModel { Id = Id };
+            await _actionService.DeleteAction(deleteActionCommand);
+
+            return NoContent();
         }
     }
 }

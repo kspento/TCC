@@ -9,8 +9,8 @@ namespace UserManagement.Domain.Contracts.Services
 {
     public interface INLogService
     {
-        Task<ServiceResponse<NLogDto>> AddLog(AddLogModel request, CancellationToken cancellationToken);
-        Task<NLogDto> GetLog(GetNLogsModel request, CancellationToken cancellationToken);
-        Task<NLogList> GetNLogs(GetNLogsModel request, CancellationToken cancellationToken);
+        Task AddLog(AddLogModel request);
+        Task<NLogDto> GetLog(GetNLogsModel request);
+        Task<NLogList> GetNLogs(GetNLogsModel request);
     }
 }

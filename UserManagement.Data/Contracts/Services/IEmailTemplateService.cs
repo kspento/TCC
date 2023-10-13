@@ -9,10 +9,10 @@ namespace UserManagement.Domain.Contracts.Services
 {
     public interface IEmailTemplateService
     {
-        Task<EmailTemplateDto> AddEmailTemplate(AddEmailTemplateModel request, CancellationToken cancellationToken);
-        Task<bool> DeleteEmailTemplate(DeleteEmailTemplateModel request, CancellationToken cancellationToken);
+        Task<EmailTemplateDto> AddEmailTemplate(AddEmailTemplateModel request);
+        Task<bool> DeleteEmailTemplate(DeleteEmailTemplateModel request);
         Task<List<EmailTemplateDto>> GetAllEmailTemplate(CancellationToken cancellationToken);
-        Task<EmailTemplateDto> GetEmailTemplate(GetEmailTemplateModel request, CancellationToken cancellationToken);
-        Task<EmailTemplateDto> UpdateEmailTemplate(UpdateEmailTemplateModel request, CancellationToken cancellationToken);
+        Task<EmailTemplateDto> GetEmailTemplate(GetEmailTemplateModel request);
+        Task<EmailTemplateDto> UpdateEmailTemplate(UpdateEmailTemplateModel request);
     }
 }

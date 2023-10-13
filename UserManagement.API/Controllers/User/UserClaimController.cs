@@ -3,6 +3,7 @@ using System.Threading.Tasks;
 using MediatR;
 using Microsoft.AspNetCore.Authorization;
 using Microsoft.AspNetCore.Mvc;
+using UserManagement.API.Filters;
 using UserManagement.Data.Dto.UserClaim;
 using UserManagement.Domain.Contracts.Services;
 using UserManagement.Domain.Model.User;
@@ -15,6 +16,7 @@ namespace UserManagement.API.Controllers
     [Route("api/[controller]")]
     [ApiController]
     [Authorize]
+    [ServiceFilter(typeof(CustomExceptionFilter))]
     public class UserClaimController : BaseController
     {
         public IUserService _userService { get; set; }

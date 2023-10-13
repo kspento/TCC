@@ -6,8 +6,8 @@ using System.Collections.Generic;
 using System.Text.Json;
 using System.Threading.Tasks;
 using UserManagement.Data.Dto.AppSetting;
-using UserManagement.MediatR.Commands;
-using UserManagement.MediatR.Queries;
+using UserManagement.Domain.Contracts.Services;
+using UserManagement.Domain.Model.App;
 
 namespace UserManagement.API.Controllers.AppSetting
 {
@@ -18,7 +18,7 @@ namespace UserManagement.API.Controllers.AppSetting
     [ApiController]
     public class AppSettingController : BaseController
     {
-        public IMediator _mediator { get; set; }
+        public IAppSettingService _appSettingService { get; set; }
         private readonly ILogger<AppSettingController> _logger;
         /// <summary>
         /// App Setting
@@ -26,33 +26,35 @@ namespace UserManagement.API.Controllers.AppSetting
         /// <param name="mediator"></param>
         /// <param name="logger"></param>
         public AppSettingController(
-            IMediator mediator,
+            IAppSettingService appSettingService,
             ILogger<AppSettingController> logger)
         {
-            _mediator = mediator;
+            _appSettingService = appSettingService;
             _logger = logger;
         }
         /// <summary>
         /// Create  Appsetting
         /// </summary>
-        /// <param name="addAppSettingCommand"></param>
+        /// <param name="addAppSettingModel"></param>
         /// <returns></returns>
         [HttpPost]
         [Produces("application/json", "application/xml", Type = typeof(AppSettingDto))]
-        public async Task<IActionResult> AddAppSetting(AddAppSettingCommand addAppSettingCommand)
+        public async Task<IActionResult> AddAppSetting(AddAppSettingModel addAppSettingModel)
         {
-            var result = await _mediator.Send(addAppSettingCommand);
-            if (result.StatusCode != 200)
-            {
-                _logger.LogError(result.StatusCode,
-                                JsonSerializer.Serialize(result), "");
-                return StatusCode(result.StatusCode, result);
-            }
-            if (!result.Success)
-            {
-                return ReturnFormattedResponse(result);
-            }
-            return CreatedAtAction("GetAppSetting", new { id = result.Data.Id }, result.Data);
+            var result = await _appSettingService.AddAppSetting(addAppSettingModel);
+
+
+            //if (result.StatusCode != 200)
+            //{
+            //    _logger.LogError(result.StatusCode,
+            //                    JsonSerializer.Serialize(result), "");
+            //    return StatusCode(result.StatusCode, result);
+            //}
+            //if (!result.Success)
+            //{
+            //    return ReturnFormattedResponse(result);
+            //}
+            return CreatedAtAction("GetAppSetting", new { id = result.Id }, result);
         }
         /// <summary>
         /// Update Exist AppSetting By Id
@@ -63,11 +65,11 @@ namespace UserManagement.API.Controllers.AppSetting
 
         [HttpPut("{id}")]
         [Produces("application/json", "application/xml", Type = typeof(AppSettingDto))]
-        public async Task<IActionResult> UpdateAppSetting(Guid id, UpdateAppSettingCommand updateAppSettingCommand)
+        public async Task<IActionResult> UpdateAppSetting(Guid id, UpdateAppSettingModel updateAppSettingCommand)
         {
             updateAppSettingCommand.Id = id;
-            var result = await _mediator.Send(updateAppSettingCommand);
-            return ReturnFormattedResponse(result);
+            var result = await _appSettingService.UpdateAppSetting(updateAppSettingCommand);
+            return CreateApiResponse(result);
         }
         /// <summary>
         /// Get AppSetting By Id
@@ -80,13 +82,13 @@ namespace UserManagement.API.Controllers.AppSetting
         public async Task<IActionResult> GetAppSetting(Guid id)
         {
             _logger.LogTrace("GetAppSetting");
-            var getAppSettingQuery = new GetAppSettingQuery
+            var getAppSettingQuery = new GetAppSettingModel
             {
                 Id = id
             };
 
-            var result = await _mediator.Send(getAppSettingQuery);
-            return ReturnFormattedResponse(result);
+            var result = await _appSettingService.GetAppSetting(getAppSettingQuery);
+            return CreateApiResponse(result);
 
         }
         /// <summary>
@@ -100,13 +102,13 @@ namespace UserManagement.API.Controllers.AppSetting
         public async Task<IActionResult> GetAppSettingByKey(string key)
         {
             _logger.LogTrace("GetAppSettingByKey");
-            var getAppSettingByKeyQuery = new GetAppSettingByKeyQuery
+            var getAppSettingByKeyQuery = new GetAppSettingModel
             {
                 Key = key
             };
 
-            var result = await _mediator.Send(getAppSettingByKeyQuery);
-            return ReturnFormattedResponse(result);
+            var result = await _appSettingService.GetAppSettingByKey(getAppSettingByKeyQuery);
+            return CreateApiResponse(result);
         }
         /// <summary>
         /// Get All AppSettings
@@ -116,11 +118,11 @@ namespace UserManagement.API.Controllers.AppSetting
         [Produces("application/json", "application/xml", Type = typeof(List<AppSettingDto>))]
         public async Task<IActionResult> GetAppSettings()
         {
-            var getAllAppSettingQuery = new GetAllAppSettingQuery
+            var getAllAppSettingQuery = new GetAppSettingModel
             {
             };
-            var result = await _mediator.Send(getAllAppSettingQuery);
-            return ReturnFormattedResponse(result);
+            var result = await _appSettingService.GetAppSettingByKey(getAllAppSettingQuery);
+            return CreateApiResponse(result);
         }
         /// <summary>
         /// Delete AppSetting By Id
@@ -130,12 +132,14 @@ namespace UserManagement.API.Controllers.AppSetting
         [HttpDelete("{Id}")]
         public async Task<IActionResult> DeleteAppSetting(Guid Id)
         {
-            var deleteAppSettingCommand = new DeleteAppSettingCommand
+            var deleteAppSettingCommand = new DeleteAppSettingModel
             {
                 Id = Id
             };
-            var result = await _mediator.Send(deleteAppSettingCommand);
-            return ReturnFormattedResponse(result);
+
+            await _appSettingService.DeleteAppSetting(deleteAppSettingCommand);
+
+            return NoContent();
         }
     }
 }

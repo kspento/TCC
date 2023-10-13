@@ -12,6 +12,7 @@ using UserManagement.Data.Entities;
 using UserManagement.Data.Repository.Contracts;
 using UserManagement.Data.Repository.RoleClaim;
 using UserManagement.Data.UnitOfWork;
+using UserManagement.Domain.Exception;
 using UserManagement.Domain.Model.Role;
 using UserManagement.Helper;
 
@@ -52,7 +53,7 @@ public class RoleService : IRoleService
         if (entityExist != null)
         {
             _logger.LogError("Role Name Already Exist.");
-            //return ServiceResponse<RoleDto>.Return409("Role Name Already Exist.");
+            throw new AlreadyExistsException("Role Name Already Exist.");
         }
 
         entityExist = await _roleRepository.FindByInclude(v => v.Id == request.Id, c => c.RoleClaims).FirstOrDefaultAsync();
@@ -70,11 +71,10 @@ public class RoleService : IRoleService
 
         if (await _uow.SaveAsync() <= 0)
         {
-            //return ServiceResponse<RoleDto>.Return500();
+            throw new System.Exception();
         }
 
         return _mapper.Map<RoleDto>(entityExist);
-        //return ServiceResponse<RoleDto>.ReturnResultWith200(_mapper.Map<RoleDto>(entityExist));
     }
 
     // Method to handle GetRoleUsersQuery
@@ -93,7 +93,6 @@ public class RoleService : IRoleService
             }).ToList();
 
         return userRoles;
-        //return ServiceResponse<List<UserRoleDto>>.ReturnResultWith200(userRoles);
     }
 
     // Method to handle GetRoleQuery
@@ -105,12 +104,10 @@ public class RoleService : IRoleService
 
         if (entity != null)
             return _mapper.Map<RoleDto>(entity);
-        //return ServiceResponse<RoleDto>.ReturnResultWith200(_mapper.Map<RoleDto>(entity));
         else
         {
             _logger.LogError("Not found");
-            return null;
-            //return ServiceResponse<RoleDto>.Return404();
+            throw new NotFoundException(string.Empty);
         }
     }
 
@@ -120,7 +117,6 @@ public class RoleService : IRoleService
         var entities = await _roleRepository.All.ToListAsync();
 
         return _mapper.Map<List<RoleDto>>(entities);
-        //return ServiceResponse<List<RoleDto>>.ReturnResultWith200(_mapper.Map<List<RoleDto>>(entities));
     }
 
     // Method to handle DeleteRoleCommand
@@ -130,7 +126,7 @@ public class RoleService : IRoleService
         if (entityExist == null)
         {
             _logger.LogError("Not found");
-            //return ServiceResponse<RoleDto>.Return404();
+            throw new NotFoundException(string.Empty);
         }
 
         entityExist.IsDeleted = true;
@@ -140,10 +136,8 @@ public class RoleService : IRoleService
 
         if (await _uow.SaveAsync() <= 0)
         {
-            //return ServiceResponse<RoleDto>.Return500();
+            throw new System.Exception();
         }
-
-        //return ServiceResponse<RoleDto>.ReturnResultWith204();
     }
 
     // Method to handle AddRoleCommand
@@ -153,7 +147,7 @@ public class RoleService : IRoleService
         if (entityExist != null)
         {
             _logger.LogError("Role Name already exist.");
-            //return ServiceResponse<RoleDto>.Return409("Role Name already exist.");
+            throw new AlreadyExistsException("Role Name already exist.");
         }
 
         var entity = _mapper.Map<Role>(request);
@@ -166,12 +160,11 @@ public class RoleService : IRoleService
 
         if (await _uow.SaveAsync() <= 0)
         {
-            //return ServiceResponse<RoleDto>.Return500();
+            throw new System.Exception();
         }
 
         var entityDto = _mapper.Map<RoleDto>(entity);
 
         return entityDto;
-        //return ServiceResponse<RoleDto>.ReturnResultWith200(entityDto);
     }
 }

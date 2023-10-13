@@ -8,10 +8,10 @@ namespace UserManagement.Domain.Contracts.Services
 {
     public interface IActionService
     {
-        Task<ActionDto> AddAction(ActionModel request, CancellationToken cancellationToken);
-        Task DeleteAction(ActionModel request, CancellationToken cancellationToken);
-        Task<ActionDto> GetAction(ActionModel request, CancellationToken cancellationToken);
-        Task<List<ActionDto>> GetAllAction(ActionModel request, CancellationToken cancellationToken);
-        Task<ActionDto> UpdateAction(ActionModel request, CancellationToken cancellationToken);
+        Task<ActionDto> AddAction(ActionModel request);
+        Task DeleteAction(ActionModel request);
+        Task<ActionDto> GetAction(ActionModel request);
+        Task<List<ActionDto>> GetAllAction();
+        Task<ActionDto> UpdateAction(ActionModel request);
     }
 }

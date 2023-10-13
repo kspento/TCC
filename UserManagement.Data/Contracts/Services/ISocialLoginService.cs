@@ -8,6 +8,6 @@ namespace UserManagement.Domain.Contracts.Services
 {
     public interface ISocialLoginService
     {
-        Task<ServiceResponse<UserAuthDto>> SocialLogin(SocialLoginModel request, CancellationToken cancellationToken);
+        Task<UserAuthDto> SocialLogin(SocialLoginModel request);
     }
 }

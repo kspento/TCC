@@ -14,9 +14,6 @@
   </PropertyGroup>
 
   <ItemGroup>
-    <Compile Remove="Controllers\Action\**" />
-    <Compile Remove="Controllers\AppSetting\**" />
-    <Compile Remove="Controllers\Dashboard\**" />
     <Compile Remove="Controllers\EmailTemplate\**" />
     <Compile Remove="Controllers\Email\**" />
     <Compile Remove="Controllers\LoginAudit\**" />
@@ -25,9 +22,6 @@
     <Compile Remove="Controllers\Page\**" />
     <Compile Remove="Controllers\Role\**" />
     <Compile Remove="Controllers\Social\**" />
-    <Content Remove="Controllers\Action\**" />
-    <Content Remove="Controllers\AppSetting\**" />
-    <Content Remove="Controllers\Dashboard\**" />
     <Content Remove="Controllers\EmailTemplate\**" />
     <Content Remove="Controllers\Email\**" />
     <Content Remove="Controllers\LoginAudit\**" />
@@ -36,9 +30,6 @@
     <Content Remove="Controllers\Page\**" />
     <Content Remove="Controllers\Role\**" />
     <Content Remove="Controllers\Social\**" />
-    <EmbeddedResource Remove="Controllers\Action\**" />
-    <EmbeddedResource Remove="Controllers\AppSetting\**" />
-    <EmbeddedResource Remove="Controllers\Dashboard\**" />
     <EmbeddedResource Remove="Controllers\EmailTemplate\**" />
     <EmbeddedResource Remove="Controllers\Email\**" />
     <EmbeddedResource Remove="Controllers\LoginAudit\**" />
@@ -47,9 +38,6 @@
     <EmbeddedResource Remove="Controllers\Page\**" />
     <EmbeddedResource Remove="Controllers\Role\**" />
     <EmbeddedResource Remove="Controllers\Social\**" />
-    <None Remove="Controllers\Action\**" />
-    <None Remove="Controllers\AppSetting\**" />
-    <None Remove="Controllers\Dashboard\**" />
     <None Remove="Controllers\EmailTemplate\**" />
     <None Remove="Controllers\Email\**" />
     <None Remove="Controllers\LoginAudit\**" />
