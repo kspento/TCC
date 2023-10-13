@@ -6,7 +6,7 @@ using UserManagement.Data.UnitOfWork;
 
 namespace UserManagement.Data.Repository.AppSetting
 {
-    public class AppSettingRepository : GenericRepository<AppSetting, UserContext>,
+    public class AppSettingRepository : GenericRepository<Entities.AppSetting, UserContext>,
           IAppSettingRepository
     {
         public AppSettingRepository(

@@ -12,6 +12,7 @@ using UserManagement.Data.Repository.Action;
 using UserManagement.Data.Repository.Role;
 using UserManagement.Data.Repository.AppSetting;
 using UserManagement.Data.Repository.EmailTemplate;
+using UserManagement.Repository;
 
 namespace UserManagement.Api.Helpers
 {
@@ -24,13 +25,13 @@ namespace UserManagement.Api.Helpers
             services.AddScoped<IPageRepository, PageRepository>();
             services.AddScoped<IActionRepository, ActionRepository>();
             services.AddScoped<IRoleRepository, RoleRepository>();
-            services.AddScoped<Data.Repository.Contracts.IUserRepository, Data.Repository.UserRepository.UserRepository>();
-            services.AddScoped<Data.Repository.Contracts.IUserRoleRepository, Data.Repository.UserRole.UserRoleRepository>();
+            services.AddScoped<IUserRepository, UserRepository>();
+            services.AddScoped<IUserRoleRepository, Data.Repository.UserRole.UserRoleRepository>();
             services.AddScoped<IUserClaimRepository, UserClaimRepository>();
             services.AddScoped<IRoleClaimRepository, RoleClaimRepository>();
             services.AddScoped<IPageActionRepository, PageActionRepository>();
             services.AddScoped<ILoginAuditRepository, LoginAuditRepository>();
-            services.AddScoped<Data.Repository.Contracts.IUserAllowedIPRepository, Data.Repository.UserRepository.UserAllowedIPRepository>();
+            services.AddScoped<IUserAllowedIPRepository, UserAllowedIPRepository>();
             services.AddScoped<IAppSettingRepository, AppSettingRepository>();
             services.AddScoped<INLogRespository, NLogRespository>();
             services.AddScoped<IEmailTemplateRepository, EmailTemplateRepository>();

@@ -1,9 +1,8 @@
-﻿using UserManagement.Data.Entities;
-using UserManagement.Data.GenericRespository;
+﻿using UserManagement.Data.GenericRespository;
 
 namespace UserManagement.Data.Repository.Contracts
 {
-    public interface IUserAllowedIPRepository : IGenericRepository<UserAllowedIP>
+    public interface IUserAllowedIPRepository : IGenericRepository<Entities.UserAllowedIP>
     {
     }
 }

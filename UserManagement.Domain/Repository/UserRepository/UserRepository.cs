@@ -1,4 +1,5 @@
-﻿using Microsoft.EntityFrameworkCore;
+﻿using UserManagement.Data.Dto;
+using Microsoft.EntityFrameworkCore;
 using Microsoft.IdentityModel.Tokens;
 using System;
 using System.Collections.Generic;
@@ -7,21 +8,20 @@ using System.Linq;
 using System.Security.Claims;
 using System.Text;
 using System.Threading.Tasks;
-using UserManagement.Data.Entities;
-using UserManagement.Data.Context;
+using UserManagement.Data.Resources;
 using UserManagement.Data.Repository.Contracts;
 using UserManagement.Data.GenericRespository;
-using UserManagement.Data.Resources;
-using UserManagement.Data.Dto.User;
-using UserManagement.Data.Dto;
-using UserManagement.Data.UnitOfWork;
+using UserManagement.Data.Context;
 using UserManagement.Data.Repository.RoleClaim;
 using UserManagement.Data.Repository.PageAction;
 using UserManagement.Data.PropertyMapping;
+using UserManagement.Data.UnitOfWork;
+using UserManagement.Data.Dto.User;
+using UserManagement.Data.Entities;
 
-namespace UserManagement.Data.Repository.UserRepository
+namespace UserManagement.Repository
 {
-    public class UserRepository : GenericRepository<User, UserContext>,
+    public class UserRepository : GenericRepository<Data.Entities.User, UserContext>,
           IUserRepository
     {
         private JwtSettings _settings = null;
@@ -105,7 +105,7 @@ namespace UserManagement.Data.Repository.UserRepository
             ret.IsAuthenticated = true;
             ret.ProfilePhoto = appUser.ProfilePhoto;
             // Get all claims for this user
-            var appClaimDtos = await GetUserAndRoleClaims(appUser);
+            var appClaimDtos = await this.GetUserAndRoleClaims(appUser);
             ret.Claims = appClaimDtos;
             var claims = appClaimDtos.Select(c => new Claim(c.ClaimType, c.ClaimValue)).ToList();
             // Set JWT bearer token
@@ -139,12 +139,12 @@ namespace UserManagement.Data.Repository.UserRepository
             return lstAppClaimDto;
         }
 
-        private async Task<List<Entities.RoleClaim>> GetRoleClaims(User appUser)
+        private async Task<List<RoleClaim>> GetRoleClaims(User appUser)
         {
             var rolesIds = await _userRoleRepository.All.Where(c => c.UserId == appUser.Id)
                 .Select(c => c.RoleId)
                 .ToListAsync();
-            List<Entities.RoleClaim> lstRoleClaim = new List<Entities.RoleClaim>();
+            List<RoleClaim> lstRoleClaim = new List<RoleClaim>();
             foreach (var roleId in rolesIds)
             {
                 var roleClaims = await _roleClaimRepository.FindBy(c => c.RoleId == roleId).ToListAsync();

@@ -52,7 +52,7 @@ namespace UserManagement.Data.PropertyMapping
         {
             propertyMappings.Add(new PropertyMapping<LoginAuditDto, LoginAudit>(_loginAuditMapping));
             propertyMappings.Add(new PropertyMapping<UserDto, User>(_userMapping));
-            propertyMappings.Add(new PropertyMapping<NLogDto, NLog>(_nLogMapping));
+            propertyMappings.Add(new PropertyMapping<NLogDto, Entities.NLog>(_nLogMapping));
         }
         public Dictionary<string, PropertyMappingValue> GetPropertyMapping
             <TSource, TDestination>()

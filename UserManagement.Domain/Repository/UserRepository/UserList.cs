@@ -4,9 +4,8 @@ using System.Collections.Generic;
 using System.Linq;
 using System.Threading.Tasks;
 using UserManagement.Data.Dto.User;
-using UserManagement.Data.Entities;
 
-namespace UserManagement.Data.Repository.UserRepository
+namespace UserManagement.Repository
 {
     public class UserList : List<UserDto>
     {
@@ -28,7 +27,7 @@ namespace UserManagement.Data.Repository.UserRepository
             AddRange(items);
         }
 
-        public async Task<UserList> Create(IQueryable<User> source, int skip, int pageSize)
+        public async Task<UserList> Create(IQueryable<Data.Entities.User> source, int skip, int pageSize)
         {
             var count = await GetCount(source);
             var dtoList = await GetDtos(source, skip, pageSize);
@@ -36,12 +35,12 @@ namespace UserManagement.Data.Repository.UserRepository
             return dtoPageList;
         }
 
-        public async Task<int> GetCount(IQueryable<User> source)
+        public async Task<int> GetCount(IQueryable<Data.Entities.User> source)
         {
             return await source.AsNoTracking().CountAsync();
         }
 
-        public async Task<List<UserDto>> GetDtos(IQueryable<User> source, int skip, int pageSize)
+        public async Task<List<UserDto>> GetDtos(IQueryable<Data.Entities.User> source, int skip, int pageSize)
         {
             var entities = await source
                 .Skip(skip)

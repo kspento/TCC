@@ -2,6 +2,7 @@
 using UserManagement.Data.Dto.Role;
 using UserManagement.Data.Dto.RoleClaim;
 using UserManagement.Data.Entities;
+using UserManagement.Domain.Model.Role;
 
 namespace UserManagement.API.Helpers.Mapping
 {
@@ -11,8 +12,8 @@ namespace UserManagement.API.Helpers.Mapping
         {
             CreateMap<RoleClaim, RoleClaimDto>().ReverseMap();
             CreateMap<Role, RoleDto>().ReverseMap();
-            CreateMap<AddRoleCommand, Role>();
-            CreateMap<UpdateRoleCommand, Role>();
+            CreateMap<AddRoleModel, Role>();
+            CreateMap<UpdateRoleModel, Role>();
         }
     }
 }

@@ -10,6 +10,7 @@ using UserManagement.Data.Dto.Page;
 using UserManagement.Data.Entities;
 using UserManagement.Data.Repository.Contracts;
 using UserManagement.Data.UnitOfWork;
+using UserManagement.Domain.Contracts.Services;
 using UserManagement.Domain.Model.Page;
 using UserManagement.Helper;
 

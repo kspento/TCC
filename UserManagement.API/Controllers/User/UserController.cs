@@ -5,10 +5,10 @@ using Microsoft.AspNetCore.Authorization;
 using Microsoft.AspNetCore.Mvc;
 using Microsoft.AspNetCore.Hosting;
 using UserManagement.Domain.Contracts.Services;
-using UserManagement.Data.Repository.UserRepository;
 using UserManagement.Data.Resources;
 using UserManagement.Data.Dto.User;
 using UserManagement.Domain.Model.User;
+using UserManagement.Repository;
 
 namespace UserManagement.API.Controllers
 {

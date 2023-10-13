@@ -7,15 +7,15 @@
   <ItemGroup>
     <Compile Remove="Commands\**" />
     <Compile Remove="Handlers\**" />
-    <Compile Remove="Queries\AppSetting\**" />
+    <Compile Remove="Queries\**" />
     <Compile Remove="Validators\**" />
     <EmbeddedResource Remove="Commands\**" />
     <EmbeddedResource Remove="Handlers\**" />
-    <EmbeddedResource Remove="Queries\AppSetting\**" />
+    <EmbeddedResource Remove="Queries\**" />
     <EmbeddedResource Remove="Validators\**" />
     <None Remove="Commands\**" />
     <None Remove="Handlers\**" />
-    <None Remove="Queries\AppSetting\**" />
+    <None Remove="Queries\**" />
     <None Remove="Validators\**" />
   </ItemGroup>
 
@@ -33,11 +33,6 @@
     <ProjectReference Include="..\UserManagement.Domain\UserManagement.Data.csproj" />
     <ProjectReference Include="..\UserManagement.Helper\UserManagement.Helper.csproj" />
     <ProjectReference Include="..\UserManagement.Repository\UserManagement.Repository.csproj" />
-  </ItemGroup>
-
-  <ItemGroup>
-    <Folder Include="Queries\NLog\" />
-    <Folder Include="Queries\Role\" />
   </ItemGroup>
 
 </Project>

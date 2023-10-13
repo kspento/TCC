@@ -12,7 +12,7 @@ using UserManagement.Data.UnitOfWork;
 
 namespace UserManagement.Data.Repository.NLog
 {
-    public class NLogRespository : GenericRepository<NLog, UserContext>,
+    public class NLogRespository : GenericRepository<Entities.NLog, UserContext>,
           INLogRespository
     {
         private readonly IPropertyMappingService _propertyMappingService;
@@ -27,7 +27,7 @@ namespace UserManagement.Data.Repository.NLog
             var collectionBeforePaging = All;
             collectionBeforePaging =
                collectionBeforePaging.ApplySort(nLogResource.OrderBy,
-               _propertyMappingService.GetPropertyMapping<NLogDto, NLog>());
+               _propertyMappingService.GetPropertyMapping<NLogDto, Entities.NLog>());
 
             if (!string.IsNullOrWhiteSpace(nLogResource.Message))
             {

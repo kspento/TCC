@@ -1,7 +1,6 @@
 using UserManagement.Api.Helpers;
 using UserManagement.API.Helpers.Mapping;
 using UserManagement.Helper;
-using UserManagement.MediatR.PipeLineBehavior;
 using FluentValidation;
 using MediatR;
 using Microsoft.AspNetCore.Builder;
@@ -41,11 +40,11 @@ namespace UserManagement.API
         // This method gets called by the runtime. Use this method to add services to the container.
         public void ConfigureServices(IServiceCollection services)
         {
-            var assembly = AppDomain.CurrentDomain.Load("UserManagement.MediatR");
-            services.AddMediatR(cfg => cfg.RegisterServicesFromAssembly(assembly));
+            //var assembly = AppDomain.CurrentDomain.Load("UserManagement.MediatR");
+            //services.AddMediatR(cfg => cfg.RegisterServicesFromAssembly(assembly));
 
-            services.AddTransient(typeof(IPipelineBehavior<,>), typeof(ValidationBehavior<,>));
-            services.AddValidatorsFromAssemblies(Enumerable.Repeat(assembly, 1));
+          //  services.AddTransient(typeof(IPipelineBehavior<,>), typeof(ValidationBehavior<,>));
+            //services.AddValidatorsFromAssemblies(Enumerable.Repeat(assembly, 1));
 
             services.AddSingleton<IHttpContextAccessor, HttpContextAccessor>();
             JwtSettings settings;

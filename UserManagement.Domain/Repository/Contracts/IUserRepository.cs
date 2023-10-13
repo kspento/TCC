@@ -1,15 +1,13 @@
 ﻿using System.Threading.Tasks;
-using UserManagement.Data.Repository.UserRepository;
-using UserManagement.Data.Entities;
 using UserManagement.Data.GenericRespository;
 using UserManagement.Data.Resources;
-using UserManagement.Data.Dto.User;
+using UserManagement.Repository;
 
 namespace UserManagement.Data.Repository.Contracts
 {
     public interface IUserRepository : IGenericRepository<Entities.User>
     {
         Task<UserList> GetUsers(UserResource userResource);
-        Task<UserAuthDto> BuildUserAuthObject(Entities.User appUser);
+        Task<UserManagement.Data.Dto.User.UserAuthDto> BuildUserAuthObject(Entities.User appUser);
     }
 }

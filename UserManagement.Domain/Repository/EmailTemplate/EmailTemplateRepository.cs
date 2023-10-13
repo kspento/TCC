@@ -6,7 +6,7 @@ using UserManagement.Data.UnitOfWork;
 
 namespace UserManagement.Data.Repository.EmailTemplate
 {
-    public class EmailTemplateRepository : GenericRepository<EmailTemplate, UserContext>,
+    public class EmailTemplateRepository : GenericRepository<Entities.EmailTemplate, UserContext>,
           IEmailTemplateRepository
     {
         public EmailTemplateRepository(

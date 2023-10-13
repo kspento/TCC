@@ -2,7 +2,6 @@
 using UserManagement.Data.Dto.Email;
 using UserManagement.Data.Entities;
 using UserManagement.Domain.Model.Email;
-using UserManagement.MediatR.Commands;
 
 namespace UserManagement.API.Helpers.Mapping
 {

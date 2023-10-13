@@ -3,7 +3,7 @@ using UserManagement.Data.GenericRespository;
 
 namespace UserManagement.Data.Repository.Contracts
 {
-    public interface IAppSettingRepository : IGenericRepository<AppSetting>
+    public interface IAppSettingRepository : IGenericRepository<Entities.AppSetting>
     {
 
     }

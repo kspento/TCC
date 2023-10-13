@@ -4,7 +4,7 @@ using UserManagement.Data.Dto.Role;
 
 namespace UserManagement.Domain.Model.Role
 {
-    public class GetAllRoleModel : IRequest<List<RoleDto>>
+    public class GetAllRoleModel : RoleDto
     {
     }
 }

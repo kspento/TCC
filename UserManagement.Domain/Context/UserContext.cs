@@ -20,7 +20,7 @@ namespace UserManagement.Data.Context
         public DbSet<Entities.Action> Actions { get; set; }
         public DbSet<Page> Pages { get; set; }
         public DbSet<PageAction> PageActions { get; set; }
-        public DbSet<NLog> NLog { get; set; }
+        public DbSet<Entities.NLog> NLog { get; set; }
         public DbSet<LoginAudit> LoginAudits { get; set; }
         public DbSet<AppSetting> AppSettings { get; set; }
         public DbSet<UserAllowedIP> UserAllowedIPs { get; set; }

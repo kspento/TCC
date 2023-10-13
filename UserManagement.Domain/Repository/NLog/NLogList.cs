@@ -28,7 +28,7 @@ namespace UserManagement.Data.Repository.NLog
             AddRange(items);
         }
 
-        public async Task<NLogList> Create(IQueryable<NLog> source, int skip, int pageSize)
+        public async Task<NLogList> Create(IQueryable<Entities.NLog> source, int skip, int pageSize)
         {
             var count = await GetCount(source);
             var dtoList = await GetDtos(source, skip, pageSize);
@@ -36,12 +36,12 @@ namespace UserManagement.Data.Repository.NLog
             return dtoPageList;
         }
 
-        public async Task<int> GetCount(IQueryable<NLog> source)
+        public async Task<int> GetCount(IQueryable<Entities.NLog> source)
         {
             return await source.AsNoTracking().CountAsync();
         }
 
-        public async Task<List<NLogDto>> GetDtos(IQueryable<NLog> source, int skip, int pageSize)
+        public async Task<List<NLogDto>> GetDtos(IQueryable<Entities.NLog> source, int skip, int pageSize)
         {
             var entities = await source
                 .Skip(skip)

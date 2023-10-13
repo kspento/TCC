@@ -16,8 +16,8 @@ namespace UserManagement.API.Helpers.Mapping
             CreateMap<UserAllowedIPDto, UserAllowedIP>().ReverseMap();
             CreateMap<User, UserDto>().ReverseMap();
             CreateMap<AddUserModel, User>();
-            CreateMap<SocialLoginCommand, User>();
-            CreateMap<ResetPasswordCommand, UserDto>();
+            CreateMap<SocialLoginModel, User>();
+            CreateMap<ResetPasswordModel, UserDto>();
         }
     }
 }

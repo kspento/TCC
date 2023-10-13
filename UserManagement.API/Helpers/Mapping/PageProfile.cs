@@ -1,7 +1,7 @@
 ﻿using AutoMapper;
 using UserManagement.Data.Dto.Page;
 using UserManagement.Data.Entities;
-
+using UserManagement.Domain.Model.Page;
 
 namespace UserManagement.API.Helpers.Mapping
 {
@@ -10,8 +10,8 @@ namespace UserManagement.API.Helpers.Mapping
         public PageProfile()
         {
             CreateMap<Page, PageDto>().ReverseMap();
-            CreateMap<AddPageCommand, Page>();
-            CreateMap<UpdatePageCommand, Page>();
+            CreateMap<AddPageModel, Page>();
+            CreateMap<UpdatePageModel, Page>();
         }
     }
 }

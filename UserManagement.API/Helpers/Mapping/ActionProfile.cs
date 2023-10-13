@@ -2,7 +2,6 @@
 using Microsoft.AspNetCore.Mvc.ApplicationModels;
 using UserManagement.Data.Dto.Action;
 using UserManagement.Data.Entities;
-using UserManagement.MediatR.Commands;
 
 namespace UserManagement.API.Helpers.Mapping
 {

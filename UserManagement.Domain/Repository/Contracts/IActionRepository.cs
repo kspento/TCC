@@ -3,7 +3,7 @@ using UserManagement.Data.GenericRespository;
 
 namespace UserManagement.Data.Repository.Contracts
 {
-    public interface IActionRepository : IGenericRepository<Action>
+    public interface IActionRepository : IGenericRepository<Entities.Action>
     {
     }
 }

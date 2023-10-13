@@ -21,10 +21,10 @@ namespace UserManagement.Helper
                 Body = sendEmailSpecification.Body,
             };
 
-            if (sendEmailSpecification.Attechments.Count > 0)
+            if (sendEmailSpecification.Attachments.Count > 0)
             {
                 Attachment attach;
-                foreach (var file in sendEmailSpecification.Attechments)
+                foreach (var file in sendEmailSpecification.Attachments)
                 {
 
                     string fileData = file.Src.Split(',').LastOrDefault();

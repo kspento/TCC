@@ -10,6 +10,7 @@ using UserManagement.Data.UnitOfWork;
 using UserManagement.Domain.Model.PageAction;
 using Microsoft.EntityFrameworkCore;
 using Microsoft.Extensions.Logging;
+using UserManagement.Domain.Contracts.Services;
 
 public class PageActionService : IPageActionService
 {
