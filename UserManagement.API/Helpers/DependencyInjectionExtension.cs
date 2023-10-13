@@ -13,6 +13,8 @@ using UserManagement.Data.Repository.Role;
 using UserManagement.Data.Repository.AppSetting;
 using UserManagement.Data.Repository.EmailTemplate;
 using UserManagement.Repository;
+using UserManagement.Domain.Contracts.Services;
+using UserManagement.Domain.Services;
 
 namespace UserManagement.Api.Helpers
 {
@@ -36,6 +38,9 @@ namespace UserManagement.Api.Helpers
             services.AddScoped<INLogRespository, NLogRespository>();
             services.AddScoped<IEmailTemplateRepository, EmailTemplateRepository>();
             services.AddScoped<IEmailSMTPSettingRepository, EmailSMTPSettingRepository>();
+
+
+            services.AddScoped<IUserService, UserService>();
         }
     }
 }

@@ -41,24 +41,34 @@ namespace UserManagement.Domain.Services
 
         public UserService(
             UserManager<User> userManager,
-            IMapper mapper,
             UserInfoToken userInfoToken,
+            IMapper mapper,           
             ILogger<AddUserModel> logger,
-            IUnitOfWork<UserContext> uow,
-            IUserRoleRepository userRoleRepository,
+            PathHelper pathHelper,
+            IUserRepository userRepository,
             IUserClaimRepository userClaimRepository,
+            IUserRoleRepository userRoleRepository,
             IUserAllowedIPRepository userAllowedIPRepository,
-            PathHelper pathHelper)
+            ILoginAuditRepository loginAuditRepository,
+            IHubContext<UserHub, IHubClient> hubContext,
+            SignInManager<User> signInManager,
+            IUnitOfWork<UserContext> uow
+                   
+            )
         {
             _mapper = mapper;
             _userManager = userManager;
             _userInfoToken = userInfoToken;
             _logger = logger;
+            _userRepository= userRepository;
             _uow = uow;
             _userClaimRepository = userClaimRepository;
             _userRoleRepository = userRoleRepository;
             _userAllowedIPRepository = userAllowedIPRepository;
             _pathHelper = pathHelper;
+            _signInManager= signInManager;
+            _loginAuditRepository= loginAuditRepository;
+            _hubContext= hubContext;
         }
 
         public async Task<UserDto> AddUser(AddUserModel addUser)
