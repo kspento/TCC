@@ -1,9 +1,7 @@
-﻿using System.Threading;
-using System.Threading.Tasks;
+﻿using System.Threading.Tasks;
 using UserManagement.Data.Dto.NLog;
 using UserManagement.Data.Repository.NLog;
 using UserManagement.Domain.Model.NLog;
-using UserManagement.Helper;
 
 namespace UserManagement.Domain.Contracts.Services
 {

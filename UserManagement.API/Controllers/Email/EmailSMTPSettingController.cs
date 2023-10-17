@@ -1,11 +1,10 @@
-﻿using MediatR;
-using Microsoft.AspNetCore.Mvc;
+﻿using Microsoft.AspNetCore.Mvc;
 using System;
 using System.Collections.Generic;
 using System.Threading.Tasks;
 using UserManagement.Data.Dto.Email;
-using UserManagement.MediatR.Commands;
-using UserManagement.MediatR.Queries;
+using UserManagement.Domain.Contracts.Services;
+using UserManagement.Domain.Model.Email;
 
 namespace UserManagement.API.Controllers.Email
 {
@@ -13,23 +12,24 @@ namespace UserManagement.API.Controllers.Email
     [ApiController]
     public class EmailSMTPSettingController : BaseController
     {
-        IMediator _mediator;
-        public EmailSMTPSettingController(IMediator mediator)
+        IEmailService _emailService;
+        public EmailSMTPSettingController(IEmailService emailService)
         {
-            _mediator = mediator;
+            _emailService = emailService;
         }
 
         /// <summary>
         /// Create an Email SMTP Configuration.
         /// </summary>
-        /// <param name="addEmailSMTPSettingCommand"></param>
+        /// <param name="addEmailSMTPSetting"></param>
         /// <returns></returns>
         [HttpPost]
         [Produces("application/json", "application/xml", Type = typeof(EmailSMTPSettingDto))]
-        public async Task<IActionResult> AddEmailSMTPSetting(AddEmailSMTPSettingCommand addEmailSMTPSettingCommand)
+        public async Task<IActionResult> AddEmailSMTPSetting(EmailSettingModel addEmailSMTPSetting)
         {
-            var result = await _mediator.Send(addEmailSMTPSettingCommand);
-            return ReturnFormattedResponse(result);
+            var result = await _emailService.AddEmailSMTPSetting(addEmailSMTPSetting);
+
+            return CreateApiResponse(result);
         }
 
         /// <summary>
@@ -40,9 +40,9 @@ namespace UserManagement.API.Controllers.Email
         [Produces("application/json", "application/xml", Type = typeof(EmailSMTPSettingDto))]
         public async Task<IActionResult> GetEmailSMTPSetting(Guid id)
         {
-            var query = new GetEmailSMTPSettingQuery() { Id = id };
-            var result = await _mediator.Send(query);
-            return ReturnFormattedResponse(result);
+            var query = new EmailSettingModel() { Id = id };
+            var result = await _emailService.GetEmailSMTPSetting(query);
+            return CreateApiResponse(result);
         }
 
         /// <summary>
@@ -53,9 +53,9 @@ namespace UserManagement.API.Controllers.Email
         [Produces("application/json", "application/xml", Type = typeof(List<EmailSMTPSettingDto>))]
         public async Task<IActionResult> GetEmailSMTPSettings()
         {
-            var query = new GetEmailSMTPSettingsQuery() { };
-            var result = await _mediator.Send(query);
-            return Ok(result);
+
+            var result = await _emailService.GetEmailSMTPSettings();
+            return CreateApiResponse(result);
         }
 
         /// <summary>
@@ -66,11 +66,11 @@ namespace UserManagement.API.Controllers.Email
         /// <returns></returns>
         [HttpPut("{id}")]
         [Produces("application/json", "application/xml", Type = typeof(EmailSMTPSettingDto))]
-        public async Task<IActionResult> UpdateEmailSMTPSetting(Guid id, UpdateEmailSMTPSettingCommand updateEmailSMTPSettingCommand)
+        public async Task<IActionResult> UpdateEmailSMTPSetting(Guid id, EmailSettingModel updateEmailSMTPSettingCommand)
         {
             updateEmailSMTPSettingCommand.Id = id;
-            var result = await _mediator.Send(updateEmailSMTPSettingCommand);
-            return ReturnFormattedResponse(result);
+            var result = await _emailService.UpdateEmailSMTPSetting(updateEmailSMTPSettingCommand);
+            return CreateApiResponse(result);
         }
 
         /// <summary>
@@ -82,9 +82,9 @@ namespace UserManagement.API.Controllers.Email
         [Produces("application/json", "application/xml", Type = typeof(EmailSMTPSettingDto))]
         public async Task<IActionResult> DeleteEmailSMTPSetting(Guid id)
         {
-            var deleteEmailSMTPSettingCommand = new DeleteEmailSMTPSettingCommand() { Id = id };
-            var result = await _mediator.Send(deleteEmailSMTPSettingCommand);
-            return ReturnFormattedResponse(result);
+            var deleteEmailSMTPSettingCommand = new EmailSettingModel() { Id = id };
+             await _emailService.DeleteEmailSMTPSetting(deleteEmailSMTPSettingCommand);
+            return NoContent();
         }
     }
 }

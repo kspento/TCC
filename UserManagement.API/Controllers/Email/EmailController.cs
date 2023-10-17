@@ -1,7 +1,7 @@
-﻿using MediatR;
-using Microsoft.AspNetCore.Mvc;
+﻿using Microsoft.AspNetCore.Mvc;
 using System.Threading.Tasks;
-using UserManagement.MediatR.Commands;
+using UserManagement.Domain.Contracts.Services;
+using UserManagement.Domain.Model.Email;
 
 namespace UserManagement.API.Controllers.Email
 {
@@ -9,10 +9,10 @@ namespace UserManagement.API.Controllers.Email
     [ApiController]
     public class EmailController : BaseController
     {
-        IMediator _mediator;
-        public EmailController(IMediator mediator)
+        private IEmailService _emailService;
+        public EmailController(IEmailService emailService)
         {
-            _mediator = mediator;
+            _emailService = emailService;
         }
         /// <summary>
         /// Send mail.
@@ -21,10 +21,11 @@ namespace UserManagement.API.Controllers.Email
         /// <returns></returns>
         [HttpPost(Name = "SendEmail")]
         [Produces("application/json", "application/xml", Type = typeof(void))]
-        public async Task<IActionResult> SendEmail(SendEmailCommand sendEmailCommand)
+        public async Task<IActionResult> SendEmail(SendEmailModel sendEmailModel)
         {
-            var result = await _mediator.Send(sendEmailCommand);
-            return ReturnFormattedResponse(result);
+            var result = await _emailService.SendEmail(sendEmailModel);
+
+            return CreateApiResponse(result);
         }
     }
 }

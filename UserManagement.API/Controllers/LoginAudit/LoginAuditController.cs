@@ -1,11 +1,10 @@
-﻿using MediatR;
-using Microsoft.AspNetCore.Authorization;
+﻿using Microsoft.AspNetCore.Authorization;
 using Microsoft.AspNetCore.Mvc;
 using System.Threading.Tasks;
 using UserManagement.Data.Repository.LoginAudit;
 using UserManagement.Data.Resources;
-using UserManagement.MediatR.Queries;
-using UserManagement.Repository;
+using UserManagement.Domain.Contracts.Services;
+using UserManagement.Domain.Model.LoginAudit;
 
 namespace UserManagement.API.Controllers.LoginAudit
 {
@@ -14,10 +13,10 @@ namespace UserManagement.API.Controllers.LoginAudit
     [Authorize]
     public class LoginAuditController : ControllerBase
     {
-        public IMediator _mediator { get; set; }
-        public LoginAuditController(IMediator mediator)
+        public ILoginAuditService _loginAuditService { get; set; }
+        public LoginAuditController(ILoginAuditService loginAuditService)
         {
-            _mediator = mediator;
+            _loginAuditService = loginAuditService;
         }
         /// <summary>
         /// Get All Login Audit detail
@@ -28,11 +27,16 @@ namespace UserManagement.API.Controllers.LoginAudit
         [Produces("application/json", "application/xml", Type = typeof(LoginAuditList))]
         public async Task<IActionResult> GetLoginAudit([FromQuery] LoginAuditResource loginAuditResource)
         {
-            var getAllLoginAuditQuery = new GetAllLoginAuditQuery
+            var getAllLoginAuditQuery = new LoginAuditModel
             {
-                LoginAuditResource = loginAuditResource
+                Fields = loginAuditResource.Fields,
+                OrderBy = loginAuditResource.OrderBy,
+                PageSize = loginAuditResource.PageSize,
+                SearchQuery = loginAuditResource.SearchQuery,
+                Skip = loginAuditResource.Skip,
+                UserName = loginAuditResource.UserName
             };
-            var result = await _mediator.Send(getAllLoginAuditQuery);
+            var result = await _loginAuditService.GetAllLoginAudit(getAllLoginAuditQuery);
 
             var paginationMetadata = new
             {

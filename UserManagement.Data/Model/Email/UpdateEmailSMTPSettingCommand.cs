@@ -1,11 +1,11 @@
-﻿using MediatR;
+﻿using System;
 using UserManagement.Data.Dto.Email;
-using UserManagement.Helper;
 
-namespace UserManagement.MediatR.Commands
+namespace UserManagement.Domain.Model.Email
 {
-    public class AddEmailSMTPSettingCommand : IRequest<ServiceResponse<EmailSMTPSettingDto>>
+    public class UpdateEmailSMTPSettingCommand : EmailSMTPSettingDto
     {
+        public Guid Id { get; set; }
         public string Host { get; set; }
         public string UserName { get; set; }
         public string Password { get; set; }

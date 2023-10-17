@@ -15,10 +15,11 @@ using System.Collections.Generic;
 using System.Linq;
 using UserManagement.Data.Repository.Contracts;
 using UserManagement.Domain.Exception;
+using UserManagement.Domain.Contracts.Services;
 
 namespace UserManagement.Domain.Services
 {
-    public class EmailService
+    public class EmailService : IEmailService
     {
         private readonly IEmailSMTPSettingRepository _emailSMTPSettingRepository;
         private readonly IUnitOfWork<UserContext> _uow;
@@ -136,7 +137,7 @@ namespace UserManagement.Domain.Services
                     Attachments = request.Attachments
                 });
 
-                return _mapper.Map<EmailDto>(request); 
+                return _mapper.Map<EmailDto>(request);
             }
             catch (System.Exception e)
             {
@@ -146,7 +147,7 @@ namespace UserManagement.Domain.Services
             }
         }
 
-        public async Task<List<EmailSMTPSettingDto>> GetEmailSMTPSettings(EmailSettingModel request)
+        public async Task<List<EmailSMTPSettingDto>> GetEmailSMTPSettings()
         {
             var entities = await _emailSMTPSettingRepository.All.ToListAsync();
             return _mapper.Map<List<EmailSMTPSettingDto>>(entities);

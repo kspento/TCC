@@ -3,7 +3,7 @@ using System.Collections.Generic;
 using UserManagement.Data.Dto.Email;
 using UserManagement.Helper;
 
-namespace UserManagement.MediatR.Commands
+namespace UserManagement.Domain.Model.Email
 {
     public class SendEmailCommand : IRequest<ServiceResponse<EmailDto>>
     {

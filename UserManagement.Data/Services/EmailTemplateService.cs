@@ -76,7 +76,7 @@ namespace UserManagement.Domain.Services
             return true;
         }
 
-        public async Task<List<EmailTemplateDto>> GetAllEmailTemplate(CancellationToken cancellationToken)
+        public async Task<List<EmailTemplateDto>> GetAllEmailTemplate()
         {
             var entities = await _emailTemplateRepository.All.ToListAsync();
 

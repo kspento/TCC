@@ -1,13 +1,11 @@
-﻿using MediatR;
-using Microsoft.AspNetCore.Authorization;
+﻿using Microsoft.AspNetCore.Authorization;
 using Microsoft.AspNetCore.Mvc;
 using System;
 using System.Threading.Tasks;
 using UserManagement.Data.Dto.NLog;
 using UserManagement.Data.Resources;
-using UserManagement.MediatR.Commands;
-using UserManagement.MediatR.Queries;
-using UserManagement.Repository;
+using UserManagement.Domain.Contracts.Services;
+using UserManagement.Domain.Model.NLog;
 
 namespace UserManagement.API.Controllers
 {
@@ -16,10 +14,10 @@ namespace UserManagement.API.Controllers
     [Authorize]
     public class NLogController : BaseController
     {
-        public IMediator _mediator { get; set; }
-        public NLogController(IMediator mediator)
+        public INLogService _nlogService { get; set; }
+        public NLogController(INLogService nlogService)
         {
-            _mediator = mediator;
+            _nlogService = nlogService;
         }
         /// <summary>
         /// Get System Logs
@@ -27,10 +25,10 @@ namespace UserManagement.API.Controllers
         /// <param name="nLogResource"></param>
         /// <returns></returns>
         [HttpGet]
-        [Produces("application/json", "application/xml", Type = typeof(NLogList))]
+        [Produces("application/json", "application/xml", Type = typeof(GetNLogsModel))]
         public async Task<IActionResult> GetNLogs([FromQuery] NLogResource nLogResource)
         {
-            var getAllLoginAuditQuery = new GetNLogsQuery
+            var getAllLoginAuditQuery = new get
             {
                 NLogResource = nLogResource
             };

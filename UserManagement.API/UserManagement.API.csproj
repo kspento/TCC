@@ -14,34 +14,18 @@
   </PropertyGroup>
 
   <ItemGroup>
-    <Compile Remove="Controllers\EmailTemplate\**" />
-    <Compile Remove="Controllers\Email\**" />
-    <Compile Remove="Controllers\LoginAudit\**" />
-    <Compile Remove="Controllers\NLog\**" />
     <Compile Remove="Controllers\PageAction\**" />
     <Compile Remove="Controllers\Page\**" />
     <Compile Remove="Controllers\Role\**" />
     <Compile Remove="Controllers\Social\**" />
-    <Content Remove="Controllers\EmailTemplate\**" />
-    <Content Remove="Controllers\Email\**" />
-    <Content Remove="Controllers\LoginAudit\**" />
-    <Content Remove="Controllers\NLog\**" />
     <Content Remove="Controllers\PageAction\**" />
     <Content Remove="Controllers\Page\**" />
     <Content Remove="Controllers\Role\**" />
     <Content Remove="Controllers\Social\**" />
-    <EmbeddedResource Remove="Controllers\EmailTemplate\**" />
-    <EmbeddedResource Remove="Controllers\Email\**" />
-    <EmbeddedResource Remove="Controllers\LoginAudit\**" />
-    <EmbeddedResource Remove="Controllers\NLog\**" />
     <EmbeddedResource Remove="Controllers\PageAction\**" />
     <EmbeddedResource Remove="Controllers\Page\**" />
     <EmbeddedResource Remove="Controllers\Role\**" />
     <EmbeddedResource Remove="Controllers\Social\**" />
-    <None Remove="Controllers\EmailTemplate\**" />
-    <None Remove="Controllers\Email\**" />
-    <None Remove="Controllers\LoginAudit\**" />
-    <None Remove="Controllers\NLog\**" />
     <None Remove="Controllers\PageAction\**" />
     <None Remove="Controllers\Page\**" />
     <None Remove="Controllers\Role\**" />

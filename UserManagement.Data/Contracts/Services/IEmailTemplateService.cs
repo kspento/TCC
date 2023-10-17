@@ -11,7 +11,7 @@ namespace UserManagement.Domain.Contracts.Services
     {
         Task<EmailTemplateDto> AddEmailTemplate(AddEmailTemplateModel request);
         Task<bool> DeleteEmailTemplate(DeleteEmailTemplateModel request);
-        Task<List<EmailTemplateDto>> GetAllEmailTemplate(CancellationToken cancellationToken);
+        Task<List<EmailTemplateDto>> GetAllEmailTemplate();
         Task<EmailTemplateDto> GetEmailTemplate(GetEmailTemplateModel request);
         Task<EmailTemplateDto> UpdateEmailTemplate(UpdateEmailTemplateModel request);
     }
