@@ -14,25 +14,6 @@
   </PropertyGroup>
 
   <ItemGroup>
-    <Compile Remove="Controllers\PageAction\**" />
-    <Compile Remove="Controllers\Page\**" />
-    <Compile Remove="Controllers\Role\**" />
-    <Compile Remove="Controllers\Social\**" />
-    <Content Remove="Controllers\PageAction\**" />
-    <Content Remove="Controllers\Page\**" />
-    <Content Remove="Controllers\Role\**" />
-    <Content Remove="Controllers\Social\**" />
-    <EmbeddedResource Remove="Controllers\PageAction\**" />
-    <EmbeddedResource Remove="Controllers\Page\**" />
-    <EmbeddedResource Remove="Controllers\Role\**" />
-    <EmbeddedResource Remove="Controllers\Social\**" />
-    <None Remove="Controllers\PageAction\**" />
-    <None Remove="Controllers\Page\**" />
-    <None Remove="Controllers\Role\**" />
-    <None Remove="Controllers\Social\**" />
-  </ItemGroup>
-
-  <ItemGroup>
     <PackageReference Include="AutoMapper" Version="12.0.1" />
     <PackageReference Include="AutoMapper.Extensions.Microsoft.DependencyInjection" Version="12.0.1" />
     <PackageReference Include="FluentValidation" Version="11.7.1" />

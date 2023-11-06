@@ -1,12 +1,11 @@
 ﻿using System;
 using System.Collections.Generic;
 using System.Threading.Tasks;
-using UserManagement.MediatR.Commands;
-using UserManagement.MediatR.Queries;
-using MediatR;
 using Microsoft.AspNetCore.Authorization;
 using Microsoft.AspNetCore.Mvc;
 using UserManagement.Data.Dto.Page;
+using UserManagement.Domain.Contracts.Services;
+using UserManagement.Domain.Model.Page;
 
 namespace UserManagement.API.Controllers
 {
@@ -18,14 +17,15 @@ namespace UserManagement.API.Controllers
     [Authorize]
     public class PageController : BaseController
     {
-        public IMediator _mediator { get; set; }
+        public IPageService _pageService { get; set; }
+
         /// <summary>
         /// Page
         /// </summary>
-        /// <param name="mediator"></param>
-        public PageController(IMediator mediator)
+        /// <param name="pageService"></param>
+        public PageController(IPageService pageService)
         {
-            _mediator = mediator;
+            _pageService = pageService;
         }
         /// <summary>
         /// Get Page By Id
@@ -36,9 +36,9 @@ namespace UserManagement.API.Controllers
         [Produces("application/json", "application/xml", Type = typeof(PageDto))]
         public async Task<IActionResult> GetPage(Guid id)
         {
-            var getPageQuery = new GetPageQuery { Id = id };
-            var result = await _mediator.Send(getPageQuery);
-            return ReturnFormattedResponse(result);
+
+            var result = await _pageService.GetPage(id);
+            return CreateApiResponse(result);
         }
         /// <summary>
         /// Get All Pages
@@ -48,52 +48,48 @@ namespace UserManagement.API.Controllers
         [HttpGet("Pages")]
         [Produces("application/json", "application/xml", Type = typeof(List<PageDto>))]
         public async Task<IActionResult> GetPages()
-        {
-            var getAllPageQuery = new GetAllPageQuery { };
-            var result = await _mediator.Send(getAllPageQuery);
+        {            
+            var result = await _pageService.GetAllPages();
             return Ok(result);
         }
         /// <summary>
         /// Create a Page
         /// </summary>
-        /// <param name="addPageCommand"></param>
+        /// <param name="addPageModel"></param>
         /// <returns></returns>
         [HttpPost("Page")]
         [Produces("application/json", "application/xml", Type = typeof(PageDto))]
-        public async Task<IActionResult> AddPage(AddPageCommand addPageCommand)
+        public async Task<IActionResult> AddPage(AddPageModel addPageModel)
         {
-            var result = await _mediator.Send(addPageCommand);
-            if (!result.Success)
-            {
-                return ReturnFormattedResponse(result);
-            }
-            return CreatedAtAction("GetPage", new { id = result.Data.Id }, result.Data);
+            var result = await _pageService.AddPage(addPageModel);
+
+            return CreatedAtAction("GetPage", new { id = result.Id }, result);
         }
         /// <summary>
         /// Update Page By Id
         /// </summary>
         /// <param name="Id"></param>
-        /// <param name="updatePageCommand"></param>
+        /// <param name="updatePageModel"></param>
         /// <returns></returns>
         [HttpPut("Page/{Id}")]
         [Produces("application/json", "application/xml", Type = typeof(PageDto))]
-        public async Task<IActionResult> UpdatePage(Guid Id, UpdatePageCommand updatePageCommand)
+        public async Task<IActionResult> UpdatePage(Guid Id, UpdatePageModel updatePageModel)
         {
-            updatePageCommand.Id = Id;
-            var result = await _mediator.Send(updatePageCommand);
-            return ReturnFormattedResponse(result);
+            updatePageModel.Id = Id;
+            var result = await _pageService.UpdatePage(updatePageModel);
+            return CreateApiResponse(result);
         }
         /// <summary>
         /// Delete Page By Id
         /// </summary>
-        /// <param name="Id"></param>
+        /// <param name="id"></param>
         /// <returns></returns>
         [HttpDelete("Page/{Id}")]
-        public async Task<IActionResult> DeletePage(Guid Id)
+        public async Task<IActionResult> DeletePage(Guid id)
         {
-            var deletePageCommand = new DeletePageCommand { Id = Id };
-            var result = await _mediator.Send(deletePageCommand);
-            return ReturnFormattedResponse(result);
+            await _pageService.DeletePage(id);               
+
+            return Ok();
         }
     }
 }

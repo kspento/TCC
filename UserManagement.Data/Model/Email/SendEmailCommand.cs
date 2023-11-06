@@ -1,11 +1,10 @@
-﻿using MediatR;
-using System.Collections.Generic;
+﻿using System.Collections.Generic;
 using UserManagement.Data.Dto.Email;
 using UserManagement.Helper;
 
 namespace UserManagement.Domain.Model.Email
 {
-    public class SendEmailCommand : IRequest<ServiceResponse<EmailDto>>
+    public class SendEmailCommand : EmailDto
     {
         public string Subject { get; set; }
         public string ToAddress { get; set; }

@@ -39,7 +39,7 @@ namespace UserManagement.Domain.Services
             return Task.FromResult(_userRepository.All.Where(c => !c.IsActive).Count());
         }
 
-        public async Task<List<UserDto>> GetOnlineUsers(List<UserDto> request)
+        public async Task<List<UserDto>> GetOnlineUsers()
         {
             var user = new SignlarUser
             {
@@ -59,6 +59,12 @@ namespace UserManagement.Domain.Services
                     ProfilePhoto = !string.IsNullOrWhiteSpace(cs.ProfilePhoto) ? $"{_pathHelper.UserProfilePath}{cs.ProfilePhoto}" : string.Empty
                 }).ToListAsync();
             return users;
+        }
+
+
+        public async Task<int> GetTotalUserCount(CancellationToken cancellationToken)
+        {
+            return await Task.FromResult(_userRepository.All.Count());
         }
     }
 }

@@ -9,6 +9,8 @@ namespace UserManagement.Domain.Contracts.Services
     {
         Task<int> GetActiveUserCount(CancellationToken cancellationToken);
         Task<int> GetInactiveUserCount(CancellationToken cancellationToken);
-        Task<List<UserDto>> GetOnlineUsers(List<UserDto> request);
+        Task<List<UserDto>> GetOnlineUsers();
+        Task<int> GetTotalUserCount(CancellationToken cancellationToken);
+
     }
 }

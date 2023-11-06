@@ -27,12 +27,8 @@ namespace UserManagement.API.Controllers
         [HttpGet]
         [Produces("application/json", "application/xml", Type = typeof(GetNLogsModel))]
         public async Task<IActionResult> GetNLogs([FromQuery] NLogResource nLogResource)
-        {
-            var getAllLoginAuditQuery = new get
-            {
-                NLogResource = nLogResource
-            };
-            var result = await _mediator.Send(getAllLoginAuditQuery);
+        {  
+            var result = await _nlogService.GetLogs(nLogResource);
 
             var paginationMetadata = new
             {
@@ -55,9 +51,10 @@ namespace UserManagement.API.Controllers
         [Produces("application/json", "application/xml", Type = typeof(NLogDto))]
         public async Task<IActionResult> GetNLog(Guid id)
         {
-            var getLogQuery = new GetLogQuery { Id = id };
-            var result = await _mediator.Send(getLogQuery);
-            return ReturnFormattedResponse(result);
+            var result = await _nlogService.GetLogById(id);
+
+            return CreateApiResponse(result);
+            
         }
 
         /// <summary>
@@ -67,10 +64,11 @@ namespace UserManagement.API.Controllers
         /// <returns></returns>
         [HttpPost]
         [Produces("application/json", "application/xml", Type = typeof(NLogDto))]
-        public async Task<IActionResult> CreatNLog(AddLogCommand addLogCommand)
+        public async Task<IActionResult> CreatNLog(AddLogModel addLogCommand)
         {
-            var result = await _mediator.Send(addLogCommand);
-            return ReturnFormattedResponse(result);
+            await _nlogService.AddLog(addLogCommand);
+
+            return Ok(null);
         }
     }
 }

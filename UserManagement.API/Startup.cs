@@ -25,6 +25,7 @@ using UserManagement.Data.Context;
 using UserManagement.Data.Dto.User;
 using UserManagement.Data.Dto;
 using UserManagement.Data.Hub;
+using UserManagement.API.Filters;
 
 namespace UserManagement.API
 {
@@ -106,6 +107,7 @@ namespace UserManagement.API
                 {
                     options.SerializerSettings.ReferenceLoopHandling = ReferenceLoopHandling.Ignore;
                     options.SerializerSettings.DateTimeZoneHandling = DateTimeZoneHandling.Local;
+                    options.Filters.Add<CustomExceptionFilter>();
                 });
             services.AddSwaggerGen(c =>
             {

@@ -1,12 +1,10 @@
 ﻿using System;
 using System.Collections.Generic;
 using System.Threading.Tasks;
-using UserManagement.MediatR.Commands;
-using UserManagement.MediatR.Queries;
-using MediatR;
 using Microsoft.AspNetCore.Authorization;
 using Microsoft.AspNetCore.Mvc;
 using UserManagement.Data.Dto.User;
+using UserManagement.Domain.Model.Role;
 
 namespace UserManagement.API.Controllers
 {
@@ -18,14 +16,14 @@ namespace UserManagement.API.Controllers
     [Authorize]
     public class RoleUsersController : BaseController
     {
-        public IMediator _mediator { get; set; }
+        public IRoleService _roleService { get; set; }
         /// <summary>
         /// RoleUsers
         /// </summary>
         /// <param name="mediator"></param>
-        public RoleUsersController(IMediator mediator)
+        public RoleUsersController(IRoleService roleService)
         {
-            _mediator = mediator;
+            _roleService = roleService;
         }
         /// <summary>
         /// Get Role Users By Id
@@ -36,8 +34,7 @@ namespace UserManagement.API.Controllers
         [Produces("application/json", "application/xml", Type = typeof(List<UserRoleDto>))]
         public async Task<IActionResult> RoleUsers(Guid id)
         {
-            var getUserQuery = new GetRoleUsersQuery { RoleId = id };
-            var result = await _mediator.Send(getUserQuery);
+            var result = await _roleService.GetRole(id);
             return Ok(result);
         }
         /// <summary>
@@ -48,11 +45,11 @@ namespace UserManagement.API.Controllers
         /// <returns></returns>
         [HttpPut("{id}")]
         [Produces("application/json", "application/xml", Type = typeof(UserRoleDto))]
-        public async Task<IActionResult> UpdateRoleUsers(Guid id, UpdateUserRoleCommand updateRoleCommand)
+        public async Task<IActionResult> UpdateRoleUsers(Guid id, UpdateRoleModel updateRoleModel)
         {
-            updateRoleCommand.Id = id;
-            var result = await _mediator.Send(updateRoleCommand);
-            return ReturnFormattedResponse(result);
+            updateRoleModel.Id = id;
+            var result = await  _roleService.UpdateRole(updateRoleModel);
+            return CreateApiResponse(result);
         }
     }
 }

@@ -1,7 +1,8 @@
 ﻿using MediatR;
 using Microsoft.AspNetCore.Mvc;
 using System.Threading.Tasks;
-using UserManagement.MediatR.Commands;
+using UserManagement.Domain.Contracts.Services;
+using UserManagement.Domain.Model.Social;
 
 namespace UserManagement.API.Controllers
 {
@@ -10,27 +11,24 @@ namespace UserManagement.API.Controllers
     [ApiExplorerSettings(IgnoreApi = true)]
     public class SocialLoginController : BaseController
     {
-        public IMediator _mediator { get; set; }
+        public ISocialLoginService _socialLoginService { get; set; }
 
-        public SocialLoginController(IMediator mediator)
+        public SocialLoginController(ISocialLoginService socialLoginService)
         {
-            _mediator = mediator;
+            _socialLoginService = socialLoginService;
         }
 
         [HttpPost("login")]
-        public async Task<IActionResult> Login(SocialLoginCommand userLoginCommand)
+        public async Task<IActionResult> Login(SocialLoginModel userLoginModel)
         {
-            userLoginCommand.RemoteIp = Request.HttpContext.Connection.RemoteIpAddress.ToString();
-            var result = await _mediator.Send(userLoginCommand);
-            if (!result.Success)
+            userLoginModel.RemoteIp = Request.HttpContext.Connection.RemoteIpAddress.ToString();
+            var result = await _socialLoginService.SocialLogin(userLoginModel);
+
+            if (!string.IsNullOrWhiteSpace(result.ProfilePhoto))
             {
-                return ReturnFormattedResponse(result);
+                result.ProfilePhoto = $"Users/{result.ProfilePhoto}";
             }
-            if (!string.IsNullOrWhiteSpace(result.Data.ProfilePhoto))
-            {
-                result.Data.ProfilePhoto = $"Users/{result.Data.ProfilePhoto}";
-            }
-            return Ok(result.Data);
+            return Ok(result);
         }
     }
 }

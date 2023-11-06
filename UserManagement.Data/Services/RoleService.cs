@@ -96,10 +96,10 @@ public class RoleService : IRoleService
     }
 
     // Method to handle GetRoleQuery
-    public async Task<RoleDto> GetRole(GetRoleModel request)
+    public async Task<RoleDto> GetRole(Guid id)
     {
         var entity = await _roleRepository.AllIncluding(c => c.UserRoles, cs => cs.RoleClaims)
-            .Where(c => c.Id == request.Id)
+            .Where(c => c.Id == id)
             .FirstOrDefaultAsync();
 
         if (entity != null)
@@ -112,7 +112,7 @@ public class RoleService : IRoleService
     }
 
     // Method to handle GetAllRoleQuery
-    public async Task<List<RoleDto>> GetAllRoles(GetAllRoleModel request)
+    public async Task<List<RoleDto>> GetAllRoles()
     {
         var entities = await _roleRepository.All.ToListAsync();
 
@@ -120,9 +120,9 @@ public class RoleService : IRoleService
     }
 
     // Method to handle DeleteRoleCommand
-    public async Task DeleteRole(DeleteRoleModel request)
+    public async Task DeleteRole(Guid id)
     {
-        var entityExist = await _roleRepository.FindAsync(request.Id);
+        var entityExist = await _roleRepository.FindAsync(id);
         if (entityExist == null)
         {
             _logger.LogError("Not found");

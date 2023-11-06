@@ -1,4 +1,5 @@
-﻿using System.Collections.Generic;
+﻿using System;
+using System.Collections.Generic;
 using System.Linq;
 using System.Threading;
 using System.Threading.Tasks;
@@ -80,24 +81,24 @@ public class PageService : IPageService
         return _mapper.Map<PageDto>(entityExist);
     }
 
-    public async Task DeletePage(DeletePageModel request)
+    public async Task DeletePage(Guid id)
     {
-        var entityExist = await _pageRepository.FindAsync(request.Id);
+        var entityExist = await _pageRepository.FindAsync(id);
         if (entityExist == null)
         {
             throw new NotFoundException(string.Empty);
         }
 
-        _pageRepository.Delete(request.Id);
+        _pageRepository.Delete(id);
         if (await _uow.SaveAsync() <= 0)
         {
             throw new System.Exception();
         }
     }
 
-    public async Task<PageDto> GetPage(GetPageModel request)
+    public async Task<PageDto> GetPage(Guid id)
     {
-        var entity = await _pageRepository.FindAsync(request.Id);
+        var entity = await _pageRepository.FindAsync(id);
         if (entity != null)
             return _mapper.Map<PageDto>(entity);
         else

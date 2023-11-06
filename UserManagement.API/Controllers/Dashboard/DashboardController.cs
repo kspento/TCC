@@ -2,9 +2,10 @@
 using Microsoft.AspNetCore.Authorization;
 using Microsoft.AspNetCore.Mvc;
 using System.Collections.Generic;
+using System.Threading;
 using System.Threading.Tasks;
 using UserManagement.Data.Dto.User;
-using UserManagement.MediatR.Queries;
+using UserManagement.Domain.Contracts.Services;
 
 namespace UserManagement.API.Controllers.Dashboard
 {
@@ -14,11 +15,11 @@ namespace UserManagement.API.Controllers.Dashboard
     public class DashboardController : ControllerBase
     {
 
-        public IMediator _mediator { get; set; }
+        public IDashBoardService _dashBoardService { get; set; }
 
-        public DashboardController(IMediator mediator)
+        public DashboardController(IDashBoardService dashBoardService)
         {
-            _mediator = mediator;
+            _dashBoardService = dashBoardService;
         }
 
         /// <summary>
@@ -29,8 +30,8 @@ namespace UserManagement.API.Controllers.Dashboard
         [Produces("application/json", "application/xml", Type = typeof(int))]
         public async Task<IActionResult> GetActiveUserCount()
         {
-            var getUserQuery = new GetActiveUserCountQuery { };
-            var result = await _mediator.Send(getUserQuery);
+            var cancelationToken = new CancellationToken();
+            var result = await _dashBoardService.GetActiveUserCount(cancelationToken);
             return Ok(result);
         }
 
@@ -42,8 +43,8 @@ namespace UserManagement.API.Controllers.Dashboard
         [Produces("application/json", "application/xml", Type = typeof(int))]
         public async Task<IActionResult> GetInactiveUserCount()
         {
-            var getUserQuery = new GetInactiveUserCountQuery { };
-            var result = await _mediator.Send(getUserQuery);
+            var cancelationToken = new CancellationToken();
+            var result = await _dashBoardService.GetInactiveUserCount(cancelationToken);
             return Ok(result);
         }
 
@@ -53,10 +54,11 @@ namespace UserManagement.API.Controllers.Dashboard
         /// <returns></returns>
         [HttpGet("GetTotalUserCount")]
         [Produces("application/json", "application/xml", Type = typeof(int))]
-        public async Task<IActionResult> GetTotalUserCount()
+        public async Task<IActionResult> GetTotalUserCount()        
         {
-            var getUserQuery = new GetTotalUserCountQuery { };
-            var result = await _mediator.Send(getUserQuery);
+            var cancelationToken = new CancellationToken();
+
+            var result = await _dashBoardService.GetTotalUserCount(cancelationToken);
             return Ok(result);
         }
 
@@ -67,9 +69,8 @@ namespace UserManagement.API.Controllers.Dashboard
         [HttpGet("GetOnlineUsers")]
         [Produces("application/json", "application/xml", Type = typeof(List<UserDto>))]
         public async Task<IActionResult> GetOnlineUsers()
-        {
-            var query = new GetOnlineUsersQuery { };
-            var result = await _mediator.Send(query);
+        {            
+            var result = await _dashBoardService.GetOnlineUsers();
             return Ok(result);
         }
     }

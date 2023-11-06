@@ -1,12 +1,11 @@
 ﻿using System;
 using System.Collections.Generic;
 using System.Threading.Tasks;
-using UserManagement.MediatR.Commands;
-using UserManagement.MediatR.Queries;
-using MediatR;
 using Microsoft.AspNetCore.Authorization;
 using Microsoft.AspNetCore.Mvc;
 using UserManagement.Data.Dto.PageAction;
+using UserManagement.Domain.Contracts.Services;
+using UserManagement.Domain.Model.PageAction;
 
 namespace UserManagement.API.Controllers
 {
@@ -18,14 +17,14 @@ namespace UserManagement.API.Controllers
     [Authorize]
     public class PageActionController : BaseController
     {
-        public IMediator _mediator { get; set; }
+        public IPageActionService _pageActionService { get; set; }
         /// <summary>
         /// Page Action
         /// </summary>
         /// <param name="mediator"></param>
-        public PageActionController(IMediator mediator)
+        public PageActionController(IPageActionService pageActionService)
         {
-            _mediator = mediator;
+            _pageActionService = pageActionService;
         }
         /// <summary>
         /// Get All Page Actions
@@ -35,21 +34,20 @@ namespace UserManagement.API.Controllers
         [Produces("application/json", "application/xml", Type = typeof(List<PageActionDto>))]
         public async Task<IActionResult> GetPageActions()
         {
-            var getAllPageActionQuery = new GetAllPageActionQuery { };
-            var result = await _mediator.Send(getAllPageActionQuery);
+            var result = await _pageActionService.GetAllPageActions();
             return Ok(result);
         }
         /// <summary>
         /// Add Page Action
         /// </summary>
-        /// <param name="addPageActionCommand"></param>
+        /// <param name="AddPageActionModel"></param>
         /// <returns></returns>
         [HttpPost("PageAction")]
         [Produces("application/json", "application/xml", Type = typeof(PageActionDto))]
-        public async Task<IActionResult> AddPageAction(AddPageActionCommand addPageActionCommand)
+        public async Task<IActionResult> AddPageAction(AddPageActionModel addPageActionModel)
         {
-            var result = await _mediator.Send(addPageActionCommand);
-            return ReturnFormattedResponse(result);
+            var result = await _pageActionService.AddPageAction(addPageActionModel);
+            return CreateApiResponse(result);
         }
 
         /// <summary>
@@ -58,11 +56,10 @@ namespace UserManagement.API.Controllers
         /// <param name="Id"></param>
         /// <returns></returns>
         [HttpDelete("PageAction/{Id}")]
-        public async Task<IActionResult> DeletePageAction(Guid Id)
+        public async Task<IActionResult> DeletePageAction(Guid id)
         {
-            var deletePageActionCommand = new DeletePageActionCommand { Id = Id };
-            var result = await _mediator.Send(deletePageActionCommand);
-            return ReturnFormattedResponse(result);
+            await _pageActionService.DeletePageAction(id);
+            return Ok();
         }
     }
 }

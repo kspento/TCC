@@ -49,9 +49,9 @@ public class PageActionService : IPageActionService
         return _mapper.Map<PageActionDto>(entity);
     }
 
-    public async Task DeletePageAction(DeletePageActionModel request)
+    public async Task DeletePageAction(Guid id)
     {
-        var entityExist = await _pageActionRepository.FindBy(c => c.Id == request.Id).FirstOrDefaultAsync();
+        var entityExist = await _pageActionRepository.FindBy(c => c.Id == id).FirstOrDefaultAsync();
         if (entityExist == null)
         {
             throw new NotFoundException(string.Empty);

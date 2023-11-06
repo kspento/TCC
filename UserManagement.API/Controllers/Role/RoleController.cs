@@ -1,12 +1,10 @@
 ﻿using System;
 using System.Collections.Generic;
 using System.Threading.Tasks;
-using UserManagement.MediatR.Commands;
-using UserManagement.MediatR.Queries;
-using MediatR;
 using Microsoft.AspNetCore.Authorization;
 using Microsoft.AspNetCore.Mvc;
 using UserManagement.Data.Dto.Role;
+using UserManagement.Domain.Model.Role;
 
 namespace UserManagement.API.Controllers
 {
@@ -18,15 +16,15 @@ namespace UserManagement.API.Controllers
     [Authorize]
     public class RoleController : BaseController
     {
-        public IMediator _mediator { get; set; }
+        public IRoleService _roleService { get; set; }
         /// <summary>
         /// Role
         /// </summary>
-        /// <param name="mediator"></param>
+        /// <param name="roleService"></param>
         public RoleController(
-            IMediator mediator)
+            IRoleService roleService)
         {
-            _mediator = mediator;
+            _roleService = roleService;
         }
         /// <summary>
         /// Create A Role
@@ -35,14 +33,11 @@ namespace UserManagement.API.Controllers
         /// <returns></returns>
         [HttpPost]
         [Produces("application/json", "application/xml", Type = typeof(RoleDto))]
-        public async Task<IActionResult> AddRole(AddRoleCommand addRoleCommand)
+        public async Task<IActionResult> AddRole(AddRoleModel addRoleModel)
         {
-            var result = await _mediator.Send(addRoleCommand);
-            if (!result.Success)
-            {
-                return ReturnFormattedResponse(result);
-            }
-            return CreatedAtAction("GetRole", new { id = result.Data.Id }, result.Data);
+            var result = await _roleService.AddRole(addRoleModel);
+
+            return CreatedAtAction("GetRole", new { id = result.Id }, result);
         }
         /// <summary>
         /// Update Exist Role By Id
@@ -53,11 +48,11 @@ namespace UserManagement.API.Controllers
 
         [HttpPut("{id}")]
         [Produces("application/json", "application/xml", Type = typeof(RoleDto))]
-        public async Task<IActionResult> UpdateRole(Guid id, UpdateRoleCommand updateRoleCommand)
+        public async Task<IActionResult> UpdateRole(Guid id, UpdateRoleModel updateRoleModel)
         {
-            updateRoleCommand.Id = id;
-            var result = await _mediator.Send(updateRoleCommand);
-            return ReturnFormattedResponse(result);
+            updateRoleModel.Id = id;
+            var result = await _roleService.UpdateRole(updateRoleModel);
+            return CreateApiResponse(result);
         }
         /// <summary>
         /// Get Role By Id
@@ -69,10 +64,8 @@ namespace UserManagement.API.Controllers
         [Produces("application/json", "application/xml", Type = typeof(RoleDto))]
         public async Task<IActionResult> GetRole(Guid id)
         {
-            var getRoleQuery = new GetRoleQuery { Id = id };
-
-            var result = await _mediator.Send(getRoleQuery);
-            return ReturnFormattedResponse(result);
+            var result = await _roleService.GetRole(id);
+            return CreateApiResponse(result);
         }
         /// <summary>
         /// Get All Roles
@@ -82,21 +75,19 @@ namespace UserManagement.API.Controllers
         [Produces("application/json", "application/xml", Type = typeof(List<RoleDto>))]
         public async Task<IActionResult> GetRoles()
         {
-            var getAllRoleQuery = new GetAllRoleQuery { };
-            var result = await _mediator.Send(getAllRoleQuery);
+            var result = await _roleService.GetAllRoles();
             return Ok(result);
         }
         /// <summary>
         /// Delete Role By Id
         /// </summary>
-        /// <param name="Id"></param>
+        /// <param name="id"></param>
         /// <returns></returns>
         [HttpDelete("{Id}")]
-        public async Task<IActionResult> DeleteRole(Guid Id)
+        public async Task<IActionResult> DeleteRole(Guid id)
         {
-            var deleteRoleCommand = new DeleteRoleCommand { Id = Id };
-            var result = await _mediator.Send(deleteRoleCommand);
-            return ReturnFormattedResponse(result);
+            await _roleService.DeleteRole(id);
+            return Ok();
         }
     }
 }
