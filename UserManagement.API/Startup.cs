@@ -26,6 +26,7 @@ using UserManagement.Data.Dto.User;
 using UserManagement.Data.Dto;
 using UserManagement.Data.Hub;
 using UserManagement.API.Filters;
+using Microsoft.Extensions.Options;
 
 namespace UserManagement.API
 {
@@ -102,12 +103,14 @@ namespace UserManagement.API
             {
                 options.Providers.Add<GzipCompressionProvider>();
             });
-            services.AddControllers()
+            services.AddControllers(op => 
+                {
+                op.Filters.Add<CustomExceptionFilter>();
+                })
                 .AddNewtonsoftJson(options =>
                 {
                     options.SerializerSettings.ReferenceLoopHandling = ReferenceLoopHandling.Ignore;
-                    options.SerializerSettings.DateTimeZoneHandling = DateTimeZoneHandling.Local;
-                    options.Filters.Add<CustomExceptionFilter>();
+                    options.SerializerSettings.DateTimeZoneHandling = DateTimeZoneHandling.Local;                    
                 });
             services.AddSwaggerGen(c =>
             {

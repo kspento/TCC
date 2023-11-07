@@ -15,7 +15,6 @@ namespace UserManagement.API.Controllers
     [Route("api")]
     [ApiController]
     [Authorize]
-    [CustomExceptionFilter]
     public class ActionController : BaseController
     {
         public IActionService _actionService { get; set; }

@@ -15,6 +15,8 @@ using UserManagement.Data.Repository.EmailTemplate;
 using UserManagement.Repository;
 using UserManagement.Domain.Contracts.Services;
 using UserManagement.Domain.Services;
+using Microsoft.AspNetCore.Mvc.Filters;
+using UserManagement.API.Filters;
 
 namespace UserManagement.Api.Helpers
 {
@@ -38,7 +40,7 @@ namespace UserManagement.Api.Helpers
             services.AddScoped<INLogRespository, NLogRespository>();
             services.AddScoped<IEmailTemplateRepository, EmailTemplateRepository>();
             services.AddScoped<IEmailSMTPSettingRepository, EmailSMTPSettingRepository>();
-
+            services.AddScoped<CustomExceptionFilter>();
 
             services.AddScoped<IUserService, UserService>();
         }
