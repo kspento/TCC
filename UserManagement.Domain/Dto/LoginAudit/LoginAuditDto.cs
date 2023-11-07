@@ -6,6 +6,7 @@ namespace UserManagement.Data.Dto.LoginAudit
     {
         public Guid Id { get; set; }
         public string UserName { get; set; }
+
         public DateTime LoginTime { get; set; }
         public string RemoteIP { get; set; }
         public string Status { get; set; }

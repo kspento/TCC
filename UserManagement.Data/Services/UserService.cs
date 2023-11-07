@@ -22,6 +22,7 @@ using UserManagement.Domain.Model.User;
 using UserManagement.Helper;
 using UserManagement.Domain.Exception;
 using NLog.LayoutRenderers.Wrappers;
+using UserManagement.Repository;
 
 namespace UserManagement.Domain.Services
 {
@@ -156,19 +157,6 @@ namespace UserManagement.Domain.Services
         {
             var entities = await _userRepository.All.OrderByDescending(c => c.CreatedDate).Take(10).ToListAsync();
             return _mapper.Map<List<UserDto>>(entities);
-        }
-
-        public async Task<UserDto> GetUsers(GetUsersModel request)
-        {
-            var entity = await _userRepository.AllIncluding(c => c.UserRoles, cs => cs.UserClaims, ip => ip.UserAllowedIPs).FirstOrDefaultAsync(c => c.Id == request.UserResource.Id);
-
-            if (entity == null)
-            {
-                _logger.LogError("User not found");
-                throw new NotFoundException("User not found");
-            }
-
-            return _mapper.Map<UserDto>(entity);     
         }
 
         public async Task<UserDto> ResetPassword(ResetPasswordModel request)
@@ -386,6 +374,13 @@ namespace UserManagement.Domain.Services
 
                 throw new NotFoundException("User not found");
             }            
+        }
+
+        public Task<UserList> GetUsers(GetUsersModel request)
+        {
+            var response = _userRepository.GetUsers(request.UserResource);
+
+            return response;
         }
     }
 }

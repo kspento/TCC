@@ -21,7 +21,7 @@ namespace UserManagement.API.Controllers
             var response = new ApiResponse<T>
             {
                 Data = data,
-                Success = !errors.Any(),
+                Success = errors == null || !errors.Any(),
                 StatusCode = statusCode,
                 Errors = errors ?? new List<string>()
             };

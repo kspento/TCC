@@ -24,10 +24,12 @@ namespace UserManagement.Data.Repository.NLog
 
         public async Task<NLogList> GetNLogsAsync(NLogResource nLogResource)
         {
-            var collectionBeforePaging = All;
-            collectionBeforePaging =
-               collectionBeforePaging.ApplySort(nLogResource.OrderBy,
-               _propertyMappingService.GetPropertyMapping<NLogDto, Entities.NLog>());
+            var allNlogResource = All;
+
+            var collectionBeforePaging = allNlogResource.OrderBySerializedString(nLogResource.OrderBy);
+            //collectionBeforePaging =
+            //   collectionBeforePaging.ApplySort(nLogResource.OrderBy,
+            //   _propertyMappingService.GetPropertyMapping<NLogDto, Entities.NLog>());
 
             if (!string.IsNullOrWhiteSpace(nLogResource.Message))
             {

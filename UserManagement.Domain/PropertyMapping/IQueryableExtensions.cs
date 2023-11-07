@@ -1,81 +1,58 @@
 ﻿using System;
-using System.Collections.Generic;
 using System.Linq;
+using System.Linq.Expressions;
 
 namespace UserManagement.Data.PropertyMapping
 {
     public static class IQueryableExtensions
     {
-        public static IQueryable<T> ApplySort<T>(this IQueryable<T> source, string orderBy,
-            Dictionary<string, PropertyMappingValue> mappingDictionary)
+        public static IQueryable<T> OrderBySerializedString<T>(this IQueryable<T> source, string serializedSort)
         {
             if (source == null)
             {
-                throw new ArgumentNullException("source");
+                throw new ArgumentNullException(nameof(source));
             }
 
-            if (mappingDictionary == null)
-            {
-                throw new ArgumentNullException("mappingDictionary");
-            }
-
-            if (string.IsNullOrWhiteSpace(orderBy))
+            if (string.IsNullOrWhiteSpace(serializedSort))
             {
                 return source;
             }
-            // the orderBy string is separated by ",", so we split it.
-            var orderByAfterSplit = orderBy.Split(',');
 
-            // apply each orderby clause in reverse order - otherwise, the 
-            // IQueryable will be ordered in the wrong order
-            foreach (var orderByClause in orderByAfterSplit.Reverse())
+            var sortClauses = serializedSort.Split(';');
+
+            IOrderedQueryable<T> orderedQuery = null;
+
+            foreach (var sortClause in sortClauses)
             {
-                // trim the orderByClause, as it might contain leading 
-                // or trailing spaces. Can't trim the var in foreach,
-                // so use another var.
-                var trimmedOrderByClause = orderByClause.Trim();
-
-                // if the sort option ends with with " desc", we order
-                // descending, otherwise ascending
-                var orderDescending = trimmedOrderByClause.EndsWith(" desc");
-
-                // remove " asc" or " desc" from the orderByClause, so we 
-                // get the property name to look for in the mapping dictionary
-                var indexOfFirstSpace = trimmedOrderByClause.IndexOf(" ");
-                var propertyName = indexOfFirstSpace == -1 ?
-                    trimmedOrderByClause : trimmedOrderByClause.Remove(indexOfFirstSpace);
-
-                // find the matching property
-                if (!mappingDictionary.ContainsKey(propertyName))
+                var parts = sortClause.Trim().Split(' ');
+                if (parts.Length > 0)
                 {
-                    throw new ArgumentException($"Key mapping for {propertyName} is missing");
-                }
+                    var propertyName = parts[0];
+                    var descending = (parts.Length > 1) && parts[1].Equals("desc", StringComparison.OrdinalIgnoreCase);
 
-                // get the PropertyMappingValue
-                var propertyMappingValue = mappingDictionary[propertyName];
+                    var type = typeof(T);
+                    var parameter = Expression.Parameter(type, "x");
+                    var property = Expression.Property(parameter, propertyName);
+                    var lambda = Expression.Lambda(property, parameter);
 
-                if (propertyMappingValue == null)
-                {
-                    throw new ArgumentNullException("propertyMappingValue");
-                }
-
-                // Run through the property names in reverse
-                // so the orderby clauses are applied in the correct order
-                foreach (var destinationProperty in propertyMappingValue.DestinationProperties.Reverse())
-                {
-                    // revert sort order if necessary
-                    if (propertyMappingValue.Revert)
+                    if (descending)
                     {
-                        orderDescending = !orderDescending;
+                        orderedQuery = orderedQuery == null
+                            ? Queryable.OrderByDescending(source, (dynamic)lambda)
+                            : Queryable.ThenByDescending(orderedQuery, (dynamic)lambda);
                     }
-
-                    source = source.OrderBy((T item) => item.GetType().GetProperty(destinationProperty).GetValue(item, null));
-
-                    //source = source.OrderBy(destinationProperty + (orderDescending ? " descending" : " ascending"));
+                    else
+                    {
+                        orderedQuery = orderedQuery == null
+                            ? Queryable.OrderBy(source, (dynamic)lambda)
+                            : Queryable.ThenBy(orderedQuery, (dynamic)lambda);
+                    }
                 }
             }
-            return source;
+
+            return orderedQuery ?? source;
         }
+
 
         //public static IQueryable<object> ShapeData<TSource>(this IQueryable<TSource> source,
         //    string fields,

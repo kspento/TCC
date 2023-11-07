@@ -33,10 +33,12 @@ namespace UserManagement.Data.Repository.LoginAudit
 
         public async Task<LoginAuditList> GetDocumentAuditTrails(LoginAuditResource loginAuditResrouce)
         {
-            var collectionBeforePaging = All;
-            collectionBeforePaging =
-               collectionBeforePaging.ApplySort(loginAuditResrouce.OrderBy,
-               _propertyMappingService.GetPropertyMapping<LoginAuditDto, UserManagement.Data.Entities.LoginAudit>());
+            var allDocuments = All;
+
+            var collectionBeforePaging = allDocuments.OrderBySerializedString(loginAuditResrouce.OrderBy);
+            //collectionBeforePaging =
+            //   collectionBeforePaging.ApplySort(loginAuditResrouce.OrderBy,
+            //   _propertyMappingService.GetPropertyMapping<LoginAuditDto, UserManagement.Data.Entities.LoginAudit>());
 
             if (!string.IsNullOrWhiteSpace(loginAuditResrouce.UserName))
             {

@@ -18,6 +18,7 @@ using UserManagement.Data.PropertyMapping;
 using UserManagement.Data.UnitOfWork;
 using UserManagement.Data.Dto.User;
 using UserManagement.Data.Entities;
+using AutoMapper;
 
 namespace UserManagement.Repository
 {
@@ -29,7 +30,8 @@ namespace UserManagement.Repository
         private readonly IRoleClaimRepository _roleClaimRepository;
         private readonly IUserRoleRepository _userRoleRepository;
         private readonly IPageActionRepository _pageActionRepository;
-        private readonly IPropertyMappingService _propertyMappingService;
+        private readonly IMapper _mapper;
+
         public UserRepository(
             IUnitOfWork<UserContext> uow,
              JwtSettings settings,
@@ -37,7 +39,7 @@ namespace UserManagement.Repository
              IRoleClaimRepository roleClaimRepository,
              IUserRoleRepository userRoleRepository,
              IPageActionRepository pageActionRepository,
-             IPropertyMappingService propertyMappingService
+             IMapper mapper
             ) : base(uow)
         {
             _roleClaimRepository = roleClaimRepository;
@@ -45,15 +47,14 @@ namespace UserManagement.Repository
             _userRoleRepository = userRoleRepository;
             _settings = settings;
             _pageActionRepository = pageActionRepository;
-            _propertyMappingService = propertyMappingService;
+            _mapper = mapper;
         }
 
         public async Task<UserList> GetUsers(UserResource userResource)
         {
-            var collectionBeforePaging = All;
-            collectionBeforePaging =
-               collectionBeforePaging.ApplySort(userResource.OrderBy,
-               _propertyMappingService.GetPropertyMapping<UserDto, User>());
+            var allUsers = All;
+
+            var collectionBeforePaging = allUsers.OrderBySerializedString(userResource.OrderBy);
 
             if (!string.IsNullOrWhiteSpace(userResource.FirstName))
             {
@@ -84,6 +85,7 @@ namespace UserManagement.Repository
                 .Where(c => c.IsActive == isActive);
 
             var loginAudits = new UserList();
+
             return await loginAudits.Create(
                 collectionBeforePaging,
                 userResource.Skip,

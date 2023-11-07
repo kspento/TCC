@@ -101,9 +101,17 @@ namespace UserManagement.Domain.Services
 
         public async Task<List<ActionDto>> GetAllAction()
         {
+
+            var result = new List<ActionDto>(); 
             var entities = await _actionRepository.All.ToListAsync();
 
-            return _mapper.Map<List<ActionDto>>(entities);
+            foreach (var item in entities)
+            {
+                var mapped = _mapper.Map<ActionDto>(item);
+                result.Add(mapped);
+            }
+
+            return result;            
         }
 
     }

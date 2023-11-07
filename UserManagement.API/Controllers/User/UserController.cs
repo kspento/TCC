@@ -97,21 +97,21 @@ namespace UserManagement.API.Controllers
         [Produces("application/json", "application/xml", Type = typeof(UserList))]
         public async Task<IActionResult> GetUsers([FromQuery] UserResource userResource)
         {
-            var getAllLoginAuditQuery = new GetUsersModel
+            var getUsersRequest = new GetUsersModel
             {
                 UserResource = userResource
             };
-            var result = await _userService.GetUsers(getAllLoginAuditQuery);
-        
-            //var paginationMetadata = new
-            //{
-            //    totalCount = result.TotalCount,
-            //    pageSize = result.PageSize,
-            //    skip = result.Skip,
-            //    totalPages = result.TotalPages
-            //};
-            //Response.Headers.Add("X-Pagination",
-            //    Newtonsoft.Json.JsonConvert.SerializeObject(paginationMetadata));
+            var result = await _userService.GetUsers(getUsersRequest);
+
+            var paginationMetadata = new
+            {
+                totalCount = result.TotalCount,
+                pageSize = result.PageSize,
+                skip = result.Skip,
+                totalPages = result.TotalPages
+            };
+            Response.Headers.Add("X-Pagination",
+                Newtonsoft.Json.JsonConvert.SerializeObject(paginationMetadata));
             return Ok(result);
         }
 

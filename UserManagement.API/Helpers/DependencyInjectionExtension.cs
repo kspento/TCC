@@ -40,6 +40,19 @@ namespace UserManagement.Api.Helpers
             services.AddScoped<INLogRespository, NLogRespository>();
             services.AddScoped<IEmailTemplateRepository, EmailTemplateRepository>();
             services.AddScoped<IEmailSMTPSettingRepository, EmailSMTPSettingRepository>();
+            services.AddScoped<IActionService, ActionService>();
+            services.AddScoped<IAppSettingService, AppSettingService>();
+            services.AddScoped<IDashBoardService, DashBoardService>();
+            services.AddScoped<IEmailService, EmailService>();
+            services.AddScoped<IEmailTemplateService, EmailTemplateService>();
+            services.AddScoped<ILoginAuditService, LoginAuditService>();
+            services.AddScoped<INLogService, NLogService>();
+            services.AddScoped<IPageActionService, PageActionService>();
+            services.AddScoped<IPageService, PageService>();
+            services.AddScoped<IRoleService, RoleService>();
+            services.AddScoped<ISocialLoginService, SocialLoginService>();
+            services.AddScoped<IUserService, UserService>();
+
             services.AddScoped<CustomExceptionFilter>();
 
             services.AddScoped<IUserService, UserService>();
