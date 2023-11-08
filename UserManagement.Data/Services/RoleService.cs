@@ -47,7 +47,7 @@ public class RoleService : IRoleService
     // Method to handle UpdateRoleCommand
     public async Task<RoleDto> UpdateRole(UpdateRoleModel request)
     {
-        var entityExist = await _roleRepository.FindBy(c => c.Name == request.Name && c.Id != request.Id)
+        var entityExist = await _roleRepository.FindBy(c => c.Id != request.Id)
           .FirstOrDefaultAsync();
 
         if (entityExist != null)
@@ -78,11 +78,11 @@ public class RoleService : IRoleService
     }
 
     // Method to handle GetRoleUsersQuery
-    public async Task<List<UserRoleDto>> GetRoleUsers(GetRoleUsersModel request)
+    public async Task<List<UserRoleDto>> GetRoleUsers(Guid roleId)
     {
         var userRoles = _userRoleRepository
             .AllIncluding(c => c.User)
-            .Where(c => c.RoleId == request.RoleId)
+            .Where(c => c.RoleId == roleId)
             .Select(cs => new UserRoleDto
             {
                 UserId = cs.UserId,
@@ -103,7 +103,10 @@ public class RoleService : IRoleService
             .FirstOrDefaultAsync();
 
         if (entity != null)
-            return _mapper.Map<RoleDto>(entity);
+        {
+            var result = _mapper.Map<RoleDto>(entity);
+            return result;
+        }
         else
         {
             _logger.LogError("Not found");
@@ -166,5 +169,23 @@ public class RoleService : IRoleService
         var entityDto = _mapper.Map<RoleDto>(entity);
 
         return entityDto;
+    }
+
+    public async Task UpdateRoleUser(UpdateRoleModel request)
+    {
+        var userRoles = await _userRoleRepository.All.Where(c => c.RoleId == request.Id).ToListAsync();
+        var userRolesToAdd = request.UserRoles.Where(c => !userRoles.Select(c => c.UserId).Contains(c.UserId.Value)).ToList();
+        
+        _userRoleRepository.AddRange(_mapper.Map<List<UserRole>>(userRolesToAdd));
+        
+        var userRolesToDelete = userRoles.Where(c => !request.UserRoles.Select(cs => cs.UserId).Contains(c.UserId)).ToList();
+        
+        _userRoleRepository.RemoveRange(userRolesToDelete);
+
+        if (await _uow.SaveAsync() <= 0)
+        {
+            //return ServiceResponse<UserRoleDto>.Return500();
+            throw new Exception();
+        }
     }
 }

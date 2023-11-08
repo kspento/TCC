@@ -65,7 +65,7 @@ namespace UserManagement.API.Controllers
         public async Task<IActionResult> GetRole(Guid id)
         {
             var result = await _roleService.GetRole(id);
-            return CreateApiResponse(result);
+            return Ok(result);
         }
         /// <summary>
         /// Get All Roles

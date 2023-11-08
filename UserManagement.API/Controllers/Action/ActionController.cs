@@ -51,7 +51,7 @@ namespace UserManagement.API.Controllers
         public async Task<IActionResult> GetActions()
         {          
             var result = await _actionService.GetAllAction();
-            return CreateApiResponse(result);
+            return Ok(result);
         }
         /// <summary>
         /// Create A Action

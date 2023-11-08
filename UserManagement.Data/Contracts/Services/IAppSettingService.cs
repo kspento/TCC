@@ -11,7 +11,7 @@ namespace UserManagement.Domain.Contracts.Services
     {
         Task<AppSettingDto> AddAppSetting(AddAppSettingModel request);
         Task DeleteAppSetting(DeleteAppSettingModel request);
-        Task<List<AppSettingDto>> GetAllAppSetting(GetAppSettingModel request);
+        Task<List<AppSettingDto>> GetAllAppSetting();
         Task<AppSettingDto> GetAppSetting(GetAppSettingModel request);
         Task<AppSettingDto> GetAppSettingByKey(GetAppSettingModel request);
         Task<AppSettingDto> UpdateAppSetting(UpdateAppSettingModel request);

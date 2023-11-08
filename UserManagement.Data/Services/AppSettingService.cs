@@ -81,7 +81,7 @@ namespace UserManagement.Domain.Services
             }
         }
 
-        public async Task<List<AppSettingDto>> GetAllAppSetting(GetAppSettingModel request)
+        public async Task<List<AppSettingDto>> GetAllAppSetting()
         {
 
             var entities = await _appSettingRepository.All.ToListAsync();

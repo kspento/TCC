@@ -42,7 +42,7 @@ namespace UserManagement.API.Controllers.Email
         {
             var query = new EmailSettingModel() { Id = id };
             var result = await _emailService.GetEmailSMTPSetting(query);
-            return CreateApiResponse(result);
+            return Ok(result);
         }
 
         /// <summary>
@@ -55,7 +55,7 @@ namespace UserManagement.API.Controllers.Email
         {
 
             var result = await _emailService.GetEmailSMTPSettings();
-            return CreateApiResponse(result);
+            return Ok(result);
         }
 
         /// <summary>

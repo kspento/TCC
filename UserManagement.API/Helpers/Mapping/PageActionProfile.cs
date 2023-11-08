@@ -1,6 +1,7 @@
 ﻿using AutoMapper;
 using UserManagement.Data.Dto.PageAction;
 using UserManagement.Data.Entities;
+using UserManagement.Domain.Model.PageAction;
 
 namespace UserManagement.API.Helpers.Mapping
 {
@@ -9,7 +10,7 @@ namespace UserManagement.API.Helpers.Mapping
         public PageActionProfile()
         {
             CreateMap<PageAction, PageActionDto>().ReverseMap();
-            //CreateMap<AddPageActionCommand, PageAction>().ReverseMap();
+            CreateMap<AddPageActionModel, PageAction>().ReverseMap();
         }
     }
 }

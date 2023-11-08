@@ -3,7 +3,7 @@ using UserManagement.Data.Dto.EmailTemplate;
 
 namespace UserManagement.Domain.Model.EmailTemplate
 {
-    public class UpdateEmailTemplateModel : EmailTemplateDto
+    public class UpdateEmailTemplateModel
     {
         public Guid Id { get; set; }
         public string Name { get; set; }

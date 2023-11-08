@@ -73,7 +73,7 @@ namespace UserManagement.API.Controllers.EmailTemplate
             };
 
             var result = await _emailTemplateService.GetEmailTemplate(getEmailTemplateQuery);
-            return CreateApiResponse(result);
+            return Ok(result);
 
         }
         /// <summary>
@@ -86,7 +86,7 @@ namespace UserManagement.API.Controllers.EmailTemplate
         {
 
             var result = await _emailTemplateService.GetAllEmailTemplate();
-            return CreateApiResponse(result);
+            return Ok(result);
         }
         /// <summary>
         /// Delete Email Template By Id

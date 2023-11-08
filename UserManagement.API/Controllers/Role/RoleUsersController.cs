@@ -34,7 +34,8 @@ namespace UserManagement.API.Controllers
         [Produces("application/json", "application/xml", Type = typeof(List<UserRoleDto>))]
         public async Task<IActionResult> RoleUsers(Guid id)
         {
-            var result = await _roleService.GetRole(id);
+            //var result = await _roleService.GetRole(id);
+            var result = await _roleService.GetRoleUsers(id);
             return Ok(result);
         }
         /// <summary>
@@ -48,8 +49,11 @@ namespace UserManagement.API.Controllers
         public async Task<IActionResult> UpdateRoleUsers(Guid id, UpdateRoleModel updateRoleModel)
         {
             updateRoleModel.Id = id;
-            var result = await  _roleService.UpdateRole(updateRoleModel);
-            return CreateApiResponse(result);
+            //var result = await  _roleService.UpdateRole(updateRoleModel);
+
+            await _roleService.UpdateRoleUser(updateRoleModel);
+
+            return Ok();
         }
     }
 }

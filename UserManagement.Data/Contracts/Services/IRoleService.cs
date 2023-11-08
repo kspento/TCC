@@ -11,6 +11,7 @@ public interface IRoleService
     Task DeleteRole(Guid id);
     Task<List<RoleDto>> GetAllRoles();
     Task<RoleDto> GetRole(Guid id);
-    Task<List<UserRoleDto>> GetRoleUsers(GetRoleUsersModel request);
+    Task<List<UserRoleDto>> GetRoleUsers(Guid roleId);
     Task<RoleDto> UpdateRole(UpdateRoleModel request);
+    Task UpdateRoleUser(UpdateRoleModel request);
 }

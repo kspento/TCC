@@ -88,7 +88,7 @@ namespace UserManagement.API.Controllers.AppSetting
             };
 
             var result = await _appSettingService.GetAppSetting(getAppSettingQuery);
-            return CreateApiResponse(result);
+            return Ok(result);
 
         }
         /// <summary>
@@ -108,7 +108,7 @@ namespace UserManagement.API.Controllers.AppSetting
             };
 
             var result = await _appSettingService.GetAppSettingByKey(getAppSettingByKeyQuery);
-            return CreateApiResponse(result);
+            return Ok(result);
         }
         /// <summary>
         /// Get All AppSettings
@@ -121,8 +121,8 @@ namespace UserManagement.API.Controllers.AppSetting
             var getAllAppSettingQuery = new GetAppSettingModel
             {
             };
-            var result = await _appSettingService.GetAppSettingByKey(getAllAppSettingQuery);
-            return CreateApiResponse(result);
+            var result = await _appSettingService.GetAllAppSetting();
+            return Ok(result);
         }
         /// <summary>
         /// Delete AppSetting By Id

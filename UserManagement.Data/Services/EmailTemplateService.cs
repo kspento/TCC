@@ -30,6 +30,7 @@ namespace UserManagement.Domain.Services
             UserInfoToken userInfoToken,
             ILogger<AddEmailTemplateModel> logger)
         {
+            _emailTemplateRepository = emailTemplateRepository;
             _mapper = mapper;
             _uow = uow;
             _userInfoToken = userInfoToken;
