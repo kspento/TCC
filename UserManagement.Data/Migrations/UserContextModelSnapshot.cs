@@ -22,7 +22,7 @@ namespace UserManagement.Domain.Migrations
 
             SqlServerModelBuilderExtensions.UseIdentityColumns(modelBuilder);
 
-            modelBuilder.Entity("UserManagement.Data.Action", b =>
+            modelBuilder.Entity("UserManagement.Data.Entities.Action", b =>
                 {
                     b.Property<Guid>("Id")
                         .ValueGeneratedOnAdd()
@@ -65,7 +65,7 @@ namespace UserManagement.Domain.Migrations
                     b.ToTable("Actions");
                 });
 
-            modelBuilder.Entity("UserManagement.Data.AppSetting", b =>
+            modelBuilder.Entity("UserManagement.Data.Entities.AppSetting", b =>
                 {
                     b.Property<Guid>("Id")
                         .ValueGeneratedOnAdd()
@@ -108,7 +108,7 @@ namespace UserManagement.Domain.Migrations
                     b.ToTable("AppSettings");
                 });
 
-            modelBuilder.Entity("UserManagement.Data.EmailSMTPSetting", b =>
+            modelBuilder.Entity("UserManagement.Data.Entities.EmailSMTPSetting", b =>
                 {
                     b.Property<Guid>("Id")
                         .ValueGeneratedOnAdd()
@@ -167,7 +167,7 @@ namespace UserManagement.Domain.Migrations
                     b.ToTable("EmailSMTPSettings");
                 });
 
-            modelBuilder.Entity("UserManagement.Data.EmailTemplate", b =>
+            modelBuilder.Entity("UserManagement.Data.Entities.EmailTemplate", b =>
                 {
                     b.Property<Guid>("Id")
                         .ValueGeneratedOnAdd()
@@ -208,7 +208,7 @@ namespace UserManagement.Domain.Migrations
                     b.ToTable("EmailTemplates");
                 });
 
-            modelBuilder.Entity("UserManagement.Data.LoginAudit", b =>
+            modelBuilder.Entity("UserManagement.Data.Entities.LoginAudit", b =>
                 {
                     b.Property<Guid>("Id")
                         .ValueGeneratedOnAdd()
@@ -243,7 +243,7 @@ namespace UserManagement.Domain.Migrations
                     b.ToTable("LoginAudits");
                 });
 
-            modelBuilder.Entity("UserManagement.Data.NLog", b =>
+            modelBuilder.Entity("UserManagement.Data.Entities.NLog", b =>
                 {
                     b.Property<Guid>("Id")
                         .ValueGeneratedOnAdd()
@@ -282,7 +282,7 @@ namespace UserManagement.Domain.Migrations
                     b.ToTable("NLog");
                 });
 
-            modelBuilder.Entity("UserManagement.Data.Page", b =>
+            modelBuilder.Entity("UserManagement.Data.Entities.Page", b =>
                 {
                     b.Property<Guid>("Id")
                         .ValueGeneratedOnAdd()
@@ -328,7 +328,7 @@ namespace UserManagement.Domain.Migrations
                     b.ToTable("Pages");
                 });
 
-            modelBuilder.Entity("UserManagement.Data.PageAction", b =>
+            modelBuilder.Entity("UserManagement.Data.Entities.PageAction", b =>
                 {
                     b.Property<Guid>("Id")
                         .ValueGeneratedOnAdd()
@@ -378,7 +378,7 @@ namespace UserManagement.Domain.Migrations
                     b.ToTable("PageActions");
                 });
 
-            modelBuilder.Entity("UserManagement.Data.Role", b =>
+            modelBuilder.Entity("UserManagement.Data.Entities.Role", b =>
                 {
                     b.Property<Guid>("Id")
                         .ValueGeneratedOnAdd()
@@ -435,7 +435,7 @@ namespace UserManagement.Domain.Migrations
                     b.ToTable("Roles", (string)null);
                 });
 
-            modelBuilder.Entity("UserManagement.Data.RoleClaim", b =>
+            modelBuilder.Entity("UserManagement.Data.Entities.RoleClaim", b =>
                 {
                     b.Property<int>("Id")
                         .ValueGeneratedOnAdd()
@@ -469,7 +469,7 @@ namespace UserManagement.Domain.Migrations
                     b.ToTable("RoleClaims", (string)null);
                 });
 
-            modelBuilder.Entity("UserManagement.Data.User", b =>
+            modelBuilder.Entity("UserManagement.Data.Entities.User", b =>
                 {
                     b.Property<Guid>("Id")
                         .ValueGeneratedOnAdd()
@@ -576,7 +576,7 @@ namespace UserManagement.Domain.Migrations
                     b.ToTable("Users", (string)null);
                 });
 
-            modelBuilder.Entity("UserManagement.Data.UserAllowedIP", b =>
+            modelBuilder.Entity("UserManagement.Data.Entities.UserAllowedIP", b =>
                 {
                     b.Property<Guid>("UserId")
                         .HasColumnType("uniqueidentifier");
@@ -589,7 +589,7 @@ namespace UserManagement.Domain.Migrations
                     b.ToTable("UserAllowedIPs");
                 });
 
-            modelBuilder.Entity("UserManagement.Data.UserClaim", b =>
+            modelBuilder.Entity("UserManagement.Data.Entities.UserClaim", b =>
                 {
                     b.Property<int>("Id")
                         .ValueGeneratedOnAdd()
@@ -623,7 +623,7 @@ namespace UserManagement.Domain.Migrations
                     b.ToTable("UserClaims", (string)null);
                 });
 
-            modelBuilder.Entity("UserManagement.Data.UserLogin", b =>
+            modelBuilder.Entity("UserManagement.Data.Entities.UserLogin", b =>
                 {
                     b.Property<string>("LoginProvider")
                         .HasColumnType("nvarchar(450)");
@@ -644,7 +644,7 @@ namespace UserManagement.Domain.Migrations
                     b.ToTable("UserLogins", (string)null);
                 });
 
-            modelBuilder.Entity("UserManagement.Data.UserRole", b =>
+            modelBuilder.Entity("UserManagement.Data.Entities.UserRole", b =>
                 {
                     b.Property<Guid>("UserId")
                         .HasColumnType("uniqueidentifier");
@@ -659,7 +659,7 @@ namespace UserManagement.Domain.Migrations
                     b.ToTable("UserRoles", (string)null);
                 });
 
-            modelBuilder.Entity("UserManagement.Data.UserToken", b =>
+            modelBuilder.Entity("UserManagement.Data.Entities.UserToken", b =>
                 {
                     b.Property<Guid>("UserId")
                         .HasColumnType("uniqueidentifier");
@@ -678,20 +678,20 @@ namespace UserManagement.Domain.Migrations
                     b.ToTable("UserTokens", (string)null);
                 });
 
-            modelBuilder.Entity("UserManagement.Data.Action", b =>
+            modelBuilder.Entity("UserManagement.Data.Entities.Action", b =>
                 {
-                    b.HasOne("UserManagement.Data.User", "CreatedByUser")
+                    b.HasOne("UserManagement.Data.Entities.User", "CreatedByUser")
                         .WithMany()
                         .HasForeignKey("CreatedBy")
                         .OnDelete(DeleteBehavior.NoAction)
                         .IsRequired();
 
-                    b.HasOne("UserManagement.Data.User", "DeletedByUser")
+                    b.HasOne("UserManagement.Data.Entities.User", "DeletedByUser")
                         .WithMany()
                         .HasForeignKey("DeletedBy")
                         .OnDelete(DeleteBehavior.NoAction);
 
-                    b.HasOne("UserManagement.Data.User", "ModifiedByUser")
+                    b.HasOne("UserManagement.Data.Entities.User", "ModifiedByUser")
                         .WithMany()
                         .HasForeignKey("ModifiedBy")
                         .OnDelete(DeleteBehavior.NoAction)
@@ -704,20 +704,20 @@ namespace UserManagement.Domain.Migrations
                     b.Navigation("ModifiedByUser");
                 });
 
-            modelBuilder.Entity("UserManagement.Data.EmailSMTPSetting", b =>
+            modelBuilder.Entity("UserManagement.Data.Entities.EmailSMTPSetting", b =>
                 {
-                    b.HasOne("UserManagement.Data.User", "CreatedByUser")
+                    b.HasOne("UserManagement.Data.Entities.User", "CreatedByUser")
                         .WithMany()
                         .HasForeignKey("CreatedBy")
                         .OnDelete(DeleteBehavior.NoAction)
                         .IsRequired();
 
-                    b.HasOne("UserManagement.Data.User", "DeletedByUser")
+                    b.HasOne("UserManagement.Data.Entities.User", "DeletedByUser")
                         .WithMany()
                         .HasForeignKey("DeletedBy")
                         .OnDelete(DeleteBehavior.NoAction);
 
-                    b.HasOne("UserManagement.Data.User", "ModifiedByUser")
+                    b.HasOne("UserManagement.Data.Entities.User", "ModifiedByUser")
                         .WithMany()
                         .HasForeignKey("ModifiedBy")
                         .OnDelete(DeleteBehavior.NoAction)
@@ -730,20 +730,20 @@ namespace UserManagement.Domain.Migrations
                     b.Navigation("ModifiedByUser");
                 });
 
-            modelBuilder.Entity("UserManagement.Data.Page", b =>
+            modelBuilder.Entity("UserManagement.Data.Entities.Page", b =>
                 {
-                    b.HasOne("UserManagement.Data.User", "CreatedByUser")
+                    b.HasOne("UserManagement.Data.Entities.User", "CreatedByUser")
                         .WithMany()
                         .HasForeignKey("CreatedBy")
                         .OnDelete(DeleteBehavior.NoAction)
                         .IsRequired();
 
-                    b.HasOne("UserManagement.Data.User", "DeletedByUser")
+                    b.HasOne("UserManagement.Data.Entities.User", "DeletedByUser")
                         .WithMany()
                         .HasForeignKey("DeletedBy")
                         .OnDelete(DeleteBehavior.NoAction);
 
-                    b.HasOne("UserManagement.Data.User", "ModifiedByUser")
+                    b.HasOne("UserManagement.Data.Entities.User", "ModifiedByUser")
                         .WithMany()
                         .HasForeignKey("ModifiedBy")
                         .OnDelete(DeleteBehavior.NoAction)
@@ -756,32 +756,32 @@ namespace UserManagement.Domain.Migrations
                     b.Navigation("ModifiedByUser");
                 });
 
-            modelBuilder.Entity("UserManagement.Data.PageAction", b =>
+            modelBuilder.Entity("UserManagement.Data.Entities.PageAction", b =>
                 {
-                    b.HasOne("UserManagement.Data.Action", "Action")
+                    b.HasOne("UserManagement.Data.Entities.Action", "Action")
                         .WithMany()
                         .HasForeignKey("ActionId")
                         .OnDelete(DeleteBehavior.Cascade)
                         .IsRequired();
 
-                    b.HasOne("UserManagement.Data.User", "CreatedByUser")
+                    b.HasOne("UserManagement.Data.Entities.User", "CreatedByUser")
                         .WithMany()
                         .HasForeignKey("CreatedBy")
                         .OnDelete(DeleteBehavior.NoAction)
                         .IsRequired();
 
-                    b.HasOne("UserManagement.Data.User", "DeletedByUser")
+                    b.HasOne("UserManagement.Data.Entities.User", "DeletedByUser")
                         .WithMany()
                         .HasForeignKey("DeletedBy")
                         .OnDelete(DeleteBehavior.NoAction);
 
-                    b.HasOne("UserManagement.Data.User", "ModifiedByUser")
+                    b.HasOne("UserManagement.Data.Entities.User", "ModifiedByUser")
                         .WithMany()
                         .HasForeignKey("ModifiedBy")
                         .OnDelete(DeleteBehavior.NoAction)
                         .IsRequired();
 
-                    b.HasOne("UserManagement.Data.Page", "Page")
+                    b.HasOne("UserManagement.Data.Entities.Page", "Page")
                         .WithMany()
                         .HasForeignKey("PageId")
                         .OnDelete(DeleteBehavior.Cascade)
@@ -798,19 +798,19 @@ namespace UserManagement.Domain.Migrations
                     b.Navigation("Page");
                 });
 
-            modelBuilder.Entity("UserManagement.Data.Role", b =>
+            modelBuilder.Entity("UserManagement.Data.Entities.Role", b =>
                 {
-                    b.HasOne("UserManagement.Data.User", "CreatedByUser")
+                    b.HasOne("UserManagement.Data.Entities.User", "CreatedByUser")
                         .WithMany()
                         .HasForeignKey("CreatedBy")
                         .OnDelete(DeleteBehavior.NoAction);
 
-                    b.HasOne("UserManagement.Data.User", "DeletedByUser")
+                    b.HasOne("UserManagement.Data.Entities.User", "DeletedByUser")
                         .WithMany()
                         .HasForeignKey("DeletedBy")
                         .OnDelete(DeleteBehavior.NoAction);
 
-                    b.HasOne("UserManagement.Data.User", "ModifiedByUser")
+                    b.HasOne("UserManagement.Data.Entities.User", "ModifiedByUser")
                         .WithMany()
                         .HasForeignKey("ModifiedBy")
                         .OnDelete(DeleteBehavior.NoAction)
@@ -823,21 +823,21 @@ namespace UserManagement.Domain.Migrations
                     b.Navigation("ModifiedByUser");
                 });
 
-            modelBuilder.Entity("UserManagement.Data.RoleClaim", b =>
+            modelBuilder.Entity("UserManagement.Data.Entities.RoleClaim", b =>
                 {
-                    b.HasOne("UserManagement.Data.Action", "Action")
+                    b.HasOne("UserManagement.Data.Entities.Action", "Action")
                         .WithMany()
                         .HasForeignKey("ActionId")
                         .OnDelete(DeleteBehavior.Cascade)
                         .IsRequired();
 
-                    b.HasOne("UserManagement.Data.Page", "Page")
+                    b.HasOne("UserManagement.Data.Entities.Page", "Page")
                         .WithMany()
                         .HasForeignKey("PageId")
                         .OnDelete(DeleteBehavior.Cascade)
                         .IsRequired();
 
-                    b.HasOne("UserManagement.Data.Role", "Role")
+                    b.HasOne("UserManagement.Data.Entities.Role", "Role")
                         .WithMany("RoleClaims")
                         .HasForeignKey("RoleId")
                         .OnDelete(DeleteBehavior.Cascade)
@@ -850,9 +850,9 @@ namespace UserManagement.Domain.Migrations
                     b.Navigation("Role");
                 });
 
-            modelBuilder.Entity("UserManagement.Data.UserAllowedIP", b =>
+            modelBuilder.Entity("UserManagement.Data.Entities.UserAllowedIP", b =>
                 {
-                    b.HasOne("UserManagement.Data.User", "User")
+                    b.HasOne("UserManagement.Data.Entities.User", "User")
                         .WithMany("UserAllowedIPs")
                         .HasForeignKey("UserId")
                         .OnDelete(DeleteBehavior.Cascade)
@@ -861,21 +861,21 @@ namespace UserManagement.Domain.Migrations
                     b.Navigation("User");
                 });
 
-            modelBuilder.Entity("UserManagement.Data.UserClaim", b =>
+            modelBuilder.Entity("UserManagement.Data.Entities.UserClaim", b =>
                 {
-                    b.HasOne("UserManagement.Data.Action", "Action")
+                    b.HasOne("UserManagement.Data.Entities.Action", "Action")
                         .WithMany()
                         .HasForeignKey("ActionId")
                         .OnDelete(DeleteBehavior.Cascade)
                         .IsRequired();
 
-                    b.HasOne("UserManagement.Data.Page", "Page")
+                    b.HasOne("UserManagement.Data.Entities.Page", "Page")
                         .WithMany()
                         .HasForeignKey("PageId")
                         .OnDelete(DeleteBehavior.Cascade)
                         .IsRequired();
 
-                    b.HasOne("UserManagement.Data.User", "User")
+                    b.HasOne("UserManagement.Data.Entities.User", "User")
                         .WithMany("UserClaims")
                         .HasForeignKey("UserId")
                         .OnDelete(DeleteBehavior.Cascade)
@@ -888,9 +888,9 @@ namespace UserManagement.Domain.Migrations
                     b.Navigation("User");
                 });
 
-            modelBuilder.Entity("UserManagement.Data.UserLogin", b =>
+            modelBuilder.Entity("UserManagement.Data.Entities.UserLogin", b =>
                 {
-                    b.HasOne("UserManagement.Data.User", "User")
+                    b.HasOne("UserManagement.Data.Entities.User", "User")
                         .WithMany("UserLogins")
                         .HasForeignKey("UserId")
                         .OnDelete(DeleteBehavior.Cascade)
@@ -899,15 +899,15 @@ namespace UserManagement.Domain.Migrations
                     b.Navigation("User");
                 });
 
-            modelBuilder.Entity("UserManagement.Data.UserRole", b =>
+            modelBuilder.Entity("UserManagement.Data.Entities.UserRole", b =>
                 {
-                    b.HasOne("UserManagement.Data.Role", "Role")
+                    b.HasOne("UserManagement.Data.Entities.Role", "Role")
                         .WithMany("UserRoles")
                         .HasForeignKey("RoleId")
                         .OnDelete(DeleteBehavior.Cascade)
                         .IsRequired();
 
-                    b.HasOne("UserManagement.Data.User", "User")
+                    b.HasOne("UserManagement.Data.Entities.User", "User")
                         .WithMany("UserRoles")
                         .HasForeignKey("UserId")
                         .OnDelete(DeleteBehavior.Cascade)
@@ -918,9 +918,9 @@ namespace UserManagement.Domain.Migrations
                     b.Navigation("User");
                 });
 
-            modelBuilder.Entity("UserManagement.Data.UserToken", b =>
+            modelBuilder.Entity("UserManagement.Data.Entities.UserToken", b =>
                 {
-                    b.HasOne("UserManagement.Data.User", "User")
+                    b.HasOne("UserManagement.Data.Entities.User", "User")
                         .WithMany("UserTokens")
                         .HasForeignKey("UserId")
                         .OnDelete(DeleteBehavior.Cascade)
@@ -929,14 +929,14 @@ namespace UserManagement.Domain.Migrations
                     b.Navigation("User");
                 });
 
-            modelBuilder.Entity("UserManagement.Data.Role", b =>
+            modelBuilder.Entity("UserManagement.Data.Entities.Role", b =>
                 {
                     b.Navigation("RoleClaims");
 
                     b.Navigation("UserRoles");
                 });
 
-            modelBuilder.Entity("UserManagement.Data.User", b =>
+            modelBuilder.Entity("UserManagement.Data.Entities.User", b =>
                 {
                     b.Navigation("UserAllowedIPs");
 

@@ -28,7 +28,6 @@
 
   <ItemGroup>
     <ProjectReference Include="..\UserManagement.Common\UserManagement.Common.csproj" />
-    <ProjectReference Include="..\UserManagement.Domain\UserManagement.Data.csproj" />
     <ProjectReference Include="..\UserManagement.Helper\UserManagement.Helper.csproj" />
   </ItemGroup>
 

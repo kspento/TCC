@@ -38,10 +38,9 @@
 
   <ItemGroup>
     <ProjectReference Include="..\UserManagement.Common\UserManagement.Common.csproj" />
-    <ProjectReference Include="..\UserManagement.Data\UserManagement.Domain.csproj" />
-    <ProjectReference Include="..\UserManagement.Domain\UserManagement.Data.csproj" />
+    <ProjectReference Include="..\UserManagement.Data\UserManagement.Data.csproj" />
+    <ProjectReference Include="..\UserManagement.Domain\UserManagement.Domain.csproj" />
     <ProjectReference Include="..\UserManagement.Helper\UserManagement.Helper.csproj" />
-    <ProjectReference Include="..\UserManagement.Repository\UserManagement.Repository.csproj" />
   </ItemGroup>
 
   <ItemGroup>
