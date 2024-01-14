@@ -50,11 +50,11 @@ public class RoleService : IRoleService
         var entityExist = await _roleRepository.FindBy(c => c.Id != request.Id)
           .FirstOrDefaultAsync();
 
-        if (entityExist != null)
-        {
-            _logger.LogError("Role Name Already Exist.");
-            throw new AlreadyExistsException("Role Name Already Exist.");
-        }
+        //if (entityExist != null)
+        //{
+        //    _logger.LogError("Role Name Already Exist.");
+        //    throw new AlreadyExistsException("Role Name Already Exist.");
+        //}
 
         entityExist = await _roleRepository.FindByInclude(v => v.Id == request.Id, c => c.RoleClaims).FirstOrDefaultAsync();
         entityExist.Name = request.Name;
